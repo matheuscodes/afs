@@ -2,7 +2,7 @@
 
 `Arkanos Financial Suite` is a personal bookkeeping tool.
 
-Copyright (C) 2005-2014 Matheus Borges Teixeira.
+Copyright (C) 2005-2015 Matheus Borges Teixeira.
 
 Free for personal use, all other rights reserved.
 
