@@ -1,14 +1,18 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Button } from 'evergreen-ui';
-import AdvancedTable from './AdvancedTable';
+import Application from './Application';
+
+import { Provider } from "react-redux";
+import configureStore from "./store";
 
 function render() {
   console.log("Rendering...")
   ReactDOM.render(<div>
     <h2>Hello from React!</h2>
-    <Button>I am using 🌲 Evergreen!</Button>
-    <AdvancedTable />
+    <Provider store={configureStore()}>
+      <Application />
+    </Provider>
     </div>, document.getElementById("internal-app"));
 }
 
