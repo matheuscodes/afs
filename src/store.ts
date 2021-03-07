@@ -1,6 +1,10 @@
-import { createStore } from "redux";
+import { createStore, applyMiddleware } from "redux";
 import reducer from "./reducers";
 import { Currency } from './models/Expense'
+import thunkMiddleware from 'redux-thunk'
+import { composeWithDevTools } from 'redux-devtools-extension'
+
+const composedEnhancer = composeWithDevTools(applyMiddleware(thunkMiddleware))
 
 function configureStore(state = { bookkeeping: [{
   date: new Date(),
@@ -11,7 +15,7 @@ function configureStore(state = { bookkeeping: [{
     currency: Currency.EUR
   },
 }] }) {
-  return createStore(reducer, state);
+  return createStore(reducer, state, composedEnhancer);
 }
 
 export default configureStore;

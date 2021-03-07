@@ -1,4 +1,7 @@
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, ipcMain } from 'electron'
+import path from 'path'
+import fs from 'fs'
+
 declare const MAIN_WINDOW_WEBPACK_ENTRY: any;
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -6,9 +9,18 @@ if (require('electron-squirrel-startup')) { // eslint-disable-line global-requir
   app.quit();
 }
 
+let mainWindow;
+
 const createWindow = (): void => {
   // Create the browser window.
-  const mainWindow = new BrowserWindow({});
+  mainWindow = new BrowserWindow({
+    webPreferences: {
+      nodeIntegration: false, // is default value after Electron v5
+      contextIsolation: true, // protect against prototype pollution
+      enableRemoteModule: false, // turn off remote
+      preload: path.join(__dirname, "bridge.js") // use a preload script
+    }
+  });
 
   // and load the index.html of the app.
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
@@ -37,6 +49,21 @@ app.on('activate', () => {
   if (BrowserWindow.getAllWindows().length === 0) {
     createWindow();
   }
+});
+
+const ROOT_PATH = "./storage";
+
+if (!fs.existsSync(ROOT_PATH)){
+  fs.mkdirSync(ROOT_PATH);
+}
+
+ipcMain.on("appendToStorageChannel", (event, request) => {
+  console.log("eventtriggered", request);
+  if (!fs.existsSync(`${ROOT_PATH}/${request.path}`)){
+    fs.mkdirSync(`${ROOT_PATH}/${request.path}`);
+  }
+  fs.appendFileSync(`${ROOT_PATH}/${request.path}/${request.file}.list.json`, `${request.data}\n`);
+  mainWindow.webContents.send("fromStorageChannel", request);
 });
 
 // In this file you can include the rest of your app's specific main process

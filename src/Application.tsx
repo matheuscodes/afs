@@ -4,6 +4,7 @@ import { addExpense } from "./actions/bookkeeping";
 import { Expense, Currency } from "./models/Expense";
 import { Button } from 'evergreen-ui';
 import ExpensesTable from './components/ExpensesTable'
+import BookkeepingService from './services/BookkeepingService'
 
 class Application extends React.Component {
   constructor(props) {
@@ -31,7 +32,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  addExpense: (expense: Expense) => dispatch(addExpense(expense))
+  addExpense: (expense: Expense) => dispatch(BookkeepingService.writeExpense(expense))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Application);

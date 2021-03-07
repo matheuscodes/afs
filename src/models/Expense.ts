@@ -13,3 +13,9 @@ export default interface Expense {
   description: string;
   value: Charge;
 }
+
+export function parseExpense(data) {
+  const parsed: Expense = JSON.parse(data);
+  parsed.date = new Date(parsed.date);
+  return parsed;
+}
