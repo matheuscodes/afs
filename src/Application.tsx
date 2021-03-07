@@ -2,13 +2,16 @@ import React from 'react'
 import { connect } from "react-redux";
 import { addExpense } from "./actions/bookkeeping";
 import { Expense, Currency } from "./models/Expense";
-import { Button } from 'evergreen-ui';
 import ExpensesTable from './components/ExpensesTable'
+import NewExpensesSheet from './components/NewExpensesSheet'
 import BookkeepingService from './services/BookkeepingService'
 
 class Application extends React.Component<any, any> {
   constructor(props: any) {
     super(props);
+    this.state = {
+      isShown: false,
+    }
   }
 
   componentDidMount() {
@@ -17,15 +20,7 @@ class Application extends React.Component<any, any> {
 
   render() {
     return <div>
-      <Button onClick={() => this.props.addExpense({
-        date: new Date(),
-        source: "Test",
-        description: "TestD",
-        value: {
-          amount: Math.random(),
-          currency: Currency.EUR
-        },
-      })}>Add Expense</Button>
+      <NewExpensesSheet submitExpense={this.props.addExpense}/>
       <ExpensesTable data={this.props.bookkeeping} />
     </div>
   }

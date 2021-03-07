@@ -8,12 +8,12 @@ import configureStore from "./store";
 
 function render() {
   console.log("Rendering...")
-  ReactDOM.render(<div>
-    <h2>Hello from React!</h2>
+  ReactDOM.render(
     <Provider store={configureStore()}>
       <Application />
-    </Provider>
-    </div>, document.getElementById("internal-app"));
+    </Provider>,
+    document.getElementById("internal-app")
+  );
 }
 
 render();
