@@ -6,8 +6,8 @@ import { Button } from 'evergreen-ui';
 import ExpensesTable from './components/ExpensesTable'
 import BookkeepingService from './services/BookkeepingService'
 
-class Application extends React.Component {
-  constructor(props) {
+class Application extends React.Component<any, any> {
+  constructor(props: any) {
     super(props);
   }
 
@@ -27,11 +27,11 @@ class Application extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state: any) => ({
   ...state
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch: any) => ({
   addExpense: (expense: Expense) => dispatch(BookkeepingService.writeExpense(expense))
 });
 

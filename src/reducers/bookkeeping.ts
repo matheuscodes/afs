@@ -1,6 +1,6 @@
 import { ADD_EXPENSE } from '../actions/bookkeeping'
 
-export default (state = [], action) => {
+export default (state: any[] = [], action: any) => {
   switch (action.operation) {
     case ADD_EXPENSE:
       console.log(ADD_EXPENSE, action.payload)

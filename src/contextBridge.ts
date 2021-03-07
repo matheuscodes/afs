@@ -8,7 +8,7 @@ contextBridge.exposeInMainWorld(
             ipcRenderer.send("appendToStorageChannel", request);
         },
         listenData: (pathPrefix, listener) => {
-            ipcRenderer.on("fromStorageChannel", (event, request) => {
+            ipcRenderer.on("fromStorageChannel", (event: any, request: any) => {
               if(request.path.startsWith(pathPrefix)) {
                 listener(request);
               }

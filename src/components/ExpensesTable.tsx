@@ -15,8 +15,8 @@ import {
   TextDropdownButton
 } from 'evergreen-ui'
 
-function capitalize(string) {
-  return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase()
+function capitalize(text: string) {
+  return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase()
 }
 
 const Order = {
@@ -25,15 +25,15 @@ const Order = {
   DESC: 'DESC',
 }
 
-const ColumnFlex = {
+const ColumnFlex: any = {
   date: 1,
   source: 2,
   description: 4,
   value: 1,
 }
 
-export default class ExpensesTable extends React.Component {
-  constructor(props) {
+export default class ExpensesTable extends React.Component<any, any> {
+  constructor(props: any) {
     super(props)
 
     this.state = {
@@ -47,12 +47,12 @@ export default class ExpensesTable extends React.Component {
     }
   }
 
-  sort = expenses => {
+  sort = (expenses: any) => {
     const { ordering, orderedColumn } = this.state
     // Return if there's no ordering.
     if (ordering === Order.NONE) return expenses
 
-    return expenses.sort((a, b) => {
+    return expenses.sort((a: any, b: any) => {
       let aValue = a[orderedColumn]
       let bValue = b[orderedColumn]
 
@@ -62,34 +62,34 @@ export default class ExpensesTable extends React.Component {
       }
 
       // Support string comparison
-      const sortTable = { true: 1, false: -1 }
+      const sortTable: any = { true: 1, false: -1 }
 
       // Order ascending (Order.ASC)
       if (this.state.ordering === Order.ASC) {
-        return aValue === bValue ? 0 : sortTable[aValue > bValue]
+        return aValue === bValue ? 0 : sortTable[`${aValue > bValue}`]
       }
 
       // Order descending (Order.DESC)
-      return bValue === aValue ? 0 : sortTable[bValue > aValue]
+      return bValue === aValue ? 0 : sortTable[`${bValue > aValue}`]
     })
   }
 
-  filter = expenses => {
+  filter = (expenses: any) => {
     const sourceQuery = this.state.searchQuery.source.trim();
     const descriptionQuery = this.state.searchQuery.description.trim();
 
     if (sourceQuery.length === 0 && descriptionQuery.length === 0) return expenses;
 
-    return expenses.filter(expense => {
+    return expenses.filter((expense: any )=> {
       const sources = filter([expense.source], sourceQuery)
       return sourceQuery.length === 0 || sources.length === 1;
-    }).filter(expense => {
+    }).filter((expense: any) => {
       const descriptions = filter([expense.description], descriptionQuery)
       return descriptionQuery.length === 0 || descriptions.length === 1;
     })
   }
 
-  getIconForOrder = order => {
+  getIconForOrder = (order: any) => {
     switch (order) {
       case Order.ASC:
         return ArrowUpIcon
@@ -100,12 +100,12 @@ export default class ExpensesTable extends React.Component {
     }
   }
 
-  handleFilterChange = (value, parameter) => {
+  handleFilterChange = (value: string, parameter: string) => {
     this.state.searchQuery[parameter] = value;
     this.setState(this.state);
   }
 
-  renderSortableTableHeaderCell = (columnName, prettyName) => {
+  renderSortableTableHeaderCell = (columnName: string, prettyName: string) => {
     return (
       <Table.TextHeaderCell flex={ColumnFlex[columnName]}>
         <Popover
@@ -162,9 +162,9 @@ export default class ExpensesTable extends React.Component {
     )
   }
 
-  renderRow = ({ expense, index }) => {
+  renderRow = ({ expense, index }: { expense: any, index: number }) => {
     return (
-      <Table.Row key={index} heigh="auto">
+      <Table.Row key={index} height="auto">
         <Table.TextCell flex={ColumnFlex.date}>{`${expense.date.toJSON().slice(0,10)}`}</Table.TextCell>
         <Table.TextCell flex={ColumnFlex.source}>{expense.source}</Table.TextCell>
         <Table.TextCell flex={ColumnFlex.description}>{expense.description}</Table.TextCell>
@@ -200,7 +200,7 @@ export default class ExpensesTable extends React.Component {
           <Table.HeaderCell flex="none" width={48}/>
         </Table.Head>
         <Table.Body>
-          {items.map((item, index) => this.renderRow({ expense: item, index }))}
+          {items.map((item: any, index: number) => this.renderRow({ expense: item, index }))}
         </Table.Body>
       </Table>
     )

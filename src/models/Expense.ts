@@ -3,18 +3,18 @@ export enum Currency {
 }
 
 export interface Charge {
-  amount: float;
+  amount: number;
   currency: Currency;
 }
 
-export default interface Expense {
+export interface Expense {
   date: Date;
   source: string;
   description: string;
   value: Charge;
 }
 
-export function parseExpense(data) {
+export function parseExpense(data: string) {
   const parsed: Expense = JSON.parse(data);
   parsed.date = new Date(parsed.date);
   return parsed;
