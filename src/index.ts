@@ -57,8 +57,19 @@ if (!fs.existsSync(ROOT_PATH)){
   fs.mkdirSync(ROOT_PATH);
 }
 
+ipcMain.on("loadFromStorageChannel", (event, request) => {
+  console.log("loadFromStorageChannel", request);
+  if (!fs.existsSync(`${ROOT_PATH}/${request.path}`)){
+    fs.mkdirSync(`${ROOT_PATH}/${request.path}`);
+  }
+  request.data = fs.readdirSync(`${ROOT_PATH}/${request.path}`)
+    .map(i => fs.readFileSync(`${ROOT_PATH}/${request.path}/${i}`))
+    .join('')
+  mainWindow.webContents.send("fromStorageChannel", request);
+});
+
 ipcMain.on("appendToStorageChannel", (event, request) => {
-  console.log("eventtriggered", request);
+  console.log("appendToStorageChannel", request);
   if (!fs.existsSync(`${ROOT_PATH}/${request.path}`)){
     fs.mkdirSync(`${ROOT_PATH}/${request.path}`);
   }

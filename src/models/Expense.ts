@@ -19,3 +19,14 @@ export function parseExpense(data: string) {
   parsed.date = new Date(parsed.date);
   return parsed;
 }
+
+export function parseExpenses(data: string) {
+  if(typeof data !== 'undefined') {
+    return data
+      .split('\n')
+      .map(i => i.length > 0 ? parseExpense(i) : undefined)
+      .filter(i => typeof i !== 'undefined')
+      .sort((a, b) => b.date.getTime() - a.date.getTime());
+  }
+  return [];
+}

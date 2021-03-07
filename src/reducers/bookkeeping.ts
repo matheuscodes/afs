@@ -1,10 +1,12 @@
-import { ADD_EXPENSE } from '../actions/bookkeeping'
+import { ADD_EXPENSE, LOAD_EXPENSES } from '../actions/bookkeeping'
 
 export default (state: any[] = [], action: any) => {
+  console.log("bookkeeping reducer", action)
   switch (action.operation) {
     case ADD_EXPENSE:
-      console.log(ADD_EXPENSE, action.payload)
       return state.concat(action.payload);
+    case LOAD_EXPENSES:
+      return action.payload;
     default:
       return state;
   }

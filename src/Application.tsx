@@ -11,6 +11,10 @@ class Application extends React.Component<any, any> {
     super(props);
   }
 
+  componentDidMount() {
+    this.props.fetchExpenses()
+  }
+
   render() {
     return <div>
       <Button onClick={() => this.props.addExpense({
@@ -32,7 +36,8 @@ const mapStateToProps = (state: any) => ({
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
-  addExpense: (expense: Expense) => dispatch(BookkeepingService.writeExpense(expense))
+  addExpense: (expense: Expense) => dispatch(BookkeepingService.writeExpense(expense)),
+  fetchExpenses: (expense: Expense) => dispatch(BookkeepingService.loadExpenses())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Application);
