@@ -22,7 +22,14 @@ function capitalize(string) {
 const Order = {
   NONE: 'NONE',
   ASC: 'ASC',
-  DESC: 'DESC'
+  DESC: 'DESC',
+}
+
+const ColumnFlex = {
+  date: 1,
+  source: 2,
+  description: 4,
+  value: 1,
 }
 
 export default class ExpensesTable extends React.Component {
@@ -30,7 +37,10 @@ export default class ExpensesTable extends React.Component {
     super(props)
 
     this.state = {
-      searchQuery: '',
+      searchQuery: {
+        source: '',
+        description: '',
+      },
       orderedColumn: 1,
       ordering: Order.NONE,
       column2Show: 'email'
@@ -64,17 +74,18 @@ export default class ExpensesTable extends React.Component {
     })
   }
 
-  // Filter the profiles based on the name property.
-  filter = profiles => {
-    const searchQuery = this.state.searchQuery.trim()
+  filter = expenses => {
+    const sourceQuery = this.state.searchQuery.source.trim();
+    const descriptionQuery = this.state.searchQuery.description.trim();
 
-    // If the searchQuery is empty, return the profiles as is.
-    if (searchQuery.length === 0) return profiles
+    if (sourceQuery.length === 0 && descriptionQuery.length === 0) return expenses;
 
-    return profiles.filter(profile => {
-      // Use the filter from fuzzaldrin-plus to filter by name.
-      const result = filter([profile.name], searchQuery)
-      return result.length === 1
+    return expenses.filter(expense => {
+      const sources = filter([expense.source], sourceQuery)
+      return sourceQuery.length === 0 || sources.length === 1;
+    }).filter(expense => {
+      const descriptions = filter([expense.description], descriptionQuery)
+      return descriptionQuery.length === 0 || descriptions.length === 1;
     })
   }
 
@@ -89,13 +100,14 @@ export default class ExpensesTable extends React.Component {
     }
   }
 
-  handleFilterChange = value => {
-    this.setState({ searchQuery: value })
+  handleFilterChange = (value, parameter) => {
+    this.state.searchQuery[parameter] = value;
+    this.setState(this.state);
   }
 
   renderSortableTableHeaderCell = (columnName, prettyName) => {
     return (
-      <Table.TextHeaderCell>
+      <Table.TextHeaderCell flex={ColumnFlex[columnName]}>
         <Popover
           position={Position.BOTTOM_LEFT}
           content={({ close }) => (
@@ -152,12 +164,12 @@ export default class ExpensesTable extends React.Component {
 
   renderRow = ({ expense, index }) => {
     return (
-      <Table.Row key={index}>
-        <Table.TextCell>{`${expense.date.toJSON().slice(0,10)}`}</Table.TextCell>
-        <Table.TextCell>{expense.source}</Table.TextCell>
-        <Table.TextCell>{expense.description}</Table.TextCell>
-        <Table.TextCell>{`${expense.value.amount} ${expense.value.currency}`}</Table.TextCell>
-        <Table.Cell width={48} flex="none">
+      <Table.Row key={index} heigh="auto">
+        <Table.TextCell flex={ColumnFlex.date}>{`${expense.date.toJSON().slice(0,10)}`}</Table.TextCell>
+        <Table.TextCell flex={ColumnFlex.source}>{expense.source}</Table.TextCell>
+        <Table.TextCell flex={ColumnFlex.description}>{expense.description}</Table.TextCell>
+        <Table.TextCell flex={ColumnFlex.value}>{`${expense.value.amount} ${expense.value.currency}`}</Table.TextCell>
+        <Table.Cell flex="none" width={48}>
           <Popover
             content={this.renderRowMenu}
             position={Position.BOTTOM_RIGHT} >
@@ -172,20 +184,24 @@ export default class ExpensesTable extends React.Component {
     const items = this.filter(this.sort(this.props.data))
     return (
       <Table border>
-        <Table.Head>
+        <Table.Head accountForScrollbar={false}>
           {this.renderSortableTableHeaderCell("date", "Date")}
           <Table.SearchHeaderCell
-            onChange={this.handleFilterChange}
-            value={this.state.searchQuery} />
+            flex={ColumnFlex.source}
+            onChange={value => this.handleFilterChange(value, "source")}
+            placeholder="Source"
+            value={this.state.searchQuery.source} />
           <Table.SearchHeaderCell
-            onChange={this.handleFilterChange}
-            value={this.state.searchQuery} />
+            flex={ColumnFlex.description}
+            onChange={value => this.handleFilterChange(value, "description")}
+            placeholder="Description"
+            value={this.state.searchQuery.description} />
           {this.renderSortableTableHeaderCell("value", "Amount")}
-          <Table.HeaderCell width={48} flex="none" />
+          <Table.HeaderCell flex="none" width={48}/>
         </Table.Head>
-        <Table.VirtualBody height={640}>
+        <Table.Body>
           {items.map((item, index) => this.renderRow({ expense: item, index }))}
-        </Table.VirtualBody>
+        </Table.Body>
       </Table>
     )
   }
