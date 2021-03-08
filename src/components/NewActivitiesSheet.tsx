@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button, SideSheet, Heading, Paragraph, Pane, TextInputField, SelectField } from 'evergreen-ui'
-import { Expense, Currency } from '../models/Expense'
+import { Activity, Currency } from '../models/Activity'
 
 function isFloat(n: any){
   return Number(n) === n && n % 1 !== 0;
@@ -12,7 +12,7 @@ function clone(obj: any) {
   return copy;
 }
 
-const emptyExpense: any = {
+const emptyActivity: any = {
   date: new Date(),
   source: "",
   description: "",
@@ -22,12 +22,12 @@ const emptyExpense: any = {
   },
 }
 
-interface NewExpensesSheetState {
+interface NewActivitiesSheetState {
   isShown: boolean,
-  expenses: Expense[],
+  activities: Activity[],
 }
 
-export default class NewExpensesSheet extends React.Component<any, NewExpensesSheetState> {
+export default class NewActivitiesSheet extends React.Component<any, NewActivitiesSheetState> {
   constructor(props: any) {
     super(props);
 
@@ -37,89 +37,89 @@ export default class NewExpensesSheet extends React.Component<any, NewExpensesSh
   initialState() {
     return {
       isShown: false,
-      expenses: [clone(emptyExpense)]
+      activities: [clone(emptyActivity)]
     }
   }
 
   toggleSideSheet() {
     this.setState({
       isShown: !this.state.isShown,
-      expenses: this.state.expenses,
+      activities: this.state.activities,
     });
   }
 
-  addEmptyExpense() {
-    this.state.expenses.push(clone(emptyExpense));
+  addEmptyActivity() {
+    this.state.activities.push(clone(emptyActivity));
     this.setState(this.state);
   }
 
-  submitExpenses() {
-    this.state.expenses.forEach(expense => this.props.submitExpense(expense));
+  submitActivities() {
+    this.state.activities.forEach(activity => this.props.submitActivity(activity));
     this.setState({
       isShown: !this.state.isShown,
-      expenses: [],
+      activities: [],
     });
   }
 
   render() {
     return (
       <Button margin={10} onClick={() => this.setState({ isShown: true })}>
-        {"New Expenses"}
+        {"New Activities"}
         <SideSheet
           isShown={this.state.isShown}
           onCloseComplete={() => this.toggleSideSheet()} >
           <Pane margin={40}>
-            <Heading margin={5} size={700} marginTop="default">New Expenses</Heading>
-            <Button margin={5} onClick={() => this.addEmptyExpense()}>Add</Button>
-            <Button margin={5} onClick={() => this.submitExpenses()}>Submit</Button>
-            {this.state.expenses.map((expense, index) => <Pane key={index} display="flex">
+            <Heading margin={5} size={700} marginTop="default">New Activities</Heading>
+            <Button margin={5} onClick={() => this.addEmptyActivity()}>Add</Button>
+            <Button margin={5} onClick={() => this.submitActivities()}>Submit</Button>
+            {this.state.activities.map((activity, index) => <Pane key={index} display="flex">
                 <TextInputField
                   padding={5}
-                  isInvalid={isNaN(new Date(expense.date).getTime())}
+                  isInvalid={isNaN(new Date(activity.date).getTime())}
                   flex={2}
                   label="Date"
-                  value={expense.date.toJSON().substring(0,10)}
+                  value={activity.date.toJSON().substring(0,10)}
                   onChange={(e: any) => {
-                    expense.date = new Date(e.target.value);
+                    activity.date = new Date(e.target.value);
                     this.setState(this.state);
                   }} />
                 <TextInputField
                   padding={5}
-                  isInvalid={!expense.source}
+                  isInvalid={!activity.source}
                   flex={3}
                   label="Source"
-                  value={expense.source}
+                  value={activity.source}
                   onChange={(e: any) => {
-                    expense.source = e.target.value;
+                    activity.source = e.target.value;
                     this.setState(this.state);
                   }} />
                 <TextInputField
                   padding={5}
-                  isInvalid={!expense.description}
+                  isInvalid={!activity.description}
                   flex={3}
                   label="Description"
-                  value={expense.description}
+                  value={activity.description}
                   onChange={(e: any) => {
-                    expense.description = e.target.value;
+                    activity.description = e.target.value;
                     this.setState(this.state);
                   }} />
                 <TextInputField
                   padding={5}
-                  isInvalid={isNaN(parseFloat(`${expense.value.amount}`))}
+                  isInvalid={isNaN(parseFloat(`${activity.value.amount}`))}
                   flex={1}
                   label="Amount"
-                  value={expense.value.amount}
+                  value={activity.value.amount}
                   onChange={(e: any) => {
-                    expense.value.amount = e.target.value;
+                    activity.value.amount = e.target.value;
                     this.setState(this.state);
                   }} />
                 <SelectField
                   padding={5}
                   flex={1}
                   label="Currency"
-                  value={expense.value.currency}
+                  value={activity.value.currency}
                   onChange={(e: any) => {
-                    expense.value.currency = e.target.value as Currency;
+                    activity.value.currency = e.target.value as Currency;
                     this.setState(this.state);
                   }} >
                   {Object.keys(Currency).map(currency => <option key={currency} value={currency}>{currency}</option>)}

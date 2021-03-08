@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
-import { Currency, Charge, Expense, parseExpense, parseExpenses } from '../models/Expense'
-import { addExpense, loadExpenses } from '../actions/bookkeeping'
+import { Currency, Charge, Activity, parseActivity, parseActivities } from '../models/Activity'
+import { addActivity, loadActivities } from '../actions/bookkeeping'
 
 const BOOKKEEPING_LOCATION = "./storage/bookkeeping"
 
@@ -20,26 +20,26 @@ class Bookkeeping {
     dispatch(action(dataParser(request.data)));
   }
 
-  writeExpense(expense: Expense) {
+  writeActivity(activity: Activity) {
     return async (dispatch: any, getState: any) => {
       const requestId = uuidv4();
       // @ts-ignore
       window.storage.appendData({
         requestId,
         path: "bookkeeping",
-        file: expense.date.toJSON().substring(0,7),
-        data: JSON.stringify(expense),
+        file: activity.date.toJSON().substring(0,7),
+        data: JSON.stringify(activity),
       });
 
       this.openRequests[requestId] = {
         dispatch,
-        action: addExpense,
-        dataParser: parseExpense,
+        action: addActivity,
+        dataParser: parseActivity,
       };
     }
   }
 
-  loadExpenses() {
+  loadActivities() {
     return async (dispatch: any, getState: any) => {
       const requestId = uuidv4();
       // @ts-ignore
@@ -50,8 +50,8 @@ class Bookkeeping {
 
       this.openRequests[requestId] = {
         dispatch,
-        action: loadExpenses,
-        dataParser: parseExpenses,
+        action: loadActivities,
+        dataParser: parseActivities,
       };
     }
   }

@@ -32,7 +32,7 @@ const ColumnFlex: any = {
   value: 1,
 }
 
-export default class ExpensesTable extends React.Component<any, any> {
+export default class ActivitiesTable extends React.Component<any, any> {
   constructor(props: any) {
     super(props)
 
@@ -47,12 +47,12 @@ export default class ExpensesTable extends React.Component<any, any> {
     }
   }
 
-  sort = (expenses: any) => {
+  sort = (activities: any) => {
     const { ordering, orderedColumn } = this.state
     // Return if there's no ordering.
-    if (ordering === Order.NONE) return expenses
+    if (ordering === Order.NONE) return activities
 
-    return expenses.sort((a: any, b: any) => {
+    return activities.sort((a: any, b: any) => {
       let aValue = a[orderedColumn]
       let bValue = b[orderedColumn]
 
@@ -74,17 +74,17 @@ export default class ExpensesTable extends React.Component<any, any> {
     })
   }
 
-  filter = (expenses: any) => {
+  filter = (activities: any) => {
     const sourceQuery = this.state.searchQuery.source.trim();
     const descriptionQuery = this.state.searchQuery.description.trim();
 
-    if (sourceQuery.length === 0 && descriptionQuery.length === 0) return expenses;
+    if (sourceQuery.length === 0 && descriptionQuery.length === 0) return activities;
 
-    return expenses.filter((expense: any )=> {
-      const sources = filter([expense.source], sourceQuery)
+    return activities.filter((activity: any )=> {
+      const sources = filter([activity.source], sourceQuery)
       return sourceQuery.length === 0 || sources.length === 1;
-    }).filter((expense: any) => {
-      const descriptions = filter([expense.description], descriptionQuery)
+    }).filter((activity: any) => {
+      const descriptions = filter([activity.description], descriptionQuery)
       return descriptionQuery.length === 0 || descriptions.length === 1;
     })
   }
@@ -162,13 +162,13 @@ export default class ExpensesTable extends React.Component<any, any> {
     )
   }
 
-  renderRow = ({ expense, index }: { expense: any, index: number }) => {
+  renderRow = ({ activity, index }: { activity: any, index: number }) => {
     return (
       <Table.Row key={index} height="auto">
-        <Table.TextCell flex={ColumnFlex.date}>{`${expense.date.toJSON().slice(0,10)}`}</Table.TextCell>
-        <Table.TextCell flex={ColumnFlex.source}>{expense.source}</Table.TextCell>
-        <Table.TextCell flex={ColumnFlex.description}>{expense.description}</Table.TextCell>
-        <Table.TextCell flex={ColumnFlex.value}>{`${expense.value.amount} ${expense.value.currency}`}</Table.TextCell>
+        <Table.TextCell flex={ColumnFlex.date}>{`${activity.date.toJSON().slice(0,10)}`}</Table.TextCell>
+        <Table.TextCell flex={ColumnFlex.source}>{activity.source}</Table.TextCell>
+        <Table.TextCell flex={ColumnFlex.description}>{activity.description}</Table.TextCell>
+        <Table.TextCell flex={ColumnFlex.value}>{`${activity.value.amount} ${activity.value.currency}`}</Table.TextCell>
         <Table.Cell flex="none" width={48}>
           <Popover
             content={this.renderRowMenu}
@@ -200,7 +200,7 @@ export default class ExpensesTable extends React.Component<any, any> {
           <Table.HeaderCell flex="none" width={48}/>
         </Table.Head>
         <Table.Body>
-          {items.map((item: any, index: number) => this.renderRow({ expense: item, index }))}
+          {items.map((item: any, index: number) => this.renderRow({ activity: item, index }))}
         </Table.Body>
       </Table>
     )

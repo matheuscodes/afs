@@ -1,9 +1,9 @@
 import React from 'react'
 import { connect } from "react-redux";
-import { addExpense } from "./actions/bookkeeping";
-import { Expense, Currency } from "./models/Expense";
-import ExpensesTable from './components/ExpensesTable'
-import NewExpensesSheet from './components/NewExpensesSheet'
+import { addActivity } from "./actions/bookkeeping";
+import { Activity, Currency } from "./models/Activity";
+import ActivitiesTable from './components/ActivitiesTable'
+import NewActivitiesSheet from './components/NewActivitiesSheet'
 import BookkeepingService from './services/BookkeepingService'
 
 class Application extends React.Component<any, any> {
@@ -15,13 +15,13 @@ class Application extends React.Component<any, any> {
   }
 
   componentDidMount() {
-    this.props.fetchExpenses()
+    this.props.fetchActivities()
   }
 
   render() {
     return <div>
-      <NewExpensesSheet submitExpense={this.props.addExpense}/>
-      <ExpensesTable data={this.props.bookkeeping} />
+      <NewActivitiesSheet submitActivity={this.props.addActivity}/>
+      <ActivitiesTable data={this.props.bookkeeping} />
     </div>
   }
 }
@@ -31,8 +31,8 @@ const mapStateToProps = (state: any) => ({
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
-  addExpense: (expense: Expense) => dispatch(BookkeepingService.writeExpense(expense)),
-  fetchExpenses: (expense: Expense) => dispatch(BookkeepingService.loadExpenses())
+  addActivity: (activity: Activity) => dispatch(BookkeepingService.writeActivity(activity)),
+  fetchActivities: (activity: Activity) => dispatch(BookkeepingService.loadActivities())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Application);

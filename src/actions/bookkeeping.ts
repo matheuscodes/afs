@@ -1,21 +1,21 @@
-import { Expense } from '../models/Expense'
+import { Activity } from '../models/Activity'
 
 export const BOOKKEEPING = "bookkeeping";
-export const ADD_EXPENSE = "add-expense";
-export const LOAD_EXPENSES = "load-expenses";
+export const ADD_EXPENSE = "add-activity";
+export const LOAD_EXPENSES = "load-activities";
 
-export const addExpense = (expense: Expense) => {
+export const addActivity = (activity: Activity) => {
   return {
     type: BOOKKEEPING,
     operation: ADD_EXPENSE,
-    payload: expense,
+    payload: activity,
   }
 }
 
-export const loadExpenses = (expenses: Expense[]) => {
+export const loadActivities = (activities: Activity[]) => {
   return {
     type: BOOKKEEPING,
     operation: LOAD_EXPENSES,
-    payload: expenses,
+    payload: activities,
   }
 }
