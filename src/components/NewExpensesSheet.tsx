@@ -1,12 +1,12 @@
 import React from 'react'
-import { Button, SideSheet, Heading, Paragraph, Pane, TextInputField, SelectField } from 'evergreen-ui';
-import { Expense, Currency } from "../models/Expense";
+import { Button, SideSheet, Heading, Paragraph, Pane, TextInputField, SelectField } from 'evergreen-ui'
+import { Expense, Currency } from '../models/Expense'
 
-function isFloat(n){
+function isFloat(n: any){
   return Number(n) === n && n % 1 !== 0;
 }
 
-function clone(obj) {
+function clone(obj: any) {
   const copy = JSON.parse(JSON.stringify(obj));
   copy.date = new Date(copy.date);
   return copy;
@@ -23,7 +23,7 @@ const emptyExpense: any = {
 }
 
 interface NewExpensesSheetState {
-  isShow: boolean,
+  isShown: boolean,
   expenses: Expense[],
 }
 
@@ -42,8 +42,10 @@ export default class NewExpensesSheet extends React.Component<any, NewExpensesSh
   }
 
   toggleSideSheet() {
-    this.state.isShown = !this.state.isShown;
-    this.setState(this.state);
+    this.setState({
+      isShown: !this.state.isShown,
+      expenses: this.state.expenses,
+    });
   }
 
   addEmptyExpense() {
@@ -53,8 +55,10 @@ export default class NewExpensesSheet extends React.Component<any, NewExpensesSh
 
   submitExpenses() {
     this.state.expenses.forEach(expense => this.props.submitExpense(expense));
-    this.state.expenses = [];
-    this.setState(this.state);
+    this.setState({
+      isShown: !this.state.isShown,
+      expenses: [],
+    });
   }
 
   render() {
@@ -63,7 +67,7 @@ export default class NewExpensesSheet extends React.Component<any, NewExpensesSh
         {"New Expenses"}
         <SideSheet
           isShown={this.state.isShown}
-          onCloseComplete={() => this.setState({ isShown: false })} >
+          onCloseComplete={() => this.toggleSideSheet()} >
           <Pane margin={40}>
             <Heading margin={5} size={700} marginTop="default">New Expenses</Heading>
             <Button margin={5} onClick={() => this.addEmptyExpense()}>Add</Button>
@@ -75,7 +79,7 @@ export default class NewExpensesSheet extends React.Component<any, NewExpensesSh
                   flex={2}
                   label="Date"
                   value={expense.date.toJSON().substring(0,10)}
-                  onChange={(e) => {
+                  onChange={(e: any) => {
                     expense.date = new Date(e.target.value);
                     this.setState(this.state);
                   }} />
@@ -85,7 +89,7 @@ export default class NewExpensesSheet extends React.Component<any, NewExpensesSh
                   flex={3}
                   label="Source"
                   value={expense.source}
-                  onChange={(e) => {
+                  onChange={(e: any) => {
                     expense.source = e.target.value;
                     this.setState(this.state);
                   }} />
@@ -95,17 +99,17 @@ export default class NewExpensesSheet extends React.Component<any, NewExpensesSh
                   flex={3}
                   label="Description"
                   value={expense.description}
-                  onChange={(e) => {
+                  onChange={(e: any) => {
                     expense.description = e.target.value;
                     this.setState(this.state);
                   }} />
                 <TextInputField
                   padding={5}
-                  isInvalid={isNaN(parseFloat(expense.value.amount))}
+                  isInvalid={isNaN(parseFloat(`${expense.value.amount}`))}
                   flex={1}
                   label="Amount"
                   value={expense.value.amount}
-                  onChange={(e) => {
+                  onChange={(e: any) => {
                     expense.value.amount = e.target.value;
                     this.setState(this.state);
                   }} />
@@ -114,11 +118,11 @@ export default class NewExpensesSheet extends React.Component<any, NewExpensesSh
                   flex={1}
                   label="Currency"
                   value={expense.value.currency}
-                  onChange={(e) => {
-                    expense.value.currency = e.target.value;
+                  onChange={(e: any) => {
+                    expense.value.currency = e.target.value as Currency;
                     this.setState(this.state);
                   }} >
-                  {Object.keys(Currency).map(currency => <option key={currency} value={Currency[currency]}>{Currency[currency]}</option>)}
+                  {Object.keys(Currency).map(currency => <option key={currency} value={currency}>{currency}</option>)}
                 </SelectField>
               </Pane>)}
           </Pane>

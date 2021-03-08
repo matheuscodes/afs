@@ -17,7 +17,7 @@ export interface Expense {
 export function parseExpense(data: string) {
   const parsed: Expense = JSON.parse(data);
   parsed.date = new Date(parsed.date);
-  parsed.value.amount = parseFloat(parsed.value.amount);
+  parsed.value.amount = parseFloat(`${parsed.value.amount}`);
   return parsed;
 }
 
