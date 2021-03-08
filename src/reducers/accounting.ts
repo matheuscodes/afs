@@ -8,7 +8,7 @@ export default (state: {accounts?: Record<string, Account>} = {}, action: any) =
       case LOAD_ACCOUNTS:
         const accounts:Record<string, Account> = {};
         action.payload.forEach((i: Account) => accounts[i.id] = i);
-        return {accounts, ...state};
+        return {...state, accounts};
       default:
         return state;
     }
