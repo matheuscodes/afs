@@ -6,15 +6,7 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 
 const composedEnhancer = composeWithDevTools(applyMiddleware(thunkMiddleware))
 
-function configureStore(state = { bookkeeping: [{
-  date: new Date(),
-  source: "Test",
-  description: "TestD",
-  value: {
-    amount: Math.random(),
-    currency: Currency.EUR
-  },
-}] }) {
+function configureStore(state: any = { bookkeeping: [], accounting: {} }) {
   return createStore(reducer, state, composedEnhancer);
 }
 

@@ -15,12 +15,15 @@ class Application extends React.Component<any, any> {
   }
 
   componentDidMount() {
+    this.props.fetchAccounts()
     this.props.fetchActivities()
   }
 
   render() {
     return <div>
-      <NewActivitiesSheet submitActivity={this.props.addActivity}/>
+      <NewActivitiesSheet
+        accounts={this.props.accounting.accounts}
+        submitActivity={this.props.addActivity} />
       <ActivitiesTable data={this.props.bookkeeping} />
     </div>
   }
@@ -32,7 +35,8 @@ const mapStateToProps = (state: any) => ({
 
 const mapDispatchToProps = (dispatch: any) => ({
   addActivity: (activity: Activity) => dispatch(BookkeepingService.writeActivity(activity)),
-  fetchActivities: (activity: Activity) => dispatch(BookkeepingService.loadActivities())
+  fetchActivities: () => dispatch(BookkeepingService.loadActivities()),
+  fetchAccounts: () => dispatch(BookkeepingService.loadAccounts())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Application);

@@ -1,6 +1,8 @@
 import { v4 as uuidv4 } from 'uuid';
 import { Currency, Charge, Activity, parseActivity, parseActivities } from '../models/Activity'
+import { Account, parseAccounts } from '../models/Account'
 import { addActivity, loadActivities } from '../actions/bookkeeping'
+import { loadAccounts } from '../actions/accounting'
 
 const BOOKKEEPING_LOCATION = "./storage/bookkeeping"
 
@@ -10,6 +12,11 @@ class Bookkeeping {
   constructor() {
     // @ts-ignore
     window.storage.listenData("bookkeeping", (request: any) => {
+      this.updateData(request);
+    });
+
+    // @ts-ignore
+    window.storage.listenData("accounting", (request: any) => {
       this.updateData(request);
     });
   }
@@ -52,6 +59,23 @@ class Bookkeeping {
         dispatch,
         action: loadActivities,
         dataParser: parseActivities,
+      };
+    }
+  }
+
+  loadAccounts() {
+    return async (dispatch: any, getState: any) => {
+      const requestId = uuidv4();
+      // @ts-ignore
+      window.storage.loadAllFiles({
+        requestId,
+        path: "accounting"
+      });
+
+      this.openRequests[requestId] = {
+        dispatch,
+        action: loadAccounts,
+        dataParser: parseAccounts,
       };
     }
   }

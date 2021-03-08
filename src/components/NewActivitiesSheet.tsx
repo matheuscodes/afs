@@ -66,6 +66,7 @@ export default class NewActivitiesSheet extends React.Component<any, NewActiviti
       <Button margin={10} onClick={() => this.setState({ isShown: true })}>
         {"New Activities"}
         <SideSheet
+          width={1024}
           isShown={this.state.isShown}
           onCloseComplete={() => this.toggleSideSheet()} >
           <Pane margin={40}>
@@ -123,6 +124,24 @@ export default class NewActivitiesSheet extends React.Component<any, NewActiviti
                     this.setState(this.state);
                   }} >
                   {Object.keys(Currency).map(currency => <option key={currency} value={currency}>{currency}</option>)}
+                </SelectField>
+                <SelectField
+                  padding={5}
+                  flex={2}
+                  label="Account"
+                  value={activity.account}
+                  onChange={(e: any) => {
+                    activity.account = e.target.value;
+                    this.setState(this.state);
+                  }} >
+                  {
+                    Object.keys(this.props.accounts || {})
+                      .map(account =>
+                        <option key={account} value={account}>
+                          {this.props.accounts[account].name} ({this.props.accounts[account].type})
+                        </option>
+                      )
+                  }
                 </SelectField>
               </Pane>)}
           </Pane>
