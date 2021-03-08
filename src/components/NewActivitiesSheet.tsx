@@ -68,7 +68,7 @@ export default class NewActivitiesSheet extends React.Component<any, NewActiviti
     return this.props.accounts ? Object.keys(this.props.accounts)[0] : undefined
   }
 
-  accountSelector(value: any, changeFunction: function) {
+  accountSelector(value: any, changeFunction: (e: any) => void) {
     return (
       <SelectField
         padding={5}
@@ -106,7 +106,7 @@ export default class NewActivitiesSheet extends React.Component<any, NewActiviti
                   isInvalid={isNaN(new Date(activity.date).getTime())}
                   flex={2}
                   label="Date"
-                  value={activity.date}
+                  value={`${activity.date}`}
                   onChange={(e: any) => {
                     activity.date = e.target.value;
                     this.setState(this.state);
