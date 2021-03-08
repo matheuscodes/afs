@@ -13,6 +13,7 @@ export interface Activity {
   description: string;
   value: Charge;
   account: string;
+  transfer: boolean;
 }
 
 export function parseActivity(data: string) {

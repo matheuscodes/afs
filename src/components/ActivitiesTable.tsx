@@ -29,6 +29,7 @@ const ColumnFlex: any = {
   date: 1,
   source: 2,
   description: 4,
+  account: 2,
   value: 1,
 }
 
@@ -41,9 +42,8 @@ export default class ActivitiesTable extends React.Component<any, any> {
         source: '',
         description: '',
       },
-      orderedColumn: 1,
-      ordering: Order.NONE,
-      column2Show: 'email'
+      orderedColumn: "date",
+      ordering: Order.DESC
     }
   }
 
@@ -166,9 +166,10 @@ export default class ActivitiesTable extends React.Component<any, any> {
     return (
       <Table.Row key={index} height="auto">
         <Table.TextCell flex={ColumnFlex.date}>{`${activity.date.toJSON().slice(0,10)}`}</Table.TextCell>
-        <Table.TextCell flex={ColumnFlex.source}>{activity.source}</Table.TextCell>
+        <Table.TextCell flex={ColumnFlex.source}>{activity.transfer && this.props.accounts ? this.props.accounts[activity.source].name : activity.source }</Table.TextCell>
         <Table.TextCell flex={ColumnFlex.description}>{activity.description}</Table.TextCell>
         <Table.TextCell flex={ColumnFlex.value}>{`${activity.value.amount} ${activity.value.currency}`}</Table.TextCell>
+        <Table.TextCell flex={ColumnFlex.account}>{this.props.accounts && this.props.accounts[activity.account] ? `${this.props.accounts[activity.account].name} (${this.props.accounts[activity.account].type})` : 'N/A'}</Table.TextCell>
         <Table.Cell flex="none" width={48}>
           <Popover
             content={this.renderRowMenu}
@@ -197,6 +198,7 @@ export default class ActivitiesTable extends React.Component<any, any> {
             placeholder="Description"
             value={this.state.searchQuery.description} />
           {this.renderSortableTableHeaderCell("value", "Amount")}
+          {this.renderSortableTableHeaderCell("account", "Account")}
           <Table.HeaderCell flex="none" width={48}/>
         </Table.Head>
         <Table.Body>

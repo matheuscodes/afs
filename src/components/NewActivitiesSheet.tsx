@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, SideSheet, Heading, Paragraph, Pane, TextInputField, SelectField } from 'evergreen-ui'
+import { Button, SideSheet, Heading, Paragraph, Pane, TextInputField, SelectField, Checkbox } from 'evergreen-ui'
 import { Activity, Currency } from '../models/Activity'
 
 function isFloat(n: any){
@@ -8,12 +8,11 @@ function isFloat(n: any){
 
 function clone(obj: any) {
   const copy = JSON.parse(JSON.stringify(obj));
-  copy.date = new Date(copy.date);
   return copy;
 }
 
 const emptyActivity: any = {
-  date: new Date(),
+  date: new Date().toJSON().substring(0,10),
   source: "",
   description: "",
   value: {
@@ -54,11 +53,39 @@ export default class NewActivitiesSheet extends React.Component<any, NewActiviti
   }
 
   submitActivities() {
-    this.state.activities.forEach(activity => this.props.submitActivity(activity));
+    this.state.activities.forEach(activity => {
+      activity.account = (activity.account || this.defaultAccount());
+      activity.date = new Date(activity.date);
+      this.props.submitActivity(activity);
+    });
     this.setState({
       isShown: !this.state.isShown,
       activities: [],
     });
+  }
+
+  defaultAccount() {
+    return this.props.accounts ? Object.keys(this.props.accounts)[0] : undefined
+  }
+
+  accountSelector(value: any, changeFunction: function) {
+    return (
+      <SelectField
+        padding={5}
+        flex={2}
+        label="Account"
+        value={value}
+        onChange={changeFunction} >
+        {
+          Object.keys(this.props.accounts || {})
+            .map(account =>
+              <option key={account} value={account}>
+                {this.props.accounts[account].name} ({this.props.accounts[account].type})
+              </option>
+            )
+        }
+      </SelectField>
+    )
   }
 
   render() {
@@ -79,21 +106,28 @@ export default class NewActivitiesSheet extends React.Component<any, NewActiviti
                   isInvalid={isNaN(new Date(activity.date).getTime())}
                   flex={2}
                   label="Date"
-                  value={activity.date.toJSON().substring(0,10)}
+                  value={activity.date}
                   onChange={(e: any) => {
-                    activity.date = new Date(e.target.value);
+                    activity.date = e.target.value;
                     this.setState(this.state);
                   }} />
-                <TextInputField
-                  padding={5}
-                  isInvalid={!activity.source}
-                  flex={3}
-                  label="Source"
-                  value={activity.source}
-                  onChange={(e: any) => {
+                {
+                  activity.transfer ?
+                  this.accountSelector(activity.source, (e: any) => {
                     activity.source = e.target.value;
                     this.setState(this.state);
-                  }} />
+                  }) :
+                  <TextInputField
+                    padding={5}
+                    isInvalid={!activity.source}
+                    flex={3}
+                    label="Source"
+                    value={activity.source}
+                    onChange={(e: any) => {
+                      activity.source = e.target.value;
+                      this.setState(this.state);
+                    }} />
+                }
                 <TextInputField
                   padding={5}
                   isInvalid={!activity.description}
@@ -125,24 +159,23 @@ export default class NewActivitiesSheet extends React.Component<any, NewActiviti
                   }} >
                   {Object.keys(Currency).map(currency => <option key={currency} value={currency}>{currency}</option>)}
                 </SelectField>
-                <SelectField
-                  padding={5}
-                  flex={2}
-                  label="Account"
-                  value={activity.account}
+                {this.accountSelector(activity.account, (e: any) => {
+                  activity.account = e.target.value;
+                  this.setState(this.state);
+                })}
+                <Checkbox
+                  label="Transfer"
+                  marginTop={36}
+                  checked={activity.transfer}
                   onChange={(e: any) => {
-                    activity.account = e.target.value;
+                    activity.transfer = e.target.checked;
+                    if(activity.transfer) {
+                      activity.source = this.defaultAccount();
+                    } else {
+                      activity.source = "";
+                    }
                     this.setState(this.state);
-                  }} >
-                  {
-                    Object.keys(this.props.accounts || {})
-                      .map(account =>
-                        <option key={account} value={account}>
-                          {this.props.accounts[account].name} ({this.props.accounts[account].type})
-                        </option>
-                      )
-                  }
-                </SelectField>
+                  }} />
               </Pane>)}
           </Pane>
         </SideSheet>

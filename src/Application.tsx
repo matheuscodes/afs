@@ -24,7 +24,9 @@ class Application extends React.Component<any, any> {
       <NewActivitiesSheet
         accounts={this.props.accounting.accounts}
         submitActivity={this.props.addActivity} />
-      <ActivitiesTable data={this.props.bookkeeping} />
+      <ActivitiesTable
+        accounts={this.props.accounting.accounts}
+        data={this.props.bookkeeping} />
     </div>
   }
 }
