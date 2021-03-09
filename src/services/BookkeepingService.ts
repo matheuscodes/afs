@@ -6,6 +6,12 @@ import { loadAccounts } from '../actions/accounting'
 
 const BOOKKEEPING_LOCATION = "./storage/bookkeeping"
 
+interface SmallActivity {
+  date: Date,
+  amount: number,
+  currency: Currency,
+}
+
 class Bookkeeping {
   openRequests: any = {}
 
@@ -81,20 +87,28 @@ class Bookkeeping {
   }
 
   monthlyOverview(year: number, month: number, activities: Activity[], accounts: Record<string, Account>) {
-    const filterByType = (a: Activity, type: AccountType) => {
-      const account = accounts[a.account];
-      if(a.transfer) {
-        const sourceAccount = accounts[a.source];
-        return typeof account !== 'undefined'
-          && typeof sourceAccount !== 'undefined'
-          && (account.type === type || sourceAccount.type === type)
-      } else {
-        return typeof account !== 'undefined'
-          && account.type === type
+    const accountActivities: Record<string, SmallActivity[]> = {}
+    Object.keys(accounts).forEach(i => accountActivities[i] = [])
+    activities.forEach((a: Activity) => {
+      if(accountActivities[a.account]) {
+        accountActivities[a.account].push({
+          date: a.date,
+          amount: a.value.amount,
+          currency: a.value.currency,
+        });
       }
-    }
+      if(a.transfer) {
+        if(accountActivities[a.source]) {
+          accountActivities[a.source].push({
+            date: a.date,
+            amount: -a.value.amount,
+            currency: a.value.currency,
+          });
+        }
+      }
+    });
 
-    const lastMonthFilter = (a: Activity) => {
+    const lastMonthFilter = (a: SmallActivity) => {
       const activityMonth = a.date.getMonth();
       const activityYear = a.date.getFullYear();
       if(month > 0) {
@@ -104,48 +118,43 @@ class Bookkeeping {
       }
     }
 
-    const thisMonthFilter = (a: Activity) => {
+    const thisMonthFilter = (a: SmallActivity) => {
       const activityMonth = a.date.getMonth();
       const activityYear = a.date.getFullYear();
       return activityMonth === month && activityYear === year;
     }
 
-    const reducer = (accumulator: Charge, a: Activity): Charge => {
-      if(a.account === a.source) {
-        return accumulator;
-      }
-      if(a.transfer) {
-        return {
-          amount: accumulator.amount - a.value.amount,
-          currency: accumulator.currency,
-        }
-      } else {
-        return {
-          amount: accumulator.amount + a.value.amount,
-          currency: accumulator.currency,
-        }
+    const reducer = (accumulator: Charge, a: SmallActivity): Charge => {
+      return {
+        amount: accumulator.amount + a.amount,
+        currency: accumulator.currency,
       }
     }
 
-    const filterByIncome = (a: Activity) => {
-      if(a.transfer) {
-        return a.value.amount < 0 && thisMonthFilter(a);
-      } else {
-        return a.value.amount > 0 && thisMonthFilter(a);
-      }
+    const filterByIncome = (a: SmallActivity) => {
+      return a.amount > 0 && thisMonthFilter(a);
     }
 
-    const filterByExpense = (a: Activity) => {
-      if(a.transfer) {
-        return a.value.amount > 0 && thisMonthFilter(a);
-      } else {
-        return a.value.amount < 0 && thisMonthFilter(a);
-      }
+    const filterByExpense = (a: SmallActivity) => {
+      return a.amount < 0 && thisMonthFilter(a);
     }
 
-    const creditActivities = activities.filter(activity => filterByType(activity, AccountType.CREDIT));
-    const checkingActivities = activities.filter(activity => filterByType(activity, AccountType.CHECKING));
-    const cashActivities = activities.filter(activity => filterByType(activity, AccountType.CASH));
+    const filterAccountByType = (a: Account, type: AccountType) => a.type === type;
+
+    const creditActivities = Object.keys(accountActivities)
+                                   .map(key => accounts[key])
+                                   .filter(account => filterAccountByType(account, AccountType.CREDIT))
+                                   .flatMap(account => accountActivities[account.id]);
+
+    const checkingActivities = Object.keys(accountActivities)
+                                    .map(key => accounts[key])
+                                    .filter(account => filterAccountByType(account, AccountType.CHECKING))
+                                    .flatMap(account => accountActivities[account.id]);
+
+    const cashActivities = Object.keys(accountActivities)
+                                   .map(key => accounts[key])
+                                   .filter(account => filterAccountByType(account, AccountType.CASH))
+                                   .flatMap(account => accountActivities[account.id])
 
     const lastMonth: any = {
       credit: creditActivities.filter(lastMonthFilter).reduce(reducer, {amount:0, currency: Currency.EUR}),
@@ -157,6 +166,8 @@ class Bookkeeping {
       checking: checkingActivities.filter(thisMonthFilter).reduce(reducer, {amount:0, currency: Currency.EUR}),
       cash: cashActivities.filter(thisMonthFilter).reduce(reducer, {amount:0, currency: Currency.EUR}),
     }
+
+    const total = checkingActivities.concat(cashActivities);
 
     return {
       lastMonth,
@@ -175,8 +186,8 @@ class Bookkeeping {
         },
       },
       total: {
-        expenses: checkingActivities.concat(cashActivities).filter(filterByExpense).reduce(reducer, {amount:0, currency: Currency.EUR}),
-        income: checkingActivities.concat(cashActivities).filter(filterByIncome).reduce(reducer, {amount:0, currency: Currency.EUR})
+        expenses: total.filter(filterByExpense).reduce(reducer, {amount:0, currency: Currency.EUR}),
+        income: total.concat(cashActivities).filter(filterByIncome).reduce(reducer, {amount:0, currency: Currency.EUR})
       }
     }
 

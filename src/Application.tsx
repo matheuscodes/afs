@@ -64,7 +64,7 @@ class Application extends React.Component<any, any> {
         {this.availableYears().map((year: number) => (
           <Tab
             key={year}
-            onSelect={() => this.setState({...this.state, year})}
+            onSelect={() => this.setState({...this.state, year, month: undefined})}
             isSelected={year === this.state.year} >
             {year}
           </Tab>
