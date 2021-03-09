@@ -166,7 +166,7 @@ export default class ActivitiesTable extends React.Component<any, any> {
     return (
       <Table.Row key={index} height="auto">
         <Table.TextCell flex={ColumnFlex.date}>{`${activity.date.toJSON().slice(0,10)}`}</Table.TextCell>
-        <Table.TextCell flex={ColumnFlex.source}>{activity.transfer && this.props.accounts ? this.props.accounts[activity.source].name : activity.source }</Table.TextCell>
+        <Table.TextCell flex={ColumnFlex.source}>{activity.transfer && this.props.accounts ? `${this.props.accounts[activity.source].name} (${this.props.accounts[activity.source].type})` : activity.source }</Table.TextCell>
         <Table.TextCell flex={ColumnFlex.description}>{activity.description}</Table.TextCell>
         <Table.TextCell flex={ColumnFlex.value}>{`${activity.value.amount} ${activity.value.currency}`}</Table.TextCell>
         <Table.TextCell flex={ColumnFlex.account}>{this.props.accounts && this.props.accounts[activity.account] ? `${this.props.accounts[activity.account].name} (${this.props.accounts[activity.account].type})` : 'N/A'}</Table.TextCell>

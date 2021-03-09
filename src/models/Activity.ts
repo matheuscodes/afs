@@ -1,3 +1,5 @@
+import { Account } from './Account'
+
 export enum Currency {
   EUR = "€",
 }

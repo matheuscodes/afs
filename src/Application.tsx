@@ -5,6 +5,7 @@ import { Activity, Currency } from "./models/Activity";
 import ActivitiesTable from './components/ActivitiesTable'
 import NewActivitiesSheet from './components/NewActivitiesSheet'
 import BookkeepingService from './services/BookkeepingService'
+import MonthlyActivityOverview from './components/MonthlyActivityOverview'
 import {
   Tab,
   Tablist,
@@ -41,7 +42,7 @@ class Application extends React.Component<any, any> {
 
   availableMonths() {
     const months = this.props.bookkeeping
-      .filter((i: any) => (1900 + i.date.getYear()) === this.state.year)
+      .filter((i: any) => (i.date.getFullYear()) === this.state.year)
       .map((i: any) => i.date.getMonth())
       .sort();
     return Array.from( new Set<number>(months) )
@@ -49,7 +50,7 @@ class Application extends React.Component<any, any> {
 
   availableYears() {
     const years = this.props.bookkeeping
-      .map((i: any) => 1900 + i.date.getYear())
+      .map((i: any) => i.date.getFullYear())
       .sort();
     return Array.from( new Set<number>(years) )
   }
@@ -80,15 +81,22 @@ class Application extends React.Component<any, any> {
           </Tab>
         ))}
       </Tablist>
-      <Pane padding={16} flex={1}>
-        {
-          typeof this.state.month !== 'undefined' ?
+      {
+        typeof this.state.month !== 'undefined' ?
+        <Pane padding={16} flex={1}>
+          <MonthlyActivityOverview
+            data={BookkeepingService.monthlyOverview(
+              this.state.year,
+              this.state.month,
+              this.props.bookkeeping,
+              this.props.accounting.accounts
+            )}/>
           <ActivitiesTable
             accounts={this.props.accounting.accounts}
-            data={this.props.bookkeeping.filter((i: Activity) => i.date.getMonth() === this.state.month)} /> :
-          ''
-        }
-      </Pane>
+            data={this.props.bookkeeping.filter((i: Activity) => i.date.getMonth() === this.state.month)} />
+        </Pane> :
+        ''
+      }
     </div>
   }
 }
