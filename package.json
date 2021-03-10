@@ -9,7 +9,8 @@
     "package": "electron-forge package && cp -R storage out/afs-win32-x64/",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
-    "lint": "eslint --ext .tsx --ext .ts --ext .jsx --ext .js ."
+    "lint": "eslint --ext .tsx --ext .ts --ext .jsx --ext .js .",
+    "backup": "cp -R storage ../backups/$(date +'%Y-%m-%d')"
   },
   "keywords": [],
   "author": {

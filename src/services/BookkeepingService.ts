@@ -111,8 +111,8 @@ class Bookkeeping {
     const lastMonthFilter = (a: SmallActivity) => {
       const activityMonth = a.date.getMonth();
       const activityYear = a.date.getFullYear();
-      if(month > 0) {
-        return activityMonth < month && activityYear <= year
+      if(month > 0 || activityYear < year) {
+        return activityMonth < month || activityYear < year
       } else {
         return activityYear < year
       }
@@ -154,7 +154,7 @@ class Bookkeeping {
     const cashActivities = Object.keys(accountActivities)
                                    .map(key => accounts[key])
                                    .filter(account => filterAccountByType(account, AccountType.CASH))
-                                   .flatMap(account => accountActivities[account.id])
+                                   .flatMap(account => accountActivities[account.id]);
 
     const lastMonth: any = {
       credit: creditActivities.filter(lastMonthFilter).reduce(reducer, {amount:0, currency: Currency.EUR}),
