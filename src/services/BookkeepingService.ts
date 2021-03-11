@@ -143,18 +143,18 @@ class Bookkeeping {
 
     const creditActivities = Object.keys(accountActivities)
                                    .map(key => accounts[key])
-                                   .filter(account => filterAccountByType(account, AccountType.CREDIT))
-                                   .flatMap(account => accountActivities[account.id]);
+                                   .filter((account: Account) => filterAccountByType(account, AccountType.CREDIT))
+                                   .flatMap((account: Account) => accountActivities[account.id]);
 
     const checkingActivities = Object.keys(accountActivities)
                                     .map(key => accounts[key])
-                                    .filter(account => filterAccountByType(account, AccountType.CHECKING))
-                                    .flatMap(account => accountActivities[account.id]);
+                                    .filter((account: Account) => filterAccountByType(account, AccountType.CHECKING))
+                                    .flatMap((account: Account) => accountActivities[account.id]);
 
     const cashActivities = Object.keys(accountActivities)
                                    .map(key => accounts[key])
-                                   .filter(account => filterAccountByType(account, AccountType.CASH))
-                                   .flatMap(account => accountActivities[account.id]);
+                                   .filter((account: Account) => filterAccountByType(account, AccountType.CASH))
+                                   .flatMap((account: Account) => accountActivities[account.id]);
 
     const lastMonth: any = {
       credit: creditActivities.filter(lastMonthFilter).reduce(reducer, {amount:0, currency: Currency.EUR}),
