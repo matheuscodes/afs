@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain } from 'electron'
+import { app, BrowserWindow, ipcMain, Menu } from 'electron'
 import path from 'path'
 import fs from 'fs'
 
@@ -21,6 +21,33 @@ const createWindow = (): void => {
       preload: path.join(__dirname, "bridge.js") // use a preload script
     }
   });
+
+  var menu = Menu.buildFromTemplate([
+      {
+          label: 'Bookkeeping',
+          click() {
+              mainWindow.loadURL(`${MAIN_WINDOW_WEBPACK_ENTRY}#/bookkeeping`);
+          }
+      },
+      {
+          label: 'Consumption Control',
+          submenu: [
+              {
+                label:'Car Fuel',
+                click() {
+                    mainWindow.loadURL(`${MAIN_WINDOW_WEBPACK_ENTRY}#/car/fuel`);
+                }
+              }
+          ]
+      },
+      {
+          label:'Exit',
+          click() {
+              app.quit();
+          }
+      }
+  ])
+  Menu.setApplicationMenu(menu);
 
   // and load the index.html of the app.
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
