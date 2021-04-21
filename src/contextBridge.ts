@@ -1,4 +1,5 @@
 import { contextBridge, ipcRenderer } from 'electron'
+import { v4 as uuidv4 } from 'uuid'
 
 // Expose protected methods that allow the renderer process to use
 // the ipcRenderer without exposing the entire object
@@ -19,3 +20,17 @@ contextBridge.exposeInMainWorld(
         }
     }
 );
+
+contextBridge.exposeInMainWorld(
+  "filesystem", {
+    readFile: (filename) => {
+      return new Promise((resolve) => {
+        const eventId = uuidv4();
+        ipcRenderer.send("readFile", {filename, eventId});
+        ipcRenderer.on(`readFile-${eventId}`, (event: any, data: string) => {
+          resolve(new TextDecoder().decode(data))
+        });
+      });
+    }
+  }
+)

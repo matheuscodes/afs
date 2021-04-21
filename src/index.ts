@@ -106,5 +106,10 @@ ipcMain.on("appendToStorageChannel", (event, request) => {
   mainWindow.webContents.send("fromStorageChannel", request);
 });
 
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and import them here.
+ipcMain.on("readFile", (event, request) => {
+  console.log("readFile", request);
+  if (!fs.existsSync(`${ROOT_PATH}/${request.path}`)){
+    fs.mkdirSync(`${ROOT_PATH}/${request.path}`);
+  }
+  mainWindow.webContents.send(`readFile-${request.eventId}`, fs.readFileSync(`${ROOT_PATH}/${request.filename}`));
+});
