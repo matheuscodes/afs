@@ -113,3 +113,14 @@ ipcMain.on("readFile", (event, request) => {
   }
   mainWindow.webContents.send(`readFile-${request.eventId}`, fs.readFileSync(`${ROOT_PATH}/${request.filename}`));
 });
+
+ipcMain.on("readDirectory", (event, request) => {
+  console.log("readDirectory", request);
+  if (!fs.existsSync(`${ROOT_PATH}/${request.path}`)){
+    fs.mkdirSync(`${ROOT_PATH}/${request.path}`);
+  }
+  const data = fs.readdirSync(`${ROOT_PATH}/${request.path}`)
+    .map(i => fs.readFileSync(`${ROOT_PATH}/${request.path}/${i}`))
+    .join('')
+  mainWindow.webContents.send(`readDirectory-${request.eventId}`, data);
+});

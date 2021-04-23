@@ -31,6 +31,16 @@ contextBridge.exposeInMainWorld(
           resolve(new TextDecoder().decode(data))
         });
       });
+    },
+
+    readDirectory: (path) => {
+      return new Promise((resolve) => {
+        const eventId = uuidv4();
+        ipcRenderer.send("readDirectory", {path, eventId});
+        ipcRenderer.on(`readDirectory-${eventId}`, (event: any, data: string) => {
+          resolve(data)
+        });
+      });
     }
   }
 )
