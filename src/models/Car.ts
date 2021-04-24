@@ -5,11 +5,17 @@ export enum Fuel {
   GASOLINE = "Gasoline",
 }
 
+export enum FuelUnit {
+  DIESEL = "l",
+  GASOLINE = "l",
+}
+
 export interface Car {
   id: string,
   name: string,
   tanks: Record<string,number>,
   tankEntries: CarTankEntry[],
+  mileage: number,
 }
 
 export interface CarTankEntry {
@@ -20,4 +26,5 @@ export interface CarTankEntry {
   paid: Charge,
   fuel: Fuel,
   type?: string,
+  rest?: number,
 }
