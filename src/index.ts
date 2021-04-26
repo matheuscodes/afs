@@ -33,10 +33,26 @@ const createWindow = (): void => {
           label: 'Consumption Control',
           submenu: [
               {
-                label:'Car Fuel',
-                click() {
-                    mainWindow.loadURL(`${MAIN_WINDOW_WEBPACK_ENTRY}#/car/fuel`);
-                }
+                  label: 'Car',
+                  submenu: [
+                      {
+                        label:'Fuel',
+                        click() {
+                            mainWindow.loadURL(`${MAIN_WINDOW_WEBPACK_ENTRY}#/car/fuel`);
+                        }
+                      }
+                  ]
+              },
+              {
+                  label: 'Home',
+                  submenu: [
+                      {
+                        label:'Water and Heating',
+                        click() {
+                            mainWindow.loadURL(`${MAIN_WINDOW_WEBPACK_ENTRY}#/home/heating`);
+                        }
+                      }
+                  ]
               }
           ]
       },

@@ -1,4 +1,4 @@
-import { Car } from '../models/Account'
+import { Car } from '../../models/Car'
 import { CAR_CONSUMPTION, UPDATE_CARS, UPDATE_CAR_TANK_ENTRIES } from '../../actions/consumption/car'
 
 export default (state: Record<string, Car> = {}, action: any) => {

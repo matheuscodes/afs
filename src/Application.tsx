@@ -2,6 +2,7 @@ import React from 'react';
 import { HashRouter,Link,Route,Switch } from "react-router-dom";
 import Bookkeeping from "./components/Bookkeeping"
 import CarFuel from "./components/consumption/CarFuel"
+import WaterAndHeating from "./components/consumption/WaterAndHeating"
 
 class Application extends React.Component<any, any> {
   constructor(props: any) {
@@ -19,6 +20,9 @@ class Application extends React.Component<any, any> {
         </Route>
         <Route exact path="/bookkeeping">
           <Bookkeeping />
+        </Route>
+        <Route exact path="/home/heating">
+          <WaterAndHeating />
         </Route>
       </Switch>
     </HashRouter>
