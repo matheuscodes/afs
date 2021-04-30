@@ -47,6 +47,18 @@ const createWindow = (): void => {
                   label: 'Home',
                   submenu: [
                       {
+                        label:'Electricity',
+                        click() {
+                            mainWindow.loadURL(`${MAIN_WINDOW_WEBPACK_ENTRY}#/home/electricity`);
+                        }
+                      },
+                      {
+                        label:'Gas',
+                        click() {
+                            mainWindow.loadURL(`${MAIN_WINDOW_WEBPACK_ENTRY}#/home/gas`);
+                        }
+                      },
+                      {
                         label:'Water and Heating',
                         click() {
                             mainWindow.loadURL(`${MAIN_WINDOW_WEBPACK_ENTRY}#/home/heating`);
