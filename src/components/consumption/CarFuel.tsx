@@ -35,7 +35,7 @@ class CarFuel extends React.Component<any, any> {
     return <Table.Row key={index} height="auto">
       <Table.TextCell flex={ColumnFlex.date}>{tankEntry.date}</Table.TextCell>
       <Table.TextCell flex={ColumnFlex.mileage}>{tankEntry.mileage ? tankEntry.mileage + 'km' : ''}</Table.TextCell>
-      <Table.TextCell flex={ColumnFlex.tanked}>{tankEntry.tanked + FuelUnit[tankEntry.fuel]}</Table.TextCell>
+      <Table.TextCell flex={ColumnFlex.tanked}>{`${tankEntry.tanked} ${FuelUnit[tankEntry.fuel]}`}</Table.TextCell>
       <Table.TextCell flex={ColumnFlex.paid}>{tankEntry.paid.amount + tankEntry.paid.currency}</Table.TextCell>
       <Table.TextCell flex={ColumnFlex.rest}>{level.toFixed(2)}</Table.TextCell>
       <Table.TextCell flex={ColumnFlex.consumed}>{consumed ? consumed.toFixed(2) + FuelUnit[tankEntry.fuel] : ''}</Table.TextCell>
@@ -47,10 +47,12 @@ class CarFuel extends React.Component<any, any> {
 
   renderCar(car: Car) {
     let lastMileage = car.mileage;
-    const tankLevel = {};
+    const tankLevel: Record<Fuel,number> = {} as Record<Fuel,number>;
     for(const fuel in Fuel) {
-        tankLevel[fuel] = 0
+        const key = fuel as keyof typeof Fuel;
+        tankLevel[Fuel[key]] = 0;
     }
+    console.log("tank",tankLevel);
     return <div>
       <p><strong>{car.name}</strong> - {car.mileage}km</p>
       <Table border>
@@ -100,6 +102,7 @@ class CarFuel extends React.Component<any, any> {
                 tankLevel[entry.fuel] = car.tanks[entry.fuel]
               }
             }
+            console.log("taneek",tankLevel, tankLevel[entry.fuel], entry.fuel);
             return this.renderRow(entry,index,traveled,tankLevel[entry.fuel], consumed)
           })}
         </Table.Body>
@@ -121,7 +124,6 @@ const mapStateToProps = (state: any) => ({
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
-  tank: (tankEntry: CarTankEntry) => dispatch(CarFuelService.tank(tankEntry)),
   fetchCars: () => dispatch(CarFuelService.fetchCars()),
   fetchTankEntries: () => dispatch(CarFuelService.fetchTankEntries())
 });

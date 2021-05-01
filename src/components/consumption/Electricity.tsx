@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from "react-redux";
 import HomeService from '../../services/HomeService';
-import { Home, PowerMeter } from '../../models/Home'
+import { Home, PowerMeter, MeterPayment, MeterPrice, MeterMeasurement } from '../../models/Home';
 import {
   Tab,
   Tablist,
@@ -11,15 +11,15 @@ import {
 } from 'evergreen-ui'
 
 function getCurrentPrice(measurement: MeterMeasurement, prices: MeterPrice[]) {
-  return prices.find(i => i.date < measurement.date);
+  return prices.find((i: MeterPrice) => i.date < measurement.date);
 }
 
-function dateDifference(a, b) {
-  return (new Date(a) - new Date(b)) / (1000 * 60 * 60 * 24)
+function dateDifference(a: string | Date, b: string | Date) {
+  return (new Date(a).getTime() - new Date(b).getTime()) / (1000 * 60 * 60 * 24)
 }
 
-function paymentsByBill(payments) {
-  return payments.reduce((acc, payment) => {
+function paymentsByBill(payments: MeterPayment[]): Record<string, any> {
+  return payments.reduce((acc: Record<string, any[]>, payment: MeterPayment) => {
     const key = `${payment.bill}`;
     // Group initialization
     if (!acc[key]) {
@@ -33,14 +33,14 @@ function paymentsByBill(payments) {
   }, {});
 }
 
-function groupedPayments(payments) {
-  const groupBy = paymentsByBill(payments);
-  return Object.keys(groupBy).map(i => groupBy[i]).map(group => {
+function groupedPayments(payments: MeterPayment[]): any[] {
+  const groupBy: Record<string, any> = paymentsByBill(payments);
+  return Object.keys(groupBy).map((i: string) => groupBy[i]).map((group: any) => {
     return {
-      from: new Date(Math.min(...group.map(i => new Date(i.date).getTime()))),
-      to: new Date(Math.max(...group.map(i => new Date(i.date).getTime()))),
+      from: new Date(Math.min(...group.map((i: MeterPayment) => new Date(i.date).getTime()))),
+      to: new Date(Math.max(...group.map((i: MeterPayment) => new Date(i.date).getTime()))),
       sum: {
-        amount: group.map(i => i.value.amount).reduce((a,b) => a+b, 0),
+        amount: group.map((i: MeterPayment) => i.value.amount).reduce((a: number,b: number) => a+b, 0),
         currency: group[0].value.currency
       },
       bill: group[0].bill
@@ -72,8 +72,8 @@ class Electricity extends React.Component<any, any> {
   }
 
   getPowerMeters(powerMeter: PowerMeter): any[] {
-    let lastDate;
-    let lastMeasurement;
+    let lastDate: Date;
+    let lastMeasurement: number;
     return powerMeter.measurements.map(measurement => {
       const item = {
         date: measurement.date,
@@ -96,9 +96,9 @@ class Electricity extends React.Component<any, any> {
 
   getBills(powerMeter: PowerMeter): any[] {
     const groups = groupedPayments(powerMeter.payments);
-    const all = [];
-    let lastDate;
-    let lastMeasurement;
+    const all = [] as any[];
+    let lastDate: string;
+    let lastMeasurement: number;
     let sumUnitCosts = 0;
     let sumBaseCosts = 0;
     this.getPowerMeters(powerMeter).forEach((measurement,index) => {
@@ -112,7 +112,7 @@ class Electricity extends React.Component<any, any> {
           lastDate = measurement.date;
           return undefined;
         }
-        const payments = groups.find(i => i.from < new Date(measurement.date).getTime() && i.to > new Date(measurement.date).getTime())
+        const payments = groups.find(i => i.from < new Date(measurement.date) && i.to > new Date(measurement.date))
         const item = {
           from: lastDate,
           to: measurement.date,
@@ -287,7 +287,7 @@ const mapStateToProps = (state: any) => ({
 
 const mapDispatchToProps = (dispatch: any) => ({
   fetchHomes: () => dispatch(HomeService.fetchHomes()),
-  fetchElectricity: (homeId) => dispatch(HomeService.fetchElectricity(homeId)),
+  fetchElectricity: (homeId: string) => dispatch(HomeService.fetchElectricity(homeId)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Electricity);

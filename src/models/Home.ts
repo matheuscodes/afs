@@ -31,16 +31,18 @@ export interface MeterPayment {
   meter: string,
   date: Date,
   value: Charge,
+  bill: string,
 }
 
 export interface PowerMeter {
-  payments: MeterPayment[],
+  payments?: MeterPayment[],
   prices: MeterPrice[],
-  measurements: MeterMeasurement[],
+  measurements?: MeterMeasurement[],
 }
 
 export interface Home {
   id: string,
   name: string,
-  heaters: Heater[]
+  heaters?: Heater[]
+  electricity?: Record<string, PowerMeter>
 }

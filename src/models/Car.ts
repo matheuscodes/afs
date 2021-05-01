@@ -5,15 +5,15 @@ export enum Fuel {
   GASOLINE = "Gasoline",
 }
 
-export enum FuelUnit {
-  DIESEL = "l",
-  GASOLINE = "l",
+export const FuelUnit: Record<Fuel, string> = {
+  [Fuel.DIESEL]: "l",
+  [Fuel.GASOLINE]: "l",
 }
 
 export interface Car {
   id: string,
   name: string,
-  tanks: Record<string,number>,
+  tanks: Record<Fuel,number>,
   tankEntries: CarTankEntry[],
   mileage: number,
 }

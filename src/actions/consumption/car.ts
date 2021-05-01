@@ -1,4 +1,4 @@
-import { Car, CarTankEntry } from '../models/Car'
+import { Car, CarTankEntry } from '../../models/Car'
 
 export const CAR_CONSUMPTION = "consumption/car";
 export const ADD_TANK_ENTRY = "add-tank-entry";
