@@ -103,7 +103,6 @@ class Electricity extends React.Component<any, any> {
     let sumBaseCosts = 0;
     this.getPowerMeters(powerMeter).forEach((measurement,index) => {
       const price = getCurrentPrice(measurement, powerMeter.prices);
-      console.log(measurement.consumption * price.unit.amount, measurement.consumption, price.unit.amount)
       sumUnitCosts += measurement.consumption * price.unit.amount;
       sumBaseCosts += measurement.days * price.base.amount;
       if(measurement.billable || index === (powerMeter.measurements.length - 1)) {

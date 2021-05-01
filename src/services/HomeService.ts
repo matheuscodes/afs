@@ -1,4 +1,4 @@
-import { updateHomes, updateElectricity } from '../actions/consumption/home';
+import { updateHomes, updateElectricity, updateGas } from '../actions/consumption/home';
 
 function isNotEmpty(str: string) {
   return str &&  str.length > 0;
@@ -34,6 +34,24 @@ class HomeService {
       const prices = data.split('\n').filter(isNotEmpty).map(parse);
 
       dispatch(updateElectricity(homeId, measurements, payments, prices))
+    }
+  }
+
+  fetchGas(homeId: string) {
+    return async (dispatch: any, getState: any) => {
+      let data;
+
+      // @ts-ignore
+      data = await window.filesystem.readFile(`consumption/homes/${homeId}/gas/measurements.json`);
+      const measurements = data.split('\n').filter(isNotEmpty).map(parse);
+      // @ts-ignore
+      data = await window.filesystem.readFile(`consumption/homes/${homeId}/gas/payments.json`);
+      const payments = data.split('\n').filter(isNotEmpty).map(parse);
+      // @ts-ignore
+      data = await window.filesystem.readFile(`consumption/homes/${homeId}/gas/prices.json`);
+      const prices = data.split('\n').filter(isNotEmpty).map(parse);
+
+      dispatch(updateGas(homeId, measurements, payments, prices))
     }
   }
 }

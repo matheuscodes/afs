@@ -40,9 +40,19 @@ export interface PowerMeter {
   measurements?: MeterMeasurement[],
 }
 
+export interface GasMeter {
+  payments?: MeterPayment[],
+  prices: MeterPrice[],
+  measurements?: MeterMeasurement[],
+  combustion: number,
+  condition: number,
+  id: string,
+}
+
 export interface Home {
   id: string,
   name: string,
   heaters?: Heater[]
   electricity?: Record<string, PowerMeter>
+  gas?: Record<string, GasMeter>
 }
