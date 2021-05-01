@@ -13,11 +13,12 @@ export default (state: Record<string, Home> = {}, action: any) => {
         });
         return {...state, ...homes};
       case UPDATE_ELECTRICITY:
-        const sortByDate = (a,b) => new Date(a.date) - new Date(b.date)
+        const sortByDateAsc = (a,b) => new Date(a.date) - new Date(b.date)
+        const sortByDateDesc = (a,b) => new Date(b.date) - new Date(a.date)
         const { homeId, payments, measurements, prices } = action.payload
         const home = state[homeId]
         home.electricity = {}
-        prices.sort(sortByDate).forEach( price => {
+        prices.sort(sortByDateDesc).forEach( price => {
           if(!home.electricity[price.meter]) {
             home.electricity[price.meter] = {
               prices: [],
@@ -25,8 +26,8 @@ export default (state: Record<string, Home> = {}, action: any) => {
           }
           home.electricity[price.meter].prices.push(price);
           const thisMeter = i =>  i.meter === price.meter
-          home.electricity[price.meter].payments = payments.filter(thisMeter).sort(sortByDate)
-          home.electricity[price.meter].measurements = measurements.filter(thisMeter).sort(sortByDate)
+          home.electricity[price.meter].payments = payments.filter(thisMeter).sort(sortByDateAsc)
+          home.electricity[price.meter].measurements = measurements.filter(thisMeter).sort(sortByDateAsc)
         })
         return {...state}
       default:

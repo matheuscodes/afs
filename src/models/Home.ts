@@ -17,6 +17,7 @@ export interface MeterMeasurement {
   meter: string,
   date: Date,
   measurement: number,
+  billable?: boolean,
 }
 
 export interface MeterPrice {
