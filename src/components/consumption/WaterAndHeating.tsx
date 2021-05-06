@@ -26,12 +26,19 @@ class WaterAndHeating extends React.Component<any, any> {
         {homes.map((home: Home) => (
           <Tab
             key={home.id}
-            onSelect={() => this.setState({...this.state, selectedHome: home})}
+            onSelect={
+              () => {
+                this.props.fetchWater(home.id)
+                this.props.fetchHeating(home.id)
+                this.setState({...this.state, selectedHome: home})
+              }
+            }
             isSelected={this.state.selectedHome && home.id === this.state.selectedHome.id} >
             {home.name}
           </Tab>
         ))}
       </Tablist>
+      {JSON.stringify(this.state.selectedHome)}
     </div>
   }
 }
@@ -42,6 +49,8 @@ const mapStateToProps = (state: any) => ({
 
 const mapDispatchToProps = (dispatch: any) => ({
   fetchHomes: () => dispatch(HomeService.fetchHomes()),
+  fetchWater: (homeId) => dispatch(HomeService.fetchWater(homeId)),
+  fetchHeating: (homeId) => dispatch(HomeService.fetchHeating(homeId)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(WaterAndHeating);

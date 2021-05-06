@@ -1,4 +1,4 @@
-import { updateHomes, updateElectricity, updateGas } from '../actions/consumption/home';
+import { updateHomes, updateElectricity, updateGas, updateWater, updateHeating } from '../actions/consumption/home';
 
 function isNotEmpty(str: string) {
   return str &&  str.length > 0;
@@ -52,6 +52,42 @@ class HomeService {
       const prices = data.split('\n').filter(isNotEmpty).map(parse);
 
       dispatch(updateGas(homeId, measurements, payments, prices))
+    }
+  }
+
+  fetchWater(homeId: string) {
+    return async (dispatch: any, getState: any) => {
+      let data;
+
+      // @ts-ignore
+      data = await window.filesystem.readFile(`consumption/homes/${homeId}/water/measurements.json`);
+      const measurements = data.split('\n').filter(isNotEmpty).map(parse);
+      // @ts-ignore
+      data = await window.filesystem.readFile(`consumption/homes/${homeId}/water/payments.json`);
+      const payments = data.split('\n').filter(isNotEmpty).map(parse);
+      // @ts-ignore
+      data = await window.filesystem.readFile(`consumption/homes/${homeId}/water/prices.json`);
+      const prices = data.split('\n').filter(isNotEmpty).map(parse);
+
+      dispatch(updateWater(homeId, measurements, payments, prices))
+    }
+  }
+
+  fetchHeating(homeId: string) {
+    return async (dispatch: any, getState: any) => {
+      let data;
+
+      // @ts-ignore
+      data = await window.filesystem.readFile(`consumption/homes/${homeId}/heating/measurements.json`);
+      const measurements = data.split('\n').filter(isNotEmpty).map(parse);
+      // @ts-ignore
+      data = await window.filesystem.readFile(`consumption/homes/${homeId}/heating/payments.json`);
+      const payments = data.split('\n').filter(isNotEmpty).map(parse);
+      // @ts-ignore
+      data = await window.filesystem.readFile(`consumption/homes/${homeId}/heating/prices.json`);
+      const prices = data.split('\n').filter(isNotEmpty).map(parse);
+
+      dispatch(updateHeating(homeId, measurements, payments, prices))
     }
   }
 }

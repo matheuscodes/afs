@@ -1,12 +1,5 @@
 import { Charge } from './Activity'
 
-export interface Heater {
-  id: string,
-  homeId: string,
-  location: string,
-  externalCode: string,
-}
-
 export interface HeaterMeasurement {
   heaterId: string,
   date: Date,
@@ -49,10 +42,30 @@ export interface GasMeter {
   id: string,
 }
 
+export interface WaterMeter {
+  payments?: MeterPayment[],
+  prices: MeterPrice[],
+  measurements?: MeterMeasurement[],
+  id: string,
+}
+
+export interface Heater {
+  id: string,
+  homeId: string,
+  location: string,
+  factor: number,
+}
+
+
 export interface Home {
   id: string,
   name: string,
-  heaters?: Heater[]
-  electricity?: Record<string, PowerMeter>
-  gas?: Record<string, GasMeter>
+  area: number,
+  heaters?: Record<string, Heater>
+  electricity?: Record<string, PowerMeter>,
+  gas?: Record<string, GasMeter>,
+  water: {
+    warm: WaterMeter,
+    cold: WaterMeter,
+  }
 }
