@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from "react-redux";
 import HomeService from '../../services/HomeService';
-import { Home } from '../../models/Home'
+import { Home, WaterMeter } from '../../models/Home';
+import { groupedPayments, dateDifference, getCurrentPrice } from '../../models/Bills';
 import {
   Tab,
   Tablist,
@@ -16,6 +17,93 @@ class WaterAndHeating extends React.Component<any, any> {
 
   async componentDidMount() {
     await this.props.fetchHomes()
+  }
+
+  getWaterReadings(waterMeter: WaterMeter, area: number): any[] {
+    if(!waterMeter.measurements) return [];
+
+    let lastDate: Date;
+    let lastMeasurement: number;
+    return waterMeter.measurements.map(measurement => {
+      const item = {
+        date: measurement.date,
+        measurement: measurement.measurement,
+        price: getCurrentPrice(measurement, waterMeter.prices),
+        consumption: typeof lastMeasurement !== 'undefined' ? measurement.measurement - lastMeasurement : 0,
+        days: lastDate ? dateDifference(measurement.date, lastDate) : 0,
+        billable: measurement.billable
+      }
+      const cost = {
+        amount: item.consumption * item.price.unit.amount + area * item.price.base.amount,
+        currency: item.price.unit.currency,
+      }
+
+      lastMeasurement = measurement.measurement;
+      lastDate = measurement.date;
+      return {...item, cost};
+    })
+  }
+
+  getWaterBills({water, area} : {water: {cold: WaterMeter, warm: WaterMeter}, area: number}): any[] {
+    return {
+      cold: this.getWaterBill(water.cold, area),
+      warm: this.getWaterBill(water.warm, area),
+    }
+  }
+
+  getWaterBill(waterMeter: WaterMeter, area: number): any[] {
+    if(!waterMeter || !waterMeter.payments) return {};
+
+    const groups = groupedPayments(waterMeter.payments);
+    const waterReadings = this.getWaterReadings(waterMeter);
+    const all = [] as any[];
+    let lastDate: string;
+    let lastMeasurement: number;
+    waterReadings.forEach((reading,index) => {
+      const price = getCurrentPrice(reading, waterMeter.prices);
+      if(reading.billable || index === (waterMeter.measurements.length - 1)) {
+        //TODO port this fix to other bills
+        if(typeof lastMeasurement === 'undefined' || !lastDate) {
+          lastMeasurement = reading.measurement;
+          lastDate = reading.date;
+          return undefined;
+        }
+        const payments = groups.find(i => i.from < new Date(reading.date) && i.to > new Date(reading.date))
+
+        const item = {
+          from: lastDate,
+          to: reading.date,
+          consumption: typeof lastMeasurement !== 'undefined' ? (reading.measurement - lastMeasurement) : 0,
+          days: lastDate ? dateDifference(reading.date, lastDate) : 0,
+          payments: payments,
+        }
+        const unitCost = {
+          amount: item.consumption * price.unit.amount,
+          currency: price.unit.currency,
+        }
+        const baseCost = {
+          amount: area * price.base.amount,
+          currency: price.base.currency,
+        }
+        const totalCost = {
+          amount: item.consumption * price.unit.amount + area * price.base.amount,
+          currency: price.unit.currency,
+        }
+
+        lastMeasurement = reading.measurement;
+        lastDate = reading.date;
+        all.push({...item, cost: {
+          unit: unitCost,
+          base: baseCost,
+          total: totalCost,
+        }});
+      }
+    })
+
+    return {
+      readings: waterReadings,
+      bills: all,
+    };
   }
 
   render() {
@@ -38,7 +126,7 @@ class WaterAndHeating extends React.Component<any, any> {
           </Tab>
         ))}
       </Tablist>
-      {JSON.stringify(this.state.selectedHome)}
+      {this.state.selectedHome ? JSON.stringify(this.getWaterBills(this.state.selectedHome)) : ''}
     </div>
   }
 }

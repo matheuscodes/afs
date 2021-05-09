@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from "react-redux";
 import HomeService from '../../services/HomeService';
 import { Home, GasMeter, MeterPayment, MeterPrice, MeterMeasurement } from '../../models/Home';
+import { groupedPayments, dateDifference, getCurrentPrice } from '../../models/Bills';
 import {
   Tab,
   Tablist,
@@ -9,44 +10,6 @@ import {
   Table,
   Heading,
 } from 'evergreen-ui'
-
-function getCurrentPrice(measurement: MeterMeasurement, prices: MeterPrice[]) {
-  return prices.find((i: MeterPrice) => i.date < measurement.date);
-}
-
-function dateDifference(a: string | Date, b: string | Date) {
-  return (new Date(a).getTime() - new Date(b).getTime()) / (1000 * 60 * 60 * 24)
-}
-
-function paymentsByBill(payments: MeterPayment[]): Record<string, any> {
-  return payments.reduce((acc: Record<string, any[]>, payment: MeterPayment) => {
-    const key = `${payment.bill}`;
-    // Group initialization
-    if (!acc[key]) {
-      acc[key] = [];
-    }
-
-    // Grouping
-    acc[key].push(payment);
-
-    return acc;
-  }, {});
-}
-
-function groupedPayments(payments: MeterPayment[]): any[] {
-  const groupBy: Record<string, any> = paymentsByBill(payments);
-  return Object.keys(groupBy).map((i: string) => groupBy[i]).map((group: any) => {
-    return {
-      from: new Date(Math.min(...group.map((i: MeterPayment) => new Date(i.date).getTime()))),
-      to: new Date(Math.max(...group.map((i: MeterPayment) => new Date(i.date).getTime()))),
-      sum: {
-        amount: group.map((i: MeterPayment) => i.value.amount).reduce((a: number,b: number) => a+b, 0),
-        currency: group[0].value.currency
-      },
-      bill: group[0].bill
-    }
-  })
-}
 
 const ColumnFlex = {
   date: 1,
@@ -87,7 +50,7 @@ class Gas extends React.Component<any, any> {
         billable: measurement.billable
       }
       const cost = {
-        amount: item.consumption * gasMeter.combustion * gasMeter.condition * item.price.unit.amount + item.days * item.price.unit.amount,
+        amount: item.consumption * gasMeter.combustion * gasMeter.condition * item.price.unit.amount + item.days * item.price.base.amount,
         currency: item.price.unit.currency,
       }
 
