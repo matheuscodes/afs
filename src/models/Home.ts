@@ -54,6 +54,9 @@ export interface Heater {
   homeId: string,
   location: string,
   factor: number,
+  payments?: MeterPayment[],
+  prices: MeterPrice[],
+  measurements?: MeterMeasurement[],
 }
 
 

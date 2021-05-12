@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from "react-redux";
 import HomeService from '../../services/HomeService';
-import { Home, WaterMeter } from '../../models/Home';
+import { Home, WaterMeter, Heater } from '../../models/Home';
 import WaterTable from './WaterTable'
 import HeatingTable from './HeatingTable'
 import { groupedPayments, dateDifference, getCurrentPrice } from '../../models/Bills';
@@ -46,7 +46,7 @@ class WaterAndHeating extends React.Component<any, any> {
     })
   }
 
-  getBills({water, heaters, area} : {water: {cold: WaterMeter, warm: WaterMeter}, heaters:  Record<string, Heater>, area: number}): any[] {
+  getBills({water, heaters, area} : {water: {cold: WaterMeter, warm: WaterMeter}, heaters:  Record<string, Heater>, area: number}): any {
     return {
       cold: this.getWaterBill(water.cold, area),
       warm: this.getWaterBill(water.warm, area),
@@ -62,7 +62,7 @@ class WaterAndHeating extends React.Component<any, any> {
 
   getWaterBill(waterMeter: WaterMeter, area: number): any {
     if(!waterMeter) return {};
-    const waterReadings = this.getWaterReadings(waterMeter);
+    const waterReadings = this.getWaterReadings(waterMeter, area);
 
     if(!waterMeter.payments) return {readings: waterReadings};
     const groups = groupedPayments(waterMeter.payments);
@@ -151,8 +151,8 @@ const mapStateToProps = (state: any) => ({
 
 const mapDispatchToProps = (dispatch: any) => ({
   fetchHomes: () => dispatch(HomeService.fetchHomes()),
-  fetchWater: (homeId) => dispatch(HomeService.fetchWater(homeId)),
-  fetchHeating: (homeId) => dispatch(HomeService.fetchHeating(homeId)),
+  fetchWater: (homeId: string) => dispatch(HomeService.fetchWater(homeId)),
+  fetchHeating: (homeId: string) => dispatch(HomeService.fetchHeating(homeId)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(WaterAndHeating);

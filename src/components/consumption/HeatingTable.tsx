@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from "react-redux";
 import HomeService from '../../services/HomeService';
-import { Home } from '../../models/Home'
+import { Home, MeterMeasurement } from '../../models/Home'
 import {
   Tab,
   Tablist,
@@ -31,21 +31,23 @@ class HeatingTable extends React.Component<any, any> {
 
   render() {
     const { heating } = this.props.data;
-    const report = {};
+    const keys = Object.keys(heating.heaters);
+    const report: any = {};
     if(heating && heating.heaters) {
-      Object.keys(heating.heaters).forEach(key => {
+      Object.keys(heating.heaters).forEach((key: string) => {
         if(heating.heaters[key].measurements) {
-          heating.heaters[key].measurements.forEach(measurement => {
-            if(!report[measurement.date]) report[measurement.date] = {
-              date: measurement.date,
+          heating.heaters[key].measurements.forEach((measurement: MeterMeasurement) => {
+            if(!report[`${measurement.date}`]) {
+              report[`${measurement.date}`] = {
+                date: measurement.date,
+              }
             }
 
-            report[measurement.date][key] = measurement.measurement;
+            report[`${measurement.date}`][key] = measurement.measurement;
           });
         }
       })
     }
-    const keys = Object.keys(heating.heaters);
     return <Table border>
       <Table.Head accountForScrollbar={false}>
         <Table.TextHeaderCell flex={ColumnFlex.date}>
@@ -59,7 +61,7 @@ class HeatingTable extends React.Component<any, any> {
         )}
       </Table.Head>
       <Table.Body>
-        {Object.keys(report).map((key, index) => this.renderRow(report[key], keys, index))}
+        {Object.keys(report).map((key: any, index: number) => this.renderRow(report[key], keys, index))}
       </Table.Body>
     </Table>
   }

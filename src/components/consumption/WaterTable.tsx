@@ -35,16 +35,16 @@ class WaterTable extends React.Component<any, any> {
 
   render() {
     const {cold, warm} = this.props.data;
-    const report = {};
+    const report: any = {};
     if(cold && cold.readings) {
-      cold.readings.forEach(reading => {
+      cold.readings.forEach((reading: any) => {
         report[reading.date] = {
           cold: reading,
         }
       });
     }
     if(warm && warm.readings) {
-      warm.readings.forEach(reading => {
+      warm.readings.forEach((reading: any) => {
         if(!report[reading.date]) report[reading.date] = {}
         report[reading.date].warm = reading;
       });
@@ -71,7 +71,7 @@ class WaterTable extends React.Component<any, any> {
         </Table.TextHeaderCell>
       </Table.Head>
       <Table.Body>
-        {Object.keys(report).map((key, index) => this.renderRow(report[key], index))}
+        {Object.keys(report).map((key: any, index: number) => this.renderRow(report[key], index))}
       </Table.Body>
     </Table>
   }

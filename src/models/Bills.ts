@@ -1,3 +1,5 @@
+import { MeterPayment, MeterMeasurement, MeterPrice } from './Home'
+
 export function getCurrentPrice(measurement: MeterMeasurement, prices: MeterPrice[]) {
   return prices.find((i: MeterPrice) => i.date < measurement.date);
 }
