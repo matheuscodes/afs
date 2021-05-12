@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from "react-redux";
 import HomeService from '../../services/HomeService';
 import { Home, WaterMeter } from '../../models/Home';
+import WaterTable from './WaterTable'
+import HeatingTable from './HeatingTable'
 import { groupedPayments, dateDifference, getCurrentPrice } from '../../models/Bills';
 import {
   Tab,
@@ -44,18 +46,27 @@ class WaterAndHeating extends React.Component<any, any> {
     })
   }
 
-  getWaterBills({water, area} : {water: {cold: WaterMeter, warm: WaterMeter}, area: number}): any[] {
+  getBills({water, heaters, area} : {water: {cold: WaterMeter, warm: WaterMeter}, heaters:  Record<string, Heater>, area: number}): any[] {
     return {
       cold: this.getWaterBill(water.cold, area),
       warm: this.getWaterBill(water.warm, area),
+      heating: this.getHeatingBill(heaters, area),
     }
   }
 
-  getWaterBill(waterMeter: WaterMeter, area: number): any[] {
-    if(!waterMeter || !waterMeter.payments) return {};
+  getHeatingBill(heaters: Record<string, Heater>, area: number): any {
+    return {
+      heaters
+    }
+  }
 
-    const groups = groupedPayments(waterMeter.payments);
+  getWaterBill(waterMeter: WaterMeter, area: number): any {
+    if(!waterMeter) return {};
     const waterReadings = this.getWaterReadings(waterMeter);
+
+    if(!waterMeter.payments) return {readings: waterReadings};
+    const groups = groupedPayments(waterMeter.payments);
+
     const all = [] as any[];
     let lastDate: string;
     let lastMeasurement: number;
@@ -126,7 +137,10 @@ class WaterAndHeating extends React.Component<any, any> {
           </Tab>
         ))}
       </Tablist>
-      {this.state.selectedHome ? JSON.stringify(this.getWaterBills(this.state.selectedHome)) : ''}
+      <h2>Water</h2>
+      {this.state.selectedHome ?   <WaterTable data={this.getBills(this.state.selectedHome)} /> : ''}
+      <h2>Heating</h2>
+      {this.state.selectedHome ?   <HeatingTable data={this.getBills(this.state.selectedHome)} /> : ''}
     </div>
   }
 }
