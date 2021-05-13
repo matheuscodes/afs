@@ -1,10 +1,12 @@
 import { updateHomes, updateElectricity, updateGas, updateWater, updateHeating } from '../actions/consumption/home';
 
 function isNotEmpty(str: string) {
+  console.log(JSON.stringify(str), str.length, str &&  str.length > 0)
   return str &&  str.length > 0;
 }
 
 function parse(str: string) {
+  console.log(str, isNotEmpty(str))
   return JSON.parse(str);
 }
 
