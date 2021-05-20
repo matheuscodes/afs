@@ -1,7 +1,7 @@
 import { MeterPayment, MeterMeasurement, MeterPrice } from './Home'
 
 export function getCurrentPrice(measurement: MeterMeasurement, prices: MeterPrice[]) {
-  return prices.find((i: MeterPrice) => i.date < measurement.date);
+  return prices.find((i: MeterPrice) => i.date <= measurement.date);
 }
 
 export function dateDifference(a: string | Date, b: string | Date) {
@@ -25,6 +25,7 @@ function paymentsByBill(payments: MeterPayment[]): Record<string, any> {
 
 export function groupedPayments(payments: MeterPayment[]): any[] {
   const groupBy: Record<string, any> = paymentsByBill(payments);
+  if(!payments) return [];
   return Object.keys(groupBy).map((i: string) => groupBy[i]).map((group: any) => {
     return {
       from: new Date(Math.min(...group.map((i: MeterPayment) => new Date(i.date).getTime()))),

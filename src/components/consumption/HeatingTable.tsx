@@ -35,8 +35,8 @@ class HeatingTable extends React.Component<any, any> {
     const report: any = {};
     if(heating && heating.heaters) {
       Object.keys(heating.heaters).forEach((key: string) => {
-        if(heating.heaters[key].measurements) {
-          heating.heaters[key].measurements.forEach((measurement: MeterMeasurement) => {
+        if(heating.heaters[key].readings) {
+          heating.heaters[key].readings.forEach((measurement: MeterMeasurement) => {
             if(!report[`${measurement.date}`]) {
               report[`${measurement.date}`] = {
                 date: measurement.date,
