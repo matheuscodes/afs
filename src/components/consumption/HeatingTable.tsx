@@ -23,8 +23,8 @@ class HeatingTable extends React.Component<any, any> {
   renderRow(day: any, keyOrder: any[], index: number) {
     return <Table.Row key={`heating-table-${index}`} height={'auto'}>
       <Table.TextCell flex={ColumnFlex.date}>{day.date}</Table.TextCell>
-      {keyOrder.map(key =>
-        <Table.TextCell flex={ColumnFlex.measurement}>{day[key]}</Table.TextCell>
+      {keyOrder.map((key: any, index: number) =>
+        <Table.TextCell key={`heating-table-cell-${index}`} flex={ColumnFlex.measurement}>{day[key]}</Table.TextCell>
       )}
     </Table.Row>
   }
@@ -53,8 +53,8 @@ class HeatingTable extends React.Component<any, any> {
         <Table.TextHeaderCell flex={ColumnFlex.date}>
           Date
         </Table.TextHeaderCell>
-        { keys.map(key =>
-          <Table.TextHeaderCell flex={ColumnFlex.measurement}>
+        { keys.map((key, index) =>
+          <Table.TextHeaderCell key={`heating-measurement-${key}-${index}`} flex={ColumnFlex.measurement}>
             {heating.heaters[key].location} <br/>
             {heating.heaters[key].id}
           </Table.TextHeaderCell>

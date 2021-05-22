@@ -4,6 +4,7 @@ import HomeService from '../../services/HomeService';
 import { Home, WaterMeter, Heater } from '../../models/Home';
 import WaterTable from './WaterTable'
 import HeatingTable from './HeatingTable'
+import WaterAndHeatingBill from './WaterAndHeatingBill'
 import { groupedPayments, dateDifference, getCurrentPrice } from '../../models/Bills';
 import {
   Tab,
@@ -116,6 +117,7 @@ class WaterAndHeating extends React.Component<any, any> {
     if(!meter.payments) return {readings};
     const firstYear = readings ? new Date(readings.map(i => new Date(i.date)).sort((a,b) => a - b)[0]).getFullYear() : 0;
     const lastYear = readings ? new Date(readings.map(i => new Date(i.date)).sort((a,b) => b - a)[0]).getFullYear() : 0;
+
     const groups = []
     for (let i = firstYear; i <= lastYear; i++) {
       groups.push(i)
@@ -149,18 +151,22 @@ class WaterAndHeating extends React.Component<any, any> {
           from: previousReading.date,
           to: currentReading.date,
           consumption: (currentReading.measurement - previousReading.measurement),
+          base: (meter.area || 0),
           days: dateDifference(currentReading.date, previousReading.date),
         }
+
         const unitCost = {
           amount: item.consumption * price.unit.amount,
           currency: price.unit.currency,
         }
+
         const baseCost = {
-          amount: area * price.base.amount,
+          amount: item.base * price.base.amount,
           currency: price.base.currency,
         }
+
         const totalCost = {
-          amount: item.consumption * price.unit.amount + area * price.base.amount,
+          amount: item.consumption * price.unit.amount + item.base * price.base.amount,
           currency: price.unit.currency,
         }
 
@@ -179,18 +185,22 @@ class WaterAndHeating extends React.Component<any, any> {
           from: null,
           to: currentReading.date,
           consumption: currentReading.measurement,
+          base: (meter.area || 0),
           days: 0,
         }
+
         const unitCost = {
           amount: item.consumption * price.unit.amount,
           currency: price.unit.currency,
         }
+
         const baseCost = {
-          amount: area * price.base.amount,
+          amount: item.base * price.base.amount,
           currency: price.base.currency,
         }
+
         const totalCost = {
-          amount: item.consumption * price.unit.amount + area * price.base.amount,
+          amount: item.consumption * price.unit.amount + item.base * price.base.amount,
           currency: price.unit.currency,
         }
 
@@ -211,7 +221,7 @@ class WaterAndHeating extends React.Component<any, any> {
     };
   }
 
-  getOverviews(allBills: any) {
+  getOverviews(allBills: any): any {
     const base = {
       cost: {
         unit: {
@@ -309,6 +319,12 @@ class WaterAndHeating extends React.Component<any, any> {
       </Tablist>
       {allBills ?
         <div>
+          { Object.keys(overviews).map(
+            (overview: any, index: number) => <WaterAndHeatingBill 
+              key={`bill-overview-${index}`}
+              bill={overviews[overview]}
+              year={overview} />
+          )}
           <h2>Water</h2>
           <WaterTable data={allBills} />
           <h2>Heating</h2>

@@ -57,6 +57,7 @@ export interface Heater {
   payments?: MeterPayment[],
   prices: MeterPrice[],
   measurements?: MeterMeasurement[],
+  area?: number,
 }
 
 
