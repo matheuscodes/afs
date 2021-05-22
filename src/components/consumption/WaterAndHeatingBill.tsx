@@ -77,7 +77,11 @@ class WaterAndHeatingBill extends React.Component<any, any> {
               <Table.TextCell flex={ColumnFlex.name}>
                 <strong>Heaters</strong><br/>
                 {bill.heaters.map( (heater: any, index: number) =>
-                  <div style={{float:'right'}} key={`heater-list-${index}`}>{heater.location}</div>
+                  <div
+                    style={{textAlign:'right', width:'100%'}} 
+                    key={`heater-list-${index}`}>
+                    {heater.location}
+                  </div>
                 )}
               </Table.TextCell>
               <Table.TextCell flex={ColumnFlex.data}>

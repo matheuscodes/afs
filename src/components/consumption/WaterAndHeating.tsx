@@ -90,7 +90,7 @@ class WaterAndHeating extends React.Component<any, any> {
       heaters
     };
 
-    const newHeaters = {};
+    const newHeaters: any = {};
     heaterKeys.forEach(key => {
       const heaterReadings = this.getHeaterReadings(heaters[key], area);
       const bills = this.getBills(heaters[key], area, heaterReadings);
@@ -115,8 +115,8 @@ class WaterAndHeating extends React.Component<any, any> {
 
   getBills(meter: any, area: number, readings: any): any {
     if(!meter.payments) return {readings};
-    const firstYear = readings ? new Date(readings.map(i => new Date(i.date)).sort((a,b) => a - b)[0]).getFullYear() : 0;
-    const lastYear = readings ? new Date(readings.map(i => new Date(i.date)).sort((a,b) => b - a)[0]).getFullYear() : 0;
+    const firstYear = readings ? new Date(readings.map((i: any) => new Date(i.date)).sort((a: any, b: any) => a - b)[0]).getFullYear() : 0;
+    const lastYear = readings ? new Date(readings.map((i: any) => new Date(i.date)).sort((a: any, b: any) => b - a)[0]).getFullYear() : 0;
 
     const groups = []
     for (let i = firstYear; i <= lastYear; i++) {
@@ -126,14 +126,14 @@ class WaterAndHeating extends React.Component<any, any> {
     const all = [] as any[];
     let lastDate: string;
     let lastMeasurement: number;
-    const bills = {};
+    const bills: Record<string, any> = {};
     groups.forEach((year: any) => {
-      let previousReading;
-      let currentReading;
+      let previousReading: any;
+      let currentReading: any;
       readings
-        .filter((reading, index) => reading.billable || index === (readings.length - 1))
-        .filter(reading => new Date(reading.date).getFullYear() <= year)
-        .forEach(reading => {
+        .filter((reading: any, index: number) => reading.billable || index === (readings.length - 1))
+        .filter(((reading: any) => new Date(reading.date).getFullYear() <= year))
+        .forEach((reading: any) => {
           if(new Date(reading.date).getFullYear() === year) {
             if(currentReading) {
               previousReading = currentReading;
@@ -182,7 +182,6 @@ class WaterAndHeating extends React.Component<any, any> {
         const price = getCurrentPrice(currentReading, meter.prices);
 
         const item = {
-          from: null,
           to: currentReading.date,
           consumption: currentReading.measurement,
           base: (meter.area || 0),
@@ -235,9 +234,9 @@ class WaterAndHeating extends React.Component<any, any> {
         }
       }
     }
-    const yearly = {}
+    const yearly: Record<string, any> = {}
     if(allBills.cold && allBills.cold.bills) {
-      Object.keys(allBills.cold.bills).forEach(year => {
+      Object.keys(allBills.cold.bills).forEach((year: string) => {
         if(!yearly[year]) {
           yearly[year] = JSON.parse(JSON.stringify(base));
         }
@@ -252,7 +251,7 @@ class WaterAndHeating extends React.Component<any, any> {
       });
     }
     if(allBills.warm && allBills.warm.bills) {
-      Object.keys(allBills.warm.bills).forEach(year => {
+      Object.keys(allBills.warm.bills).forEach((year: string) => {
         if(!yearly[year]) {
           yearly[year] = JSON.parse(JSON.stringify(base));
         }
@@ -269,7 +268,7 @@ class WaterAndHeating extends React.Component<any, any> {
     if(allBills.heating && allBills.heating.heaters) {
       Object.keys(allBills.heating.heaters).forEach(heater => {
         if(allBills.heating.heaters[heater].bills) {
-          Object.keys(allBills.heating.heaters[heater].bills).forEach(year => {
+          Object.keys(allBills.heating.heaters[heater].bills).forEach((year: string) => {
             if(!yearly[year]) {
               yearly[year] = JSON.parse(JSON.stringify(base));
             }
@@ -320,7 +319,7 @@ class WaterAndHeating extends React.Component<any, any> {
       {allBills ?
         <div>
           { Object.keys(overviews).map(
-            (overview: any, index: number) => <WaterAndHeatingBill 
+            (overview: any, index: number) => <WaterAndHeatingBill
               key={`bill-overview-${index}`}
               bill={overviews[overview]}
               year={overview} />
