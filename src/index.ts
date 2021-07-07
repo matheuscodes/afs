@@ -30,6 +30,12 @@ const createWindow = (): void => {
           }
       },
       {
+          label: 'Upkeep',
+          click() {
+              mainWindow.loadURL(`${MAIN_WINDOW_WEBPACK_ENTRY}#/upkeep`);
+          }
+      },
+      {
           label: 'Consumption Control',
           submenu: [
               {
@@ -136,10 +142,20 @@ ipcMain.on("appendToStorageChannel", (event, request) => {
 
 ipcMain.on("readFile", (event, request) => {
   console.log("readFile", request);
-  if (!fs.existsSync(`${ROOT_PATH}/${request.path}`)){
+  if (request.path && !fs.existsSync(`${ROOT_PATH}/${request.path}`)){
     fs.mkdirSync(`${ROOT_PATH}/${request.path}`);
   }
   mainWindow.webContents.send(`readFile-${request.eventId}`, fs.readFileSync(`${ROOT_PATH}/${request.filename}`));
+});
+
+ipcMain.on("listFiles", (event, request) => {
+  console.log("listFiles", request);
+  if (!fs.existsSync(`${ROOT_PATH}/${request.path}`)){
+    fs.mkdirSync(`${ROOT_PATH}/${request.path}`);
+  }
+  const data = fs.readdirSync(`${ROOT_PATH}/${request.path}`);
+
+  mainWindow.webContents.send(`listFiles-${request.eventId}`, data);
 });
 
 ipcMain.on("readDirectory", (event, request) => {

@@ -5,6 +5,7 @@ import CarFuel from "./components/consumption/CarFuel"
 import WaterAndHeating from "./components/consumption/WaterAndHeating"
 import Gas from "./components/consumption/Gas"
 import Electricity from "./components/consumption/Electricity"
+import Upkeep from "./components/upkeep"
 
 class Application extends React.Component<any, any> {
   constructor(props: any) {
@@ -22,6 +23,9 @@ class Application extends React.Component<any, any> {
         </Route>
         <Route exact path="/bookkeeping">
           <Bookkeeping />
+        </Route>
+        <Route exact path="/upkeep">
+          <Upkeep />
         </Route>
         <Route exact path="/home/heating">
           <WaterAndHeating />

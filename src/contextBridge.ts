@@ -33,6 +33,16 @@ contextBridge.exposeInMainWorld(
       });
     },
 
+    listFiles: (path) => {
+      return new Promise((resolve) => {
+        const eventId = uuidv4();
+        ipcRenderer.send("listFiles", {path, eventId});
+        ipcRenderer.on(`listFiles-${eventId}`, (event: any, data: string[]) => {
+          resolve(data)
+        });
+      });
+    },
+
     readDirectory: (path) => {
       return new Promise((resolve) => {
         const eventId = uuidv4();
