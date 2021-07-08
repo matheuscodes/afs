@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import LongTermService from '../../services/LongTermService';
 import { Charge } from "../../models/Activity";
 import DetailsTable from "./DetailsTable";
+import UpkeepHistoryGraph from "./UpkeepHistoryGraph";
 import {
   Tab,
   Tablist,
@@ -26,6 +27,7 @@ class Upkeep extends React.Component<any, any> {
         this.props.longTerm.upkeep ?
           <DetailsTable data={this.props.longTerm.upkeep} /> : ''
       }
+      <UpkeepHistoryGraph data={this.props.longTerm.upkeep} />
     </div>
   }
 }

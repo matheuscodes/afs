@@ -100,7 +100,6 @@ class DetailsTable extends React.Component<any, any> {
     return Object.keys(housing).filter((i: index) => i !== 'area').map((i: any, index: number) => {
       total += housing[i].amount;
       currency = housing[i].currency;
-      console.log(i, housing[i], total)
       return <Table.TextCell key={`housing-overview-${period}-${index}`} flex={ColumnFlex.housing[i]}>
         {housing[i].amount} {housing[i].currency}
       </Table.TextCell>
@@ -128,7 +127,9 @@ class DetailsTable extends React.Component<any, any> {
         <Table.TextHeaderCell flex={ColumnFlex.housing.area + ColumnFlex.housing.cost + ColumnFlex.housing.electricity + ColumnFlex.housing.gas + ColumnFlex.housing.internet + ColumnFlex.housing.services + ColumnFlex.housing.total}>
           Housing
         </Table.TextHeaderCell>
-        <Table.TextHeaderCell flex={ColumnFlex.salary}></Table.TextHeaderCell>
+        <Table.TextHeaderCell flex={ColumnFlex.salary}>
+          Income
+        </Table.TextHeaderCell>
       </Table.Head>
       <Table.Head accountForScrollbar={false}>
         <Table.TextHeaderCell flex={ColumnFlex.date}>

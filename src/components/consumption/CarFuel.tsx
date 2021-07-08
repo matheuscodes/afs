@@ -52,7 +52,6 @@ class CarFuel extends React.Component<any, any> {
         const key = fuel as keyof typeof Fuel;
         tankLevel[Fuel[key]] = 0;
     }
-    console.log("tank",tankLevel);
     return <div>
       <p><strong>{car.name}</strong> - {car.mileage}km</p>
       <Table border>
@@ -102,7 +101,6 @@ class CarFuel extends React.Component<any, any> {
                 tankLevel[entry.fuel] = car.tanks[entry.fuel]
               }
             }
-            console.log("taneek",tankLevel, tankLevel[entry.fuel], entry.fuel);
             return this.renderRow(entry,index,traveled,tankLevel[entry.fuel], consumed)
           })}
         </Table.Body>
