@@ -117,7 +117,7 @@ class DetailsTable extends React.Component<any, any> {
     const halfs = this.props.data;
     return <div>
       <div className='header'>
-        <h1 className='title'>Multi Axis Line Chart</h1>
+        <h2 className='title'>History</h2>
       </div>
       <Line data={this.calculateReport()} options={options} />
     </div>

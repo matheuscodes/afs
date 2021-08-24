@@ -23,11 +23,11 @@ class Upkeep extends React.Component<any, any> {
     const wtf = this.props.longTerm.upkeep;
     return <div>
       <h1>Upkeep</h1>
+      <UpkeepHistoryGraph data={this.props.longTerm.upkeep} />
       {
         this.props.longTerm.upkeep ?
           <DetailsTable data={this.props.longTerm.upkeep} /> : ''
       }
-      <UpkeepHistoryGraph data={this.props.longTerm.upkeep} />
     </div>
   }
 }
