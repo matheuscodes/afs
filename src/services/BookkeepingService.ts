@@ -108,11 +108,21 @@ class Bookkeeping {
       }
     });
 
+    const tillNowFilter = (a: SmallActivity) => {
+      const activityMonth = a.date.getMonth();
+      const activityYear = a.date.getFullYear();
+      if(activityYear == year) {
+        return activityMonth <= month
+      } else {
+        return activityYear < year
+      }
+    }
+
     const lastMonthFilter = (a: SmallActivity) => {
       const activityMonth = a.date.getMonth();
       const activityYear = a.date.getFullYear();
-      if(month > 0 || activityYear < year) {
-        return activityMonth < month || activityYear < year
+      if(activityYear == year) {
+        return activityMonth < month
       } else {
         return activityYear < year
       }
@@ -169,6 +179,24 @@ class Bookkeeping {
 
     const total = checkingActivities.concat(cashActivities);
 
+    const thisMonthPerAccount: any = {
+      [`${AccountType.CREDIT}`]: [],
+      [`${AccountType.CHECKING}`]: [],
+    }
+
+    Object.keys(accountActivities)
+          .map(key => accounts[key])
+          .filter((account: Account) => [AccountType.CREDIT, AccountType.CHECKING].includes(account.type))
+          .forEach((account: Account) => {
+            const balance = accountActivities[account.id]
+              .filter(tillNowFilter)
+              .reduce(reducer, {amount:0, currency: Currency.EUR});
+            thisMonthPerAccount[account.type].push({
+              balance,
+              ...account
+            });
+          });
+
     return {
       lastMonth,
       current: {
@@ -188,7 +216,8 @@ class Bookkeeping {
       total: {
         expenses: total.filter(filterByExpense).reduce(reducer, {amount:0, currency: Currency.EUR}),
         income: total.concat(cashActivities).filter(filterByIncome).reduce(reducer, {amount:0, currency: Currency.EUR})
-      }
+      },
+      accounts: thisMonthPerAccount,
     }
 
   }
