@@ -6,8 +6,7 @@ import {
   Pane,
   Table,
   Heading,
-} from 'evergreen-ui'
-import React from 'react';
+} from 'evergreen-ui';
 import { Line } from 'react-chartjs-2';
 
 const label = {
@@ -17,7 +16,7 @@ const label = {
   groceries: 3,
 }
 
-const data = {
+const data: any = {
   labels: [],
   datasets: [
     {
@@ -51,7 +50,7 @@ const data = {
   ],
 };
 
-const options = {};
+const options: any = {};
 
 const monthCalories = 30 * 2000;
 
@@ -65,7 +64,7 @@ class DetailsTable extends React.Component<any, any> {
     const filled = JSON.parse(JSON.stringify(data));
     if(!halfs || halfs.length <= 0) return filled;
 
-    let firstGroceries, firstPet, firstHousing;
+    let firstGroceries: any, firstPet: any, firstHousing: any;
     let firstSalary = halfs[0].salary;
     halfs.forEach((half: any) => {
       const period = `${half.year}${half.period}`;
@@ -97,7 +96,7 @@ class DetailsTable extends React.Component<any, any> {
 
       const housing = half.salary.amount / (Object
         .keys(half.housing)
-        .filter((i: index) => i !== 'area')
+        .filter((i: any) => i !== 'area')
         .map((i: any) => half.housing[i].amount)
         .reduce((a: any, b:any) => a + b, 0) / half.housing.area);
       if(!firstHousing && Number.isFinite(housing)) {
@@ -119,7 +118,7 @@ class DetailsTable extends React.Component<any, any> {
       <div className='header'>
         <h2 className='title'>History</h2>
       </div>
-      <Line data={this.calculateReport()} options={options} />
+      <Line data={this.calculateReport()} options={options} type="line"/>
     </div>
   }
 }

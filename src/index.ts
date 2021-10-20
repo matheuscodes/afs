@@ -24,16 +24,27 @@ const createWindow = (): void => {
 
   var menu = Menu.buildFromTemplate([
       {
-          label: 'Bookkeeping',
-          click() {
-              mainWindow.loadURL(`${MAIN_WINDOW_WEBPACK_ENTRY}#/bookkeeping`);
-          }
-      },
-      {
-          label: 'Upkeep',
-          click() {
-              mainWindow.loadURL(`${MAIN_WINDOW_WEBPACK_ENTRY}#/upkeep`);
-          }
+        label: 'Finances',
+        submenu: [
+          {
+              label: 'Bookkeeping',
+              click() {
+                  mainWindow.loadURL(`${MAIN_WINDOW_WEBPACK_ENTRY}#/finances/bookkeeping`);
+              }
+          },
+          {
+              label: 'Savings',
+              click() {
+                  mainWindow.loadURL(`${MAIN_WINDOW_WEBPACK_ENTRY}#/finances/savings`);
+              }
+          },
+          {
+              label: 'Upkeep',
+              click() {
+                  mainWindow.loadURL(`${MAIN_WINDOW_WEBPACK_ENTRY}#/finances/upkeep`);
+              }
+          },
+        ]
       },
       {
           label: 'Consumption Control',

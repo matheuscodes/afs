@@ -8,7 +8,7 @@ import {
   Heading,
 } from 'evergreen-ui'
 
-const ColumnFlex = {
+const ColumnFlex: any = {
   date: 1,
   ingredients: 1,
   overview: 1,
@@ -97,7 +97,7 @@ class DetailsTable extends React.Component<any, any> {
   housingOverview(housing: any = {}, period: string) {
     let total = 0;
     let currency;
-    return Object.keys(housing).filter((i: index) => i !== 'area').map((i: any, index: number) => {
+    return Object.keys(housing).filter((i: any) => i !== 'area').map((i: any, index: number) => {
       total += housing[i].amount;
       currency = housing[i].currency;
       return <Table.TextCell key={`housing-overview-${period}-${index}`} flex={ColumnFlex.housing[i]}>
