@@ -44,8 +44,8 @@ class Bookkeeping extends React.Component<any, any> {
     const months = this.props.bookkeeping
       .filter((i: any) => (i.date.getFullYear()) === this.state.year)
       .map((i: any) => i.date.getMonth())
-      .sort();
-    return Array.from( new Set<number>(months) )
+      .map((i: any) => parseInt(i));
+    return Array.from( new Set<number>(months) ).sort((a: number, b: number) => a - b);
   }
 
   availableYears() {
