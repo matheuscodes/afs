@@ -8,19 +8,21 @@ import {
   Heading,
 } from 'evergreen-ui';
 import { Line } from 'react-chartjs-2';
+import LongTermService from '../../services/LongTermService';
 
 const label = {
   income: 0,
   housing: 1,
   pet: 2,
   groceries: 3,
+  car: 4,
 }
 
 const data: any = {
   labels: [],
   datasets: [
     {
-      label: 'Income',
+      label: 'Disposable income',
       data: [],
       fill: false,
       backgroundColor: 'rgb(0, 128, 0)',
@@ -47,6 +49,13 @@ const data: any = {
       backgroundColor: 'rgb(255, 128, 128)',
       borderColor: 'rgba(255, 128, 128, 0.2)',
     },
+    {
+      label: 'Car',
+      data: [],
+      fill: false,
+      backgroundColor: 'rgb(128, 0, 128)',
+      borderColor: 'rgba(128, 0, 128, 0.2)',
+    },
   ],
 };
 
@@ -59,66 +68,37 @@ class DetailsTable extends React.Component<any, any> {
     super(props);
   }
 
-  calculateReport() {
-    const halfs = this.props.data;
+  convertReport() {
+    const converted = LongTermService.calculateUpkeepReport(this.props.data);
     const filled = JSON.parse(JSON.stringify(data));
-    if(!halfs || halfs.length <= 0) return filled;
-
-    let firstGroceries: any, firstPet: any, firstHousing: any;
-    let firstSalary = halfs[0].salary;
-    halfs.forEach((half: any) => {
-      const period = `${half.year}${half.period}`;
-      filled.labels.push(period);
-
-      let calories = 0, prices = 0;
-      half.groceries.forEach((i: any) => {
-        calories += i.calories;
-        prices += i.price ? i.price.amount : 0;
+    if(typeof converted.report !== 'undefined') {
+      Object.keys(converted.report).forEach(year => {
+        Object.keys(converted.report[year]).forEach(period => {
+          const axis = `${year}${period}`;
+          const item = converted.report[year][period];
+          filled.labels.push(axis);
+          const freeIncome = item.income
+            - (item.housing || 0)
+            - (item.groceries || 0)
+            - (item.pet || 0)
+            - (item.car || 0);
+          filled.datasets[label.income].data.push(freeIncome);
+          filled.datasets[label.housing].data.push(item.housing);
+          filled.datasets[label.groceries].data.push(item.groceries);
+          filled.datasets[label.pet].data.push(item.pet);
+          filled.datasets[label.car].data.push(item.car);
+        });
       });
-      const groceries = half.salary.amount / ((monthCalories / calories) * prices);
-      if(!firstGroceries && Number.isFinite(groceries)) {
-        firstGroceries = groceries;
-        filled.datasets[label.groceries].data.push(1);
-      } else {
-        filled.datasets[label.groceries].data.push(groceries / firstGroceries);
-      }
-
-      const pet = half.salary.amount / (Object
-        .keys(half.pet)
-        .map((i: any) => half.pet[i].amount)
-        .reduce((a: any, b:any) => a + b, 0) / 6);
-      if(!firstPet && Number.isFinite(pet)) {
-        firstPet = pet;
-        filled.datasets[label.pet].data.push(1);
-      } else {
-        filled.datasets[label.pet].data.push(pet / firstPet);
-      }
-
-      const housing = half.salary.amount / (Object
-        .keys(half.housing)
-        .filter((i: any) => i !== 'area')
-        .map((i: any) => half.housing[i].amount)
-        .reduce((a: any, b:any) => a + b, 0) / half.housing.area);
-      if(!firstHousing && Number.isFinite(housing)) {
-        firstHousing = housing;
-        filled.datasets[label.housing].data.push(1);
-      } else {
-        filled.datasets[label.housing].data.push(housing / firstHousing);
-      }
-
-      filled.datasets[label.income].data.push(half.salary.amount / firstSalary.amount);
-    });
-
+    }
     return filled;
   }
 
   render() {
-    const halfs = this.props.data;
     return <div>
       <div className='header'>
         <h2 className='title'>History</h2>
       </div>
-      <Line data={this.calculateReport()} options={options} type="line"/>
+      <Line data={this.convertReport()} options={options} type="line"/>
     </div>
   }
 }

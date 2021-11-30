@@ -5,6 +5,7 @@ export const LOAD_UPKEEPS = "load-upkeeps";
 export const LOAD_SAVINGS = "load-savings";
 
 export const loadUpkeeps = (upkeeps: any[]) => {
+  console.log("upkeep", upkeeps);
   return {
     type: LONG_TERM,
     operation: LOAD_UPKEEPS,
