@@ -31,7 +31,7 @@ class LongTermService {
 
   calculateUpkeepReport(upkeeps: any[]) {
     const halfs = upkeeps;
-    const report = {}
+    const report: any = {}
     if(!halfs || halfs.length <= 0) return {};
 
     let firstGroceries: any, firstPet: any, firstHousing: any;
