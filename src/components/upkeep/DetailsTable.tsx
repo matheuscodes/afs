@@ -8,32 +8,6 @@ import {
   Heading,
 } from 'evergreen-ui'
 
-const ColumnFlex: any = {
-  date: 1,
-  ingredients: 1,
-  overview: 1,
-  basicFoodSum: 1,
-  pet: {
-    food: 1,
-    taxes: 1,
-    vet: 1,
-    insurance: 1,
-    total: 1,
-  },
-  housing: {
-    area: 1,
-    cost: 1,
-    electricity: 1,
-    gas: 1,
-    internet: 1,
-    services: 1,
-    total: 1,
-  },
-  salary: 1,
-}
-
-const monthCalories = 30 * 2000;
-
 class DetailsTable extends React.Component<any, any> {
   constructor(props: any) {
     super(props);
@@ -42,7 +16,7 @@ class DetailsTable extends React.Component<any, any> {
   renderRow(half: any, index: number) {
     const period = `${half.year}${half.period}`;
     return <Table.Row key={`upkeep-detail-table-${index}`} height={'auto'}>
-      <Table.TextCell flex={ColumnFlex.date}>{period}</Table.TextCell>
+      <Table.TextCell flex={1}>{period}</Table.TextCell>
       {
         Object.keys(this.props.columns).map(
           column =>
