@@ -71,6 +71,13 @@ class DetailsTable extends React.Component<any, any> {
   convertReport() {
     const converted = LongTermService.calculateUpkeepReport(this.props.data);
     const filled = JSON.parse(JSON.stringify(data));
+    const forecast: any = {
+      income: 0,
+      housing: 0,
+      groceries: 0,
+      pet: 0,
+      car: 0,
+    }
     if(typeof converted.report !== 'undefined') {
       Object.keys(converted.report).forEach(year => {
         Object.keys(converted.report[year]).forEach(period => {
@@ -83,13 +90,30 @@ class DetailsTable extends React.Component<any, any> {
             - (item.pet || 0)
             - (item.car || 0);
           filled.datasets[label.income].data.push(freeIncome);
+          forecast.income = (forecast.income + (item.income || 0)) / 2;
           filled.datasets[label.housing].data.push(item.housing);
+          forecast.housing = (forecast.housing + (item.housing || 0)) / 2;
           filled.datasets[label.groceries].data.push(item.groceries);
+          forecast.groceries = (forecast.groceries + (item.groceries || 0)) / 2;
           filled.datasets[label.pet].data.push(item.pet);
+          forecast.pet = (forecast.pet + (item.pet || 0)) / 2;
           filled.datasets[label.car].data.push(item.car);
+          forecast.car = (forecast.car + (item.car || 0)) / 2;
         });
       });
     }
+
+    filled.labels.push("Forecast");
+    const freeIncomeForecast = forecast.income
+      - (forecast.housing || 0)
+      - (forecast.groceries || 0)
+      - (forecast.pet || 0)
+      - (forecast.car || 0);
+    filled.datasets[label.income].data.push(freeIncomeForecast);
+    filled.datasets[label.housing].data.push(forecast.housing);
+    filled.datasets[label.groceries].data.push(forecast.groceries);
+    filled.datasets[label.pet].data.push(forecast.pet);
+    filled.datasets[label.car].data.push(forecast.car);
     return filled;
   }
 
