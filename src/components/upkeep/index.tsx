@@ -80,7 +80,8 @@ class Upkeep extends React.Component<any, any> {
               title="Income"
               columns={{
                 "Salary": (half: any) => <div>{(half.salary.amount).toFixed(2)} {half.salary.currency}</div>,
-                "Total": (half: any) => <strong>{(half.salary.amount).toFixed(2)} {half.salary.currency}</strong>,
+                "Expected Savings": (half: any) => <div>{half.savings ? (half.savings.amount).toFixed(2) + ' ' + half.savings.currency : ''}</div>,
+                "Disposable Income": (half: any) => <strong>{(half.salary.amount - (half.savings ? half.savings.amount : 0)).toFixed(2)} {half.salary.currency}</strong>,
               }}
               data={this.props.longTerm.upkeep} />
           </div> : ''

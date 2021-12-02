@@ -45,7 +45,13 @@ class LongTermService {
         report[`${half.year}`][`${half.period}`] = {}
       }
 
-      report[`${half.year}`][`${half.period}`].income =  half.salary.amount / firstSalary.amount
+      if(typeof half.salary !== 'undefined'){
+        report[`${half.year}`][`${half.period}`].income =  half.salary.amount / firstSalary.amount;
+      }
+
+      if(typeof half.savings !== 'undefined'){
+        report[`${half.year}`][`${half.period}`].savings =  half.savings.amount / firstSalary.amount;
+      }
 
       let calories = 0, prices = 0;
       half.groceries.forEach((i: any) => {

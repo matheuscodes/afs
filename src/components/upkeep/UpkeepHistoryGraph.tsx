@@ -16,6 +16,7 @@ const label = {
   pet: 2,
   groceries: 3,
   car: 4,
+  savings: 5,
 }
 
 const data: any = {
@@ -53,6 +54,13 @@ const data: any = {
       label: 'Car',
       data: [],
       fill: false,
+      backgroundColor: 'rgb(0, 0, 128)',
+      borderColor: 'rgba(0, 0, 128, 0.2)',
+    },
+    {
+      label: 'Savings',
+      data: [],
+      fill: false,
       backgroundColor: 'rgb(128, 0, 128)',
       borderColor: 'rgba(128, 0, 128, 0.2)',
     },
@@ -77,6 +85,7 @@ class DetailsTable extends React.Component<any, any> {
       groceries: 0,
       pet: 0,
       car: 0,
+      savings: 0,
     }
     if(typeof converted.report !== 'undefined') {
       Object.keys(converted.report).forEach(year => {
@@ -88,7 +97,8 @@ class DetailsTable extends React.Component<any, any> {
             - (item.housing || 0)
             - (item.groceries || 0)
             - (item.pet || 0)
-            - (item.car || 0);
+            - (item.car || 0)
+            - (item.savings || 0);
           filled.datasets[label.income].data.push(freeIncome);
           forecast.income = (forecast.income + (item.income || 0)) / 2;
           filled.datasets[label.housing].data.push(item.housing);
@@ -99,6 +109,8 @@ class DetailsTable extends React.Component<any, any> {
           forecast.pet = (forecast.pet + (item.pet || 0)) / 2;
           filled.datasets[label.car].data.push(item.car);
           forecast.car = (forecast.car + (item.car || 0)) / 2;
+          filled.datasets[label.savings].data.push(item.savings);
+          forecast.savings = (forecast.savings + (item.savings || 0)) / 2;
         });
       });
     }
@@ -108,12 +120,14 @@ class DetailsTable extends React.Component<any, any> {
       - (forecast.housing || 0)
       - (forecast.groceries || 0)
       - (forecast.pet || 0)
-      - (forecast.car || 0);
+      - (forecast.car || 0)
+      - (forecast.savings || 0);
     filled.datasets[label.income].data.push(freeIncomeForecast);
     filled.datasets[label.housing].data.push(forecast.housing);
     filled.datasets[label.groceries].data.push(forecast.groceries);
     filled.datasets[label.pet].data.push(forecast.pet);
     filled.datasets[label.car].data.push(forecast.car);
+    filled.datasets[label.savings].data.push(forecast.savings);
     return filled;
   }
 
