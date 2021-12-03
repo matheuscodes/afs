@@ -21,7 +21,7 @@ export default class MonthlyActivityOverview extends React.Component<any, any> {
       <Pane display='flex' width='100%'>
         <Pane padding={16} flex={2}>
           <Table border>
-            <Table.Head accountForScrollbar={false}>
+            <Table.Head accountForScrollbar={false} height='3em'>
               <Table.TextHeaderCell textAlign="center">Overview</Table.TextHeaderCell>
             </Table.Head>
             <Table.Body>
@@ -63,15 +63,15 @@ export default class MonthlyActivityOverview extends React.Component<any, any> {
         {
           this.props.data.accounts ?
             Object.keys(this.props.data.accounts).map((accountType: string) =>
-              <Pane padding={16} flex={1}>
+              <Pane key={`bookkeeping-monthly-overview-${accountType}`} padding={16} flex={1}>
                 <Table border>
-                  <Table.Head accountForScrollbar={false}>
+                  <Table.Head accountForScrollbar={false} height='3em'>
                     <Table.TextHeaderCell textAlign="center">{`${accountType}`} Accounts</Table.TextHeaderCell>
                   </Table.Head>
                   <Table.Body>
                     {
                       this.props.data.accounts[accountType].map((account: any, index: number) =>
-                        <Table.Row intent={index % 2 ? undefined : 'success'} height='auto'>
+                        <Table.Row key={`bookkeeping-monthly-overview-${accountType}-${index}`} intent={index % 2 ? undefined : 'success'} height='auto'>
                           <Table.TextCell flex={2}><strong>{`${account.name}`}</strong></Table.TextCell>
                           <Table.TextCell>{`${account.balance.amount.toFixed(2)} ${account.balance.currency}`}</Table.TextCell>
                         </Table.Row>

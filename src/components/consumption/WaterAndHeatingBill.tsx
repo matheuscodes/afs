@@ -32,7 +32,7 @@ class WaterAndHeatingBill extends React.Component<any, any> {
       justifyContent="center"
       alignItems="center">
       <Table border>
-        <Table.Head accountForScrollbar={false}>
+        <Table.Head accountForScrollbar={false} height='3em'>
           <Table.TextHeaderCell>
             Water and Heating bill {this.props.year}
           </Table.TextHeaderCell>
@@ -78,7 +78,7 @@ class WaterAndHeatingBill extends React.Component<any, any> {
                 <strong>Heaters</strong><br/>
                 {bill.heaters.map( (heater: any, index: number) =>
                   <div
-                    style={{textAlign:'right', width:'100%'}} 
+                    style={{textAlign:'right', width:'100%'}}
                     key={`heater-list-${index}`}>
                     {heater.location}
                   </div>

@@ -66,34 +66,34 @@ class Savings extends React.Component<any, any> {
     return <div>
       <h1>Savings</h1>
       {
-        Object.keys(summary).map(bank =>
-          <div>
-            <h2>{bank}</h2>
-              {
-                summary[bank].map((account: any) =>
-                  <div>
-                    <h3>{account.name}</h3>
-                    Total: {account.total.toFixed(2)} €
-                    <Table>
-                      <Table.Body>
-                        {
-                          Object.keys(account.funds).map(fund =>
-                            <Table.Row>
-                              <Table.TextCell>
-                                {fund}
-                              </Table.TextCell>
-                              <Table.TextCell>
-                                {account.funds[fund]} €
-                              </Table.TextCell>
-                            </Table.Row>
-                          )
-                        }
-                      </Table.Body>
-                    </Table>
-                  </div>
-                )
-              }
-          </div>
+        Object.keys(summary).map((bank: any, index: number) =>
+        <div key={`savings-bank-${bank}-${index}`}>
+          <h2>{bank}</h2>
+          {
+            summary[bank].map((account: any) =>
+              <div key={`savings-account-${account.name}`}>
+                <h3>{account.name}</h3>
+                Total: {account.total.toFixed(2)} €
+                <Table>
+                  <Table.Body>
+                  {
+                    Object.keys(account.funds).map((fund: any, i: number) =>
+                      <Table.Row key={`savings-fund-${bank}-${fund}-${i}`} height='2em'>
+                        <Table.TextCell>
+                          {fund}
+                        </Table.TextCell>
+                        <Table.TextCell>
+                          {account.funds[fund]} €
+                        </Table.TextCell>
+                      </Table.Row>
+                    )
+                  }
+                  </Table.Body>
+                </Table>
+              </div>
+            )
+          }
+        </div>
         )
       }
     </div>

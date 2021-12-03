@@ -185,7 +185,7 @@ export default class ActivitiesTable extends React.Component<any, any> {
     const items = this.filter(this.sort(this.props.data))
     return (
       <Table border>
-        <Table.Head accountForScrollbar={false}>
+        <Table.Head accountForScrollbar={false} height='3em'>
           {this.renderSortableTableHeaderCell("date", "Date")}
           <Table.SearchHeaderCell
             flex={ColumnFlex.source}

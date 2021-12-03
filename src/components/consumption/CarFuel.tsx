@@ -32,31 +32,31 @@ class CarFuel extends React.Component<any, any> {
       consumptionperkm = consumed / traveled;
       distanceperunit = traveled / consumed;
     }
-    return <Table.Row key={index} height="auto">
-      <Table.TextCell flex={ColumnFlex.date}>{tankEntry.date}</Table.TextCell>
-      <Table.TextCell flex={ColumnFlex.mileage}>{tankEntry.mileage ? tankEntry.mileage + 'km' : ''}</Table.TextCell>
-      <Table.TextCell flex={ColumnFlex.tanked}>{`${tankEntry.tanked} ${FuelUnit[tankEntry.fuel]}`}</Table.TextCell>
-      <Table.TextCell flex={ColumnFlex.paid}>{tankEntry.paid.amount + tankEntry.paid.currency}</Table.TextCell>
-      <Table.TextCell flex={ColumnFlex.rest}>{level.toFixed(2)}</Table.TextCell>
-      <Table.TextCell flex={ColumnFlex.consumed}>{consumed ? consumed.toFixed(2) + FuelUnit[tankEntry.fuel] : ''}</Table.TextCell>
-      <Table.TextCell flex={ColumnFlex.traveled}>{traveled ? traveled + 'km' : ''}</Table.TextCell>
-      <Table.TextCell flex={ColumnFlex.consumption}>{consumptionperkm ? (consumptionperkm * 100).toFixed(2) + FuelUnit[tankEntry.fuel] + '/100km' : '' }</Table.TextCell>
-      <Table.TextCell flex={ColumnFlex.consumption}>{distanceperunit ? distanceperunit.toFixed(2) + 'km/' + FuelUnit[tankEntry.fuel] : '' }</Table.TextCell>
+    return <Table.Row key={`car-consumption-row-${index}`} height='auto'>
+      <Table.TextCell>{tankEntry.date}</Table.TextCell>
+      <Table.TextCell>{tankEntry.mileage ? tankEntry.mileage + 'km' : ''}</Table.TextCell>
+      <Table.TextCell>{`${tankEntry.tanked} ${FuelUnit[tankEntry.fuel]}`}</Table.TextCell>
+      <Table.TextCell>{tankEntry.paid.amount + tankEntry.paid.currency}</Table.TextCell>
+      <Table.TextCell>{level.toFixed(2)}</Table.TextCell>
+      <Table.TextCell>{consumed ? consumed.toFixed(2) + FuelUnit[tankEntry.fuel] : ''}</Table.TextCell>
+      <Table.TextCell>{traveled ? traveled + 'km' : ''}</Table.TextCell>
+      <Table.TextCell>{consumptionperkm ? (consumptionperkm * 100).toFixed(2) + FuelUnit[tankEntry.fuel] + '/100km' : '' }</Table.TextCell>
+      <Table.TextCell>{distanceperunit ? distanceperunit.toFixed(2) + 'km/' + FuelUnit[tankEntry.fuel] : '' }</Table.TextCell>
     </Table.Row>
   }
 
-  renderCar(car: Car) {
+  renderCar(car: Car, index: number) {
     let lastMileage = car.mileage;
     const tankLevel: Record<Fuel,number> = {} as Record<Fuel,number>;
     for(const fuel in Fuel) {
         const key = fuel as keyof typeof Fuel;
         tankLevel[Fuel[key]] = 0;
     }
-    return <div>
+    return <div key={`car-consumption-${index}`}>
       <p><strong>{car.name}</strong> - {car.mileage}km</p>
       <Table border>
-        <Table.Head accountForScrollbar={false}>
-          <Table.TextHeaderCell flex={ColumnFlex.date}>
+        <Table.Head accountForScrollbar={false} height='3em'>
+          <Table.TextHeaderCell>
             Date
           </Table.TextHeaderCell>
           <Table.TextHeaderCell>
@@ -84,7 +84,8 @@ class CarFuel extends React.Component<any, any> {
           </Table.TextHeaderCell>
         </Table.Head>
         <Table.Body>
-          {car.tankEntries.map((entry, index) => {
+        {
+          car.tankEntries.map((entry, index) => {
             let traveled = undefined;
             if(entry.mileage) {
               traveled = entry.mileage - lastMileage;
@@ -102,7 +103,8 @@ class CarFuel extends React.Component<any, any> {
               }
             }
             return this.renderRow(entry,index,traveled,tankLevel[entry.fuel], consumed)
-          })}
+          })
+        }
         </Table.Body>
       </Table>
     </div>
@@ -112,7 +114,7 @@ class CarFuel extends React.Component<any, any> {
     const cars = this.props.cars ?  Object.keys(this.props.cars).map(i => this.props.cars[i]) : []
     return <div>
       <h1>Car Fuel</h1>
-      { cars.map(car => this.renderCar(car)) }
+      { cars.map((car: any, index: number) => this.renderCar(car, index)) }
     </div>
   }
 }

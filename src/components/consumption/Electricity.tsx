@@ -196,7 +196,7 @@ class Electricity extends React.Component<any, any> {
                   justifyContent="center"
                   alignItems="center">
                   <Table border>
-                    <Table.Head accountForScrollbar={false}>
+                    <Table.Head accountForScrollbar={false} height='3em'>
                       <Table.TextHeaderCell>
                         {bill.payments ? bill.payments.bill : "Current"}
                       </Table.TextHeaderCell>
@@ -242,7 +242,7 @@ class Electricity extends React.Component<any, any> {
               )}
             </div>
             <Table border>
-              <Table.Head accountForScrollbar={false}>
+              <Table.Head accountForScrollbar={false} height='3em'>
                 <Table.TextHeaderCell flex={ColumnFlex.date}>
                   Date
                 </Table.TextHeaderCell>

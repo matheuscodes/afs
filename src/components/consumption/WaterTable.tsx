@@ -50,7 +50,7 @@ class WaterTable extends React.Component<any, any> {
       });
     }
     return <Table border>
-      <Table.Head accountForScrollbar={false}>
+      <Table.Head accountForScrollbar={false} height='3em'>
         <Table.TextHeaderCell flex={ColumnFlex.date}>
           Date
         </Table.TextHeaderCell>
