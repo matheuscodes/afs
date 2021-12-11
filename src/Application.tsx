@@ -7,6 +7,7 @@ import Gas from "./components/consumption/Gas"
 import Electricity from "./components/consumption/Electricity"
 import Upkeep from "./components/upkeep"
 import Savings from "./components/finances/Savings"
+import PropertyInvestments from "./components/finances/investments/PropertyInvestments.tsx"
 
 class Application extends React.Component<any, any> {
   constructor(props: any) {
@@ -30,6 +31,9 @@ class Application extends React.Component<any, any> {
         </Route>
         <Route exact path="/finances/upkeep">
           <Upkeep />
+        </Route>
+        <Route exact path="/finances/investments/properties">
+          <PropertyInvestments />
         </Route>
         <Route exact path="/home/heating">
           <WaterAndHeating />

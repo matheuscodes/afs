@@ -44,6 +44,17 @@ const createWindow = (): void => {
                   mainWindow.loadURL(`${MAIN_WINDOW_WEBPACK_ENTRY}#/finances/upkeep`);
               }
           },
+          {
+            label: 'Investments',
+            submenu: [
+              {
+                  label: 'Properties',
+                  click() {
+                      mainWindow.loadURL(`${MAIN_WINDOW_WEBPACK_ENTRY}#/finances/investments/properties`);
+                  }
+              },
+            ]
+          },
         ]
       },
       {

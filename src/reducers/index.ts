@@ -3,6 +3,7 @@ import bookkeeping from './bookkeeping'
 import accounting from './accounting'
 import cars from './consumption/cars'
 import homes from './consumption/homes'
+import properties from './investments/properties'
 import longTerm from './long-term'
 
 export default combineReducers({
@@ -10,5 +11,6 @@ export default combineReducers({
   accounting,
   cars,
   homes,
+  properties,
   longTerm,
 })
