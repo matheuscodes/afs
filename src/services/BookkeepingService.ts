@@ -185,7 +185,7 @@ class Bookkeeping {
 
     const total = checkingActivities.concat(cashActivities).concat(creditActivities);
 
-    const reduceByCategory = (acc, current) => {
+    const reduceByCategory = (acc: any, current: any) => {
       if(current.amount) {
         const category = current.category || "Other";
         if(!acc[category]) {
