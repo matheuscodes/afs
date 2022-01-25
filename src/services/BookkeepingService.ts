@@ -8,8 +8,10 @@ const BOOKKEEPING_LOCATION = "./storage/bookkeeping"
 
 interface SmallActivity {
   date: Date,
+  transfer: boolean,
   amount: number,
   currency: Currency,
+  category: string,
 }
 
 class Bookkeeping {
@@ -93,6 +95,8 @@ class Bookkeeping {
       if(accountActivities[a.account]) {
         accountActivities[a.account].push({
           date: a.date,
+          transfer: a.transfer,
+          category: a.category,
           amount: a.value.amount,
           currency: a.value.currency,
         });
@@ -101,6 +105,8 @@ class Bookkeeping {
         if(accountActivities[a.source]) {
           accountActivities[a.source].push({
             date: a.date,
+            transfer: a.transfer,
+            category: a.category,
             amount: -a.value.amount,
             currency: a.value.currency,
           });
@@ -142,11 +148,11 @@ class Bookkeeping {
     }
 
     const filterByIncome = (a: SmallActivity) => {
-      return a.amount > 0 && thisMonthFilter(a);
+      return a.amount > 0 && thisMonthFilter(a) && !a.transfer;
     }
 
     const filterByExpense = (a: SmallActivity) => {
-      return a.amount < 0 && thisMonthFilter(a);
+      return a.amount < 0 && thisMonthFilter(a) && !a.transfer;
     }
 
     const filterAccountByType = (a: Account, type: AccountType) => a.type === type;
@@ -177,7 +183,22 @@ class Bookkeeping {
       cash: cashActivities.filter(thisMonthFilter).reduce(reducer, {amount:0, currency: Currency.EUR}),
     }
 
-    const total = checkingActivities.concat(cashActivities);
+    const total = checkingActivities.concat(cashActivities).concat(creditActivities);
+
+    const reduceByCategory = (acc, current) => {
+      if(current.amount) {
+        const category = current.category || "Other";
+        if(!acc[category]) {
+          acc[category] = {
+            amount: 0,
+            currency: current.currency,
+          }
+        }
+        acc[category].amount += current.amount;
+      }
+
+      return acc;
+    }
 
     const thisMonthPerAccount: any = {
       [`${AccountType.CREDIT}`]: [],
@@ -215,8 +236,9 @@ class Bookkeeping {
       },
       total: {
         expenses: total.filter(filterByExpense).reduce(reducer, {amount:0, currency: Currency.EUR}),
-        income: total.concat(cashActivities).filter(filterByIncome).reduce(reducer, {amount:0, currency: Currency.EUR})
+        income: total.filter(filterByIncome).reduce(reducer, {amount:0, currency: Currency.EUR})
       },
+      categorized: total.filter(filterByExpense).reduce(reduceByCategory, {}),
       accounts: thisMonthPerAccount,
     }
 

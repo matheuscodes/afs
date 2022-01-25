@@ -7,7 +7,7 @@ import Gas from "./components/consumption/Gas"
 import Electricity from "./components/consumption/Electricity"
 import Upkeep from "./components/upkeep"
 import Savings from "./components/finances/Savings"
-import PropertyInvestments from "./components/finances/investments/PropertyInvestments.tsx"
+import PropertyInvestments from "./components/finances/investments/PropertyInvestments"
 
 class Application extends React.Component<any, any> {
   constructor(props: any) {

@@ -71,7 +71,7 @@ class PropertyInvestments extends React.Component<any, any> {
   getReport() {
     const filled = JSON.parse(JSON.stringify(data));
     const grouped = this.state.selectedProperty.valuations
-      .reduce((grouped, valuation) => {
+      .reduce((grouped:any, valuation:any) => {
         if(!grouped[valuation.date]) {
           grouped[valuation.date] = {
             average: 0,
@@ -82,11 +82,11 @@ class PropertyInvestments extends React.Component<any, any> {
         return grouped;
       }, {});
     Object.keys(grouped).forEach(date => {
-      grouped[date].average = grouped[date].valuations.reduce((a,b) => a+b, 0) / grouped[date].valuations.length;
+      grouped[date].average = grouped[date].valuations.reduce((a: any,b:any) => a+b, 0) / grouped[date].valuations.length;
     });
 
     filled.labels = Object.keys(grouped);
-    filled.datasets[0].data = filled.labels.map(i => grouped[i].average);
+    filled.datasets[0].data = filled.labels.map((i: any) => grouped[i].average);
     console.log("hej", filled)
     return filled;
   }

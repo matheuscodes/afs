@@ -31,7 +31,7 @@ class Bookkeeping extends React.Component<any, any> {
   constructor(props: any) {
     super(props);
     this.state = {
-      year: 2021
+      year: new Date().getFullYear()
     }
   }
 
@@ -94,7 +94,10 @@ class Bookkeeping extends React.Component<any, any> {
             )}/>
           <ActivitiesTable
             accounts={this.props.accounting.accounts}
-            data={this.props.bookkeeping.filter((i: Activity) => i.date.getMonth() === this.state.month)} />
+            data={this.props.bookkeeping.filter((i: Activity) => {
+              return i.date.getMonth() === this.state.month &&
+                i.date.getFullYear() === this.state.year
+            })} />
         </Pane> :
         ''
       }

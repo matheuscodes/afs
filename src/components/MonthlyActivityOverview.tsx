@@ -83,6 +83,27 @@ export default class MonthlyActivityOverview extends React.Component<any, any> {
             )
           : ''
         }
+        <Pane padding={16} flex={1}>
+          <Table border>
+            <Table.Head accountForScrollbar={false} height='3em'>
+              <Table.TextHeaderCell textAlign="center">Category Spending</Table.TextHeaderCell>
+            </Table.Head>
+            <Table.Body>
+              {
+                Object.keys(this.props.data.categorized).map((key, index) =>
+                  <Table.Row key={`bookkeeping-monthly-overview-category-${key}`} intent={index % 2 ? undefined : 'success'} height='auto'>
+                    <Table.TextCell flex={2}><strong>{`${key}`}</strong></Table.TextCell>
+                    <Table.TextCell>{`${this.props.data.categorized[key].amount.toFixed(2)} ${this.props.data.categorized[key].currency}`}</Table.TextCell>
+                  </Table.Row>
+                )
+              }
+              <Table.Row key={`bookkeeping-monthly-overview-categories-total`} intent={this.props.data.categorized.length % 2 ? undefined : 'success'} height='auto'>
+                <Table.TextCell flex={2} textAlign={"right"}><strong>Total</strong></Table.TextCell>
+                <Table.TextCell><strong>{this.props.data ? `${this.props.data.total.expenses.amount.toFixed(2)} ${this.props.data.total.expenses.currency}` : '-'}</strong></Table.TextCell>
+              </Table.Row>
+            </Table.Body>
+          </Table>
+        </Pane>
       </Pane>
     )
   }

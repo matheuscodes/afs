@@ -73,23 +73,27 @@ class Savings extends React.Component<any, any> {
             summary[bank].map((account: any) =>
               <div key={`savings-account-${account.name}`}>
                 <h3>{account.name}</h3>
-                Total: {account.total.toFixed(2)} €
-                <Table>
-                  <Table.Body>
-                  {
-                    Object.keys(account.funds).map((fund: any, i: number) =>
-                      <Table.Row key={`savings-fund-${bank}-${fund}-${i}`} height='2em'>
-                        <Table.TextCell>
-                          {fund}
-                        </Table.TextCell>
-                        <Table.TextCell>
-                          {account.funds[fund]} €
-                        </Table.TextCell>
-                      </Table.Row>
-                    )
-                  }
-                  </Table.Body>
-                </Table>
+                Total: {Math.floor(-account.total) !== 0 ? account.total.toFixed(2) : '-'} €
+                {
+                  account.total <= 0 ? '' :
+                  <Table>
+                    <Table.Body>
+                    {
+                      Object.keys(account.funds).map((fund: any, i: number) =>
+                        account.funds[fund] === 0 ? '' :
+                        <Table.Row key={`savings-fund-${bank}-${fund}-${i}`} height='2em'>
+                          <Table.TextCell>
+                            {fund}
+                          </Table.TextCell>
+                          <Table.TextCell>
+                            {account.funds[fund]} €
+                          </Table.TextCell>
+                        </Table.Row>
+                      )
+                    }
+                    </Table.Body>
+                  </Table>
+                }
               </div>
             )
           }
