@@ -152,6 +152,11 @@ class Bookkeeping {
     }
 
     const filterByExpense = (a: SmallActivity) => {
+      if(a.transfer) {
+        if(a.category) {
+          return a.amount < 0 && thisMonthFilter(a);
+        }
+      }
       return a.amount < 0 && thisMonthFilter(a) && !a.transfer;
     }
 
