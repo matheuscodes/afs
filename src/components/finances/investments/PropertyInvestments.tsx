@@ -6,6 +6,13 @@ import {
   Tablist,
   Pane,
 } from 'evergreen-ui';
+import {
+  Chart as ChartJS,
+  LinearScale,
+  PointElement,
+  LineElement,
+} from 'chart.js'
+ChartJS.register(LinearScale, PointElement, LineElement)
 import { Line } from 'react-chartjs-2';
 
 const options: any = {};
@@ -94,7 +101,7 @@ class PropertyInvestments extends React.Component<any, any> {
   getPropertyReport() {
     return <div>
       <h2>{this.state.selectedProperty.name}</h2>
-      <Line data={this.getReport()} options={options} type="line"/>
+      <Line data={this.getReport()} options={options} />
     </div>
   }
 

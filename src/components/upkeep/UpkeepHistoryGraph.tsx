@@ -7,6 +7,11 @@ import {
   Table,
   Heading,
 } from 'evergreen-ui';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+} from 'chart.js'
+ChartJS.register(CategoryScale)
 import { Line } from 'react-chartjs-2';
 import LongTermService from '../../services/LongTermService';
 
@@ -136,7 +141,7 @@ class DetailsTable extends React.Component<any, any> {
       <div className='header'>
         <h2 className='title'>History</h2>
       </div>
-      <Line data={this.convertReport()} options={options} type="line"/>
+      <Line data={this.convertReport()} options={options} />
     </div>
   }
 }

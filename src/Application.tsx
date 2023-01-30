@@ -1,5 +1,5 @@
 import React from 'react';
-import { HashRouter,Link,Route,Switch } from "react-router-dom";
+import { HashRouter,Link,Route,Routes } from "react-router-dom";
 import Bookkeeping from "./components/Bookkeeping"
 import CarFuel from "./components/consumption/CarFuel"
 import WaterAndHeating from "./components/consumption/WaterAndHeating"
@@ -16,35 +16,17 @@ class Application extends React.Component<any, any> {
 
   render() {
     return <HashRouter>
-      <Switch>
-        <Route exact path="/">
-          <p>Nothing</p>
-        </Route>
-        <Route exact path="/car/fuel">
-          <CarFuel />
-        </Route>
-        <Route exact path="/finances/bookkeeping">
-          <Bookkeeping />
-        </Route>
-        <Route exact path="/finances/savings">
-          <Savings />
-        </Route>
-        <Route exact path="/finances/upkeep">
-          <Upkeep />
-        </Route>
-        <Route exact path="/finances/investments/properties">
-          <PropertyInvestments />
-        </Route>
-        <Route exact path="/home/heating">
-          <WaterAndHeating />
-        </Route>
-        <Route exact path="/home/electricity">
-          <Electricity />
-        </Route>
-        <Route exact path="/home/Gas">
-          <Gas />
-        </Route>
-      </Switch>
+      <Routes>
+        <Route path="/" element={<p>Nothing</p>} />
+        <Route path="/car/fuel" element={<CarFuel />} />
+        <Route path="/finances/bookkeeping" element={<Bookkeeping />} />
+        <Route path="/finances/savings" element={<Savings />} />
+        <Route path="/finances/upkeep" element={<Upkeep />} />
+        <Route path="/finances/investments/properties" element={<PropertyInvestments />} />
+        <Route path="/home/heating" element={<WaterAndHeating />} />
+        <Route path="/home/electricity" element={<Electricity />} />
+        <Route path="/home/Gas" element={<Gas />} />
+      </Routes>
     </HashRouter>
   }
 }

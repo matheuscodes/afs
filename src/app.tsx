@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { Button } from 'evergreen-ui';
 import Application from './Application';
 
@@ -8,12 +8,12 @@ import configureStore from "./store";
 
 function render() {
   console.log("Rendering...")
-  ReactDOM.render(
-    <Provider store={configureStore()}>
-      <Application />
-    </Provider>,
-    document.getElementById("internal-app")
-  );
+  createRoot(document.getElementById("internal-app"))
+      .render(
+        <Provider store={configureStore()}>
+          <Application />
+        </Provider>
+      );
 }
 
 render();

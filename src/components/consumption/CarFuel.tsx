@@ -33,7 +33,7 @@ class CarFuel extends React.Component<any, any> {
       distanceperunit = traveled / consumed;
     }
     return <Table.Row key={`car-consumption-row-${index}`} height='auto'>
-      <Table.TextCell>{tankEntry.date}</Table.TextCell>
+      <Table.TextCell>{`${tankEntry.date}`}</Table.TextCell>
       <Table.TextCell>{tankEntry.mileage ? tankEntry.mileage + 'km' : ''}</Table.TextCell>
       <Table.TextCell>{`${tankEntry.tanked} ${FuelUnit[tankEntry.fuel]}`}</Table.TextCell>
       <Table.TextCell>{tankEntry.paid.amount + tankEntry.paid.currency}</Table.TextCell>
