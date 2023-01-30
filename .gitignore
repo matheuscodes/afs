@@ -90,3 +90,6 @@ out/
 
 # Data
 storage/
+
+# IDE
+.idea
