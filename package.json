@@ -6,7 +6,9 @@
   "main": ".webpack/main",
   "scripts": {
     "start": "electron-forge start",
-    "package": "electron-forge package && cp -R storage out/afs-win32-x64/",
+    "package-windows": "electron-forge package --arch x64 --platform win32 && cp -R base out/afs-win32-x64/storage",
+    "package-linux": "electron-forge package --arch x64 --platform linux && cp -R base out/afs-linux-x64/storage",
+    "package-mac": "electron-forge package --arch x64 --platform darwin",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
     "lint": "eslint --ext .tsx --ext .ts --ext .jsx --ext .js .",

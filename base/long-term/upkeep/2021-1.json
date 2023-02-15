@@ -1,0 +1,38 @@
+{
+  "year":2021,
+  "period": "H1",
+  "groceries": [
+    {"product":"1Kg Flour", "calories":3640, "price":{"amount":0.32,"currency":"€"}},
+    {"product":"1Kg Sugar", "calories":3870, "price":{"amount":0.85,"currency":"€"}},
+    {"product":"500g Tomaten Puree", "calories":90, "price":{"amount":0.39,"currency":"€"}},
+    {"product":"500g Pasta", "calories":1855, "price":{"amount":0.45,"currency":"€"}},
+    {"product":"1Kg Rice", "calories":3650, "price":{"amount":1.99,"currency":"€"}},
+    {"product":"185g Tofu", "calories":141, "price":{"amount":1.39,"currency":"€"}},
+    {"product":"1L Plant Milk", "calories":570, "price":{"amount":1.29,"currency":"€"}},
+    {"product":"150g Vegan Cheese", "calories":395, "price":{"amount":2.99,"currency":"€"}},
+    {"product":"180g Fake meat", "calories": 859, "price":{"amount":2.39,"currency":"€"}},
+    {"product":"226g Burger", "calories":306, "price":{"amount":3.49,"currency":"€"}}
+  ],
+  "pet": {
+    "food": {"amount":20.72,"currency":"€"},
+    "taxes": {"amount":60,"currency":"€"},
+    "vet": {"amount":426.66,"currency":"€"},
+    "insurance": {"amount":24.86,"currency":"€"}
+  },
+  "housing": {
+    "area": 57,
+    "cost": {"amount":316,"currency":"€"},
+    "electricity": {"amount":35,"currency":"€"},
+    "gas": {"amount":20,"currency":"€"},
+    "internet": {"amount":33,"currency":"€"},
+    "services": {"amount":211,"currency":"€"}
+  },
+  "car": {
+    "maintenance": {"amount":86,"currency":"€"},
+    "consumption": 6,
+    "fuel": {"amount":1.56,"currency":"€"},
+    "insurance": {"amount":623.29,"currency":"€"}
+  },
+  "salary": {"amount":3576.1,"currency":"€"},
+  "savings": {"amount":1950,"currency":"€"}
+}

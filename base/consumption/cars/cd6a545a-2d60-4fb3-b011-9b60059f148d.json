@@ -1,0 +1,2 @@
+{ "carId":"cd6a545a-2d60-4fb3-b011-9b60059f148d", "date": "2022-12-30", "mileage": 190, "tanked": 52.60, "rest": 0, "paid": {"amount": 25.69, "currency": "€"}, "fuel": "Diesel"}
+{ "carId":"cd6a545a-2d60-4fb3-b011-9b60059f148d", "date": "2023-02-12", "mileage": 316, "tanked": 9.59, "paid": {"amount": 20.42, "currency": "€"}, "fuel": "Diesel"}

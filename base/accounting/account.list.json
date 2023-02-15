@@ -1,0 +1,7 @@
+{"id":"5304b4b6-0899-4687-9334-d887f16cf9d2", "type":"Credit Card", "name":"Canadian Express"}
+{"id":"39aead69-85e7-4002-9415-70c056af859a", "type":"Loan", "name":"BankOne Loan", "bank": "BankOne"}
+{"id":"b7d1a763-e838-4ebd-9f34-e3471fe77ff7", "type":"Cash", "name":"Wallet"}
+{"id":"de8cd2e2-586c-453b-b208-c8e0833e0ff4", "type":"Checking", "name":"BankTwo", "bank": "BankTwo"}
+{"id":"0096c189-49c5-4879-897e-ae787c3b83f7", "type":"Saving", "name":"BankTwo", "bank": "BankTwo"}
+{"id":"d3c13191-b890-417b-85ff-53e8e8a8fa18", "type":"Credit Card", "name":"BankTwo", "bank": "BankTwo"}
+{"id":"5f8a9f2a-a190-49c1-b1a3-66523c851fee", "type":"Loan", "name":"BankTwo Kredit", "bank": "BankTwo"}

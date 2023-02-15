@@ -1,0 +1,40 @@
+{"meter":"7729", "measurement":0, "date":"2022-01-01", "billable": true}
+{"meter":"7731", "measurement":0, "date":"2022-01-01", "billable": true}
+{"meter":"7730", "measurement":0, "date":"2022-01-01", "billable": true}
+{"meter":"7734", "measurement":0, "date":"2022-01-01", "billable": true}
+{"meter":"7734", "measurement":0, "date":"2022-02-02"}
+{"meter":"7729", "measurement":6, "date":"2022-02-02"}
+{"meter":"7730", "measurement":78, "date":"2022-02-02"}
+{"meter":"7731", "measurement":85, "date":"2022-02-02"}
+{"meter":"7734", "measurement":0, "date":"2022-03-03"}
+{"meter":"7729", "measurement":17, "date":"2022-03-03"}
+{"meter":"7730", "measurement":142, "date":"2022-03-03"}
+{"meter":"7731", "measurement":151, "date":"2022-03-03"}
+{"meter":"7734", "measurement":0, "date":"2022-05-03"}
+{"meter":"7729", "measurement":26, "date":"2022-05-03"}
+{"meter":"7730", "measurement":187, "date":"2022-05-03"}
+{"meter":"7731", "measurement":205, "date":"2022-05-03"}
+{"meter":"7734", "measurement":0, "date":"2022-06-11"}
+{"meter":"7729", "measurement":26, "date":"2022-06-11"}
+{"meter":"7730", "measurement":187, "date":"2022-06-11"}
+{"meter":"7731", "measurement":205, "date":"2022-06-11"}
+{"meter":"7734", "measurement":103, "date":"2022-10-01"}
+{"meter":"7729", "measurement":33, "date":"2022-10-01"}
+{"meter":"7730", "measurement":188, "date":"2022-10-01"}
+{"meter":"7731", "measurement":205, "date":"2022-10-01"}
+{"meter":"7734", "measurement":103, "date":"2022-11-01"}
+{"meter":"7729", "measurement":35, "date":"2022-11-01"}
+{"meter":"7730", "measurement":188, "date":"2022-11-01"}
+{"meter":"7731", "measurement":205, "date":"2022-11-01"}
+{"meter":"7734", "measurement":103, "date":"2022-12-01"}
+{"meter":"7729", "measurement":40, "date":"2022-12-01"}
+{"meter":"7730", "measurement":196, "date":"2022-12-01"}
+{"meter":"7731", "measurement":215, "date":"2022-12-01"}
+{"meter":"7734", "measurement":103, "date":"2022-12-31"}
+{"meter":"7729", "measurement":48, "date":"2022-12-31"}
+{"meter":"7730", "measurement":278, "date":"2022-12-31"}
+{"meter":"7731", "measurement":278, "date":"2022-12-31"}
+{"meter":"7734", "measurement":0, "date":"2023-02-01"}
+{"meter":"7729", "measurement":4, "date":"2023-02-01"}
+{"meter":"7730", "measurement":52, "date":"2023-02-01"}
+{"meter":"7731", "measurement":51, "date":"2023-02-01"}

@@ -1,0 +1,4 @@
+{"date":"2023-02-01T00:00:00.000Z","source":"Tax Office","description":"Taxes","value":{"amount":"-33.33","currency":"€"},"account":"de8cd2e2-586c-453b-b208-c8e0833e0ff4", "category": "Base"}
+{"date":"2023-02-01T00:00:00.000Z","source":"Energy","description":"Gas Bill","value":{"amount":"-35","currency":"€"},"account":"de8cd2e2-586c-453b-b208-c8e0833e0ff4", "category": "Base"}
+{"date":"2023-02-01T00:00:00.000Z","source":"Energy","description":"Electricity Bill","value":{"amount":"-45","currency":"€"},"account":"de8cd2e2-586c-453b-b208-c8e0833e0ff4", "category": "Base"}
+{"date":"2023-02-01T00:00:00.000Z","source":"Building","description":"Utilities","value":{"amount":"-211","currency":"€"},"account":"de8cd2e2-586c-453b-b208-c8e0833e0ff4", "category": "Base"}

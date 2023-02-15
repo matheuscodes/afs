@@ -1,0 +1,33 @@
+{"date":"2023-01-02T00:00:00.000Z","source":"GEZ","description":"Rundfunkbeitrag","value":{"amount":"-55.94","currency":"€"},"account":"de8cd2e2-586c-453b-b208-c8e0833e0ff4", "category": "Base"}
+{"date":"2023-01-02T00:00:00.000Z","source":"Energy","description":"Gas Bill","value":{"amount":"-19","currency":"€"},"account":"de8cd2e2-586c-453b-b208-c8e0833e0ff4", "category": "Base"}
+{"date":"2023-01-02T00:00:00.000Z","source":"Energy","description":"Electricity Bill","value":{"amount":"-41","currency":"€"},"account":"de8cd2e2-586c-453b-b208-c8e0833e0ff4", "category": "Base"}
+{"date":"2023-01-03T00:00:00.000Z","source":"d3c13191-b890-417b-85ff-53e8e8a8fa18","description":"Bill BankTwo","value":{"amount":"-12.99","currency":"€"},"transfer":true,"account":"de8cd2e2-586c-453b-b208-c8e0833e0ff4"}
+{"date":"2023-01-03T00:00:00.000Z","source":"Restaurant","description":"Lunch","value":{"amount":"-9","currency":"€"},"account":"de8cd2e2-586c-453b-b208-c8e0833e0ff4", "category": "Base"}
+{"date":"2023-01-12T00:00:00.000Z","source":"Doctor","description":"Check-up","value":{"amount":"-237.20","currency":"€"},"account":"de8cd2e2-586c-453b-b208-c8e0833e0ff4", "category": "Health"}
+{"date":"2023-01-12T00:00:00.000Z","source":"Pharmacy","description":"Medicine","value":{"amount":"-33.70","currency":"€"},"account":"de8cd2e2-586c-453b-b208-c8e0833e0ff4", "category": "Health"}
+{"date":"2023-01-14T00:00:00.000Z","source":"b7d1a763-e838-4ebd-9f34-e3471fe77ff7","description":"Mall","value":{"amount":"-150","currency":"€"},"transfer":true,"account":"de8cd2e2-586c-453b-b208-c8e0833e0ff4"}
+{"date":"2023-01-18T00:00:00.000Z","source":"Parking","description":"Car","value":{"amount":"-54.74","currency":"€"},"account":"de8cd2e2-586c-453b-b208-c8e0833e0ff4", "category": "Disposable"}
+{"date":"2023-01-18T00:00:00.000Z","source":"Restaurant","description":"Lunch","value":{"amount":"-6.5","currency":"€"},"account":"de8cd2e2-586c-453b-b208-c8e0833e0ff4", "category": "Base"}
+{"date":"2023-01-19T00:00:00.000Z","source":"Doctor","description":"Urin","value":{"amount":"-61.69","currency":"€"},"account":"de8cd2e2-586c-453b-b208-c8e0833e0ff4", "category": "Health"}
+{"date":"2023-01-26T00:00:00.000Z","source":"Restaurant","description":"Lunch","value":{"amount":"-10.79","currency":"€"},"account":"de8cd2e2-586c-453b-b208-c8e0833e0ff4", "category": "Base"}
+{"date":"2023-01-26T00:00:00.000Z","source":"Train","description":"Come from dinner","value":{"amount":"-3","currency":"€"},"account":"de8cd2e2-586c-453b-b208-c8e0833e0ff4", "category": "Base"}
+{"date":"2023-01-27T00:00:00.000Z","source":"Restaurant","description":"Lunch","value":{"amount":"-6.5","currency":"€"},"account":"de8cd2e2-586c-453b-b208-c8e0833e0ff4", "category": "Base"}
+{"date":"2023-01-28T00:00:00.000Z","source":"0096c189-49c5-4879-897e-ae787c3b83f7","description":"Emergency","value":{"amount":"-250","currency":"€"},"transfer":true,"account":"de8cd2e2-586c-453b-b208-c8e0833e0ff4"}
+{"date":"2023-01-28T00:00:00.000Z","source":"0096c189-49c5-4879-897e-ae787c3b83f7","description":"Mortgage","value":{"amount":"-450","currency":"€"},"transfer":true,"account":"de8cd2e2-586c-453b-b208-c8e0833e0ff4"}
+{"date":"2023-01-28T00:00:00.000Z","source":"0096c189-49c5-4879-897e-ae787c3b83f7","description":"Household","value":{"amount":"-100","currency":"€"},"transfer":true,"account":"de8cd2e2-586c-453b-b208-c8e0833e0ff4"}
+{"date":"2023-01-28T00:00:00.000Z","source":"0096c189-49c5-4879-897e-ae787c3b83f7","description":"Car Maintenance","value":{"amount":"-50","currency":"€"},"transfer":true,"account":"de8cd2e2-586c-453b-b208-c8e0833e0ff4"}
+{"date":"2023-01-30T00:00:00.000Z","source":"39aead69-85e7-4002-9415-70c056af859a","description":"Mortgage","value":{"amount":"-316.23","currency":"€"},"transfer":true,"account":"de8cd2e2-586c-453b-b208-c8e0833e0ff4", "category": "Base"}
+{"date":"2023-01-31T00:00:00.000Z","source":"5f8a9f2a-a190-49c1-b1a3-66523c851fee","description":"Car Loan","value":{"amount":"-758","currency":"€"},"transfer":true,"account":"de8cd2e2-586c-453b-b208-c8e0833e0ff4"}
+{"date":"2023-01-31T00:00:00.000Z","source":"Streaming","description":"Pro Account","value":{"amount":"-3.84","currency":"€"},"account":"de8cd2e2-586c-453b-b208-c8e0833e0ff4", "category": "Disposable"}
+{"date":"2023-01-02T00:00:00.000Z","source":"Cloud","description":"Servers","value":{"amount":"-0.64","currency":"€"},"account":"5304b4b6-0899-4687-9334-d887f16cf9d2", "category": "Disposable"}
+{"date":"2023-01-07T00:00:00.000Z","source":"Supermarket","description":"Groceries","value":{"amount":"-120.62","currency":"€"},"account":"5304b4b6-0899-4687-9334-d887f16cf9d2", "category": "Base"}
+{"date":"2023-01-10T00:00:00.000Z","source":"Shop","description":"Movies","value":{"amount":"-23.98","currency":"€"},"account":"5304b4b6-0899-4687-9334-d887f16cf9d2", "category": "Disposable"}
+{"date":"2023-01-14T00:00:00.000Z","source":"Supermarket","description":"Groceries","value":{"amount":"-24.56","currency":"€"},"account":"5304b4b6-0899-4687-9334-d887f16cf9d2", "category": "Base"}
+{"date":"2023-01-14T00:00:00.000Z","source":"Supermarket","description":"Groceries","value":{"amount":"-11.25","currency":"€"},"account":"5304b4b6-0899-4687-9334-d887f16cf9d2", "category": "Base"}
+{"date":"2023-01-21T00:00:00.000Z","source":"Supermarket","description":"Groceries","value":{"amount":"-35.75","currency":"€"},"account":"5304b4b6-0899-4687-9334-d887f16cf9d2", "category": "Base"}
+{"date":"2023-01-21T00:00:00.000Z","source":"Warehouse","description":"Plant","value":{"amount":"-3.99","currency":"€"},"account":"5304b4b6-0899-4687-9334-d887f16cf9d2", "category": "Disposable"}
+{"date":"2023-01-14T00:00:00.000Z","source":"Train","description":"Go to dinner","value":{"amount":"-3","currency":"€"},"account":"5304b4b6-0899-4687-9334-d887f16cf9d2", "category": "Base"}
+{"date":"2023-01-28T00:00:00.000Z","source":"Supermarket","description":"Groceries","value":{"amount":"-33.28","currency":"€"},"account":"5304b4b6-0899-4687-9334-d887f16cf9d2", "category": "Base"}
+{"date":"2023-01-28T00:00:00.000Z","source":"Supermarket","description":"Groceries","value":{"amount":"-12.8","currency":"€"},"account":"5304b4b6-0899-4687-9334-d887f16cf9d2", "category": "Base"}
+{"date":"2023-01-28T00:00:00.000Z","source":"Shop","description":"Wallets","value":{"amount":"-69.98","currency":"€"},"account":"5304b4b6-0899-4687-9334-d887f16cf9d2", "category": "Disposable"}
+{"date":"2023-01-24T00:00:00.000Z","source":"Company","description":"Salary","value":{"amount":"2500","currency":"€"},"account":"de8cd2e2-586c-453b-b208-c8e0833e0ff4"}
