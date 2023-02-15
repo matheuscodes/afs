@@ -27,7 +27,7 @@ jobs:
       with:
         type: 'zip'
         filename: 'release-win32-x64.zip'
-        path: 'out/afs-win32-x64'
+        directory: 'out/afs-win32-x64'
     - uses: ncipollo/release-action@v1.12.0
       name: Publish release
       with:
