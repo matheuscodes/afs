@@ -108,7 +108,7 @@ class LongTermService {
       const accounts: any = {}
       parseAccounts(accountList).forEach(account => accounts[account.id] = account);
 
-      const bookkeeping = files.filter(isNotEmpty).map(parseActivities).flatMap(x => x);
+      const bookkeeping = files.filter(isNotEmpty).map(parseActivities).flatMap((x:any) => x);
 
       const savings = bookkeeping.map((activity: any) => {
         activity.source = accounts[activity.source];

@@ -9,7 +9,7 @@ if (require('electron-squirrel-startup')) { // eslint-disable-line global-requir
   app.quit();
 }
 
-let mainWindow;
+let mainWindow: BrowserWindow;
 
 const createWindow = (): void => {
   // Create the browser window.
@@ -18,7 +18,6 @@ const createWindow = (): void => {
       nodeIntegration: false, // is default value after Electron v5
       sandbox: false,
       contextIsolation: true, // protect against prototype pollution
-      enableRemoteModule: false, // turn off remote
       preload: path.join(__dirname, "bridge.js") // use a preload script
     }
   });

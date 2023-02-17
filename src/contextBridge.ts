@@ -5,13 +5,13 @@ import { v4 as uuidv4 } from 'uuid'
 // the ipcRenderer without exposing the entire object
 contextBridge.exposeInMainWorld(
     "storage", {
-        appendData: (request) => {
+        appendData: (request: any) => {
             ipcRenderer.send("appendToStorageChannel", request);
         },
-        loadAllFiles: (request) => {
+        loadAllFiles: (request: any) => {
             ipcRenderer.send("loadFromStorageChannel", request);
         },
-        listenData: (pathPrefix, listener) => {
+        listenData: (pathPrefix: any, listener: any) => {
             ipcRenderer.on("fromStorageChannel", (event: any, request: any) => {
               if(request.path.startsWith(pathPrefix)) {
                 listener(request);
@@ -23,17 +23,17 @@ contextBridge.exposeInMainWorld(
 
 contextBridge.exposeInMainWorld(
   "filesystem", {
-    readFile: (filename) => {
+    readFile: (filename: string) => {
       return new Promise((resolve) => {
         const eventId = uuidv4();
         ipcRenderer.send("readFile", {filename, eventId});
-        ipcRenderer.on(`readFile-${eventId}`, (event: any, data: string) => {
+        ipcRenderer.on(`readFile-${eventId}`, (event: any, data: Buffer) => {
           resolve(new TextDecoder().decode(data))
         });
       });
     },
 
-    listFiles: (path) => {
+    listFiles: (path: string) => {
       return new Promise((resolve) => {
         const eventId = uuidv4();
         ipcRenderer.send("listFiles", {path, eventId});
@@ -43,7 +43,7 @@ contextBridge.exposeInMainWorld(
       });
     },
 
-    readDirectory: (path) => {
+    readDirectory: (path: string) => {
       return new Promise((resolve) => {
         const eventId = uuidv4();
         ipcRenderer.send("readDirectory", {path, eventId});
