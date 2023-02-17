@@ -74,7 +74,7 @@
     "@electron-forge/plugin-webpack": "6.0.4",
     "@marshallofsound/webpack-asset-relocator-loader": "0.5.0",
     "@types/electron": "1.6.10",
-    "@types/react-dom": "^18.0.10",
+    "@types/react-dom": "18.0.11",
     "@typescript-eslint/eslint-plugin": "4.16.1",
     "@typescript-eslint/parser": "4.16.1",
     "css-loader": "4.3.0",
