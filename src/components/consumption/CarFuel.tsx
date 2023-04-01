@@ -52,6 +52,7 @@ class CarFuel extends React.Component<any, any> {
         const key = fuel as keyof typeof Fuel;
         tankLevel[Fuel[key]] = 0;
     }
+    let pending: number[] = [];
     return <div key={`car-consumption-${index}`}>
       <p><strong>{car.name}</strong> - {car.mileage}km</p>
       <Table border>
@@ -92,15 +93,11 @@ class CarFuel extends React.Component<any, any> {
               lastMileage = entry.mileage;
             }
             let consumed = undefined;
-            if(entry.rest) {
-              consumed = tankLevel[entry.fuel] - entry.rest;
-              tankLevel[entry.fuel] = entry.rest + entry.tanked;
-            } else {
-              tankLevel[entry.fuel] += entry.tanked;
-              if(tankLevel[entry.fuel] > car.tanks[entry.fuel]) {
-                consumed = tankLevel[entry.fuel] - car.tanks[entry.fuel]
-                tankLevel[entry.fuel] = car.tanks[entry.fuel]
-              }
+            pending.push(entry.tanked);
+            if(entry.mileage) {
+              consumed = pending.reduce((a,b) => a+b, 0);
+              tankLevel[entry.fuel] = car.tanks[entry.fuel]
+              pending = [];
             }
             return this.renderRow(entry,index,traveled,tankLevel[entry.fuel], consumed)
           })

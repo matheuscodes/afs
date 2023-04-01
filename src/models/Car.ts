@@ -26,5 +26,4 @@ export interface CarTankEntry {
   paid: Charge,
   fuel: Fuel,
   type?: string,
-  rest?: number,
 }
