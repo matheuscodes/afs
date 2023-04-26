@@ -47,14 +47,36 @@ class CarFuel extends React.Component<any, any> {
 
   renderCar(car: Car, index: number) {
     let lastMileage = car.mileage;
+    let totalTanked = 0;
+    let totalPaid = 0;
     const tankLevel: Record<Fuel,number> = {} as Record<Fuel,number>;
     for(const fuel in Fuel) {
         const key = fuel as keyof typeof Fuel;
         tankLevel[Fuel[key]] = 0;
     }
     let pending: number[] = [];
+    const rows = car.tankEntries.map((entry, index) => {
+      let traveled = undefined;
+      if(entry.mileage) {
+        traveled = entry.mileage - lastMileage;
+        lastMileage = entry.mileage;
+      }
+      let consumed = undefined;
+      pending.push(entry.tanked);
+      if(entry.mileage) {
+        consumed = pending.reduce((a,b) => a+b, 0);
+        tankLevel[entry.fuel] = car.tanks[entry.fuel]
+        pending = [];
+      }
+      totalTanked += entry.tanked;
+      totalPaid += entry.paid.amount;
+      return this.renderRow(entry,index,traveled,tankLevel[entry.fuel], consumed)
+    });
+    const totalMileage = (lastMileage - car.mileage);
     return <div key={`car-consumption-${index}`}>
       <p><strong>{car.name}</strong> - {car.mileage}km</p>
+      <p><strong>{totalTanked.toFixed(2)} l</strong> - {totalPaid.toFixed(2)} € / {totalMileage}km - <strong>{(totalTanked * 100 / totalMileage).toFixed(2)} l/100km</strong></p>
+      <p><strong>{(totalTanked * 2.65).toFixed(2)} Kg CO² </strong> - {totalMileage*0.5} g CO, {totalMileage*0.09} g HC, {totalMileage*0.08} g NOx</p>
       <Table border>
         <Table.Head accountForScrollbar={false} height='3em'>
           <Table.TextHeaderCell>
@@ -86,21 +108,7 @@ class CarFuel extends React.Component<any, any> {
         </Table.Head>
         <Table.Body>
         {
-          car.tankEntries.map((entry, index) => {
-            let traveled = undefined;
-            if(entry.mileage) {
-              traveled = entry.mileage - lastMileage;
-              lastMileage = entry.mileage;
-            }
-            let consumed = undefined;
-            pending.push(entry.tanked);
-            if(entry.mileage) {
-              consumed = pending.reduce((a,b) => a+b, 0);
-              tankLevel[entry.fuel] = car.tanks[entry.fuel]
-              pending = [];
-            }
-            return this.renderRow(entry,index,traveled,tankLevel[entry.fuel], consumed)
-          })
+          rows
         }
         </Table.Body>
       </Table>

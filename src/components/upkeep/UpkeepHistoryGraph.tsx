@@ -10,8 +10,21 @@ import {
 import {
   Chart as ChartJS,
   CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
 } from 'chart.js'
-ChartJS.register(CategoryScale)
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Tooltip,
+  Legend
+);
 import { Line } from 'react-chartjs-2';
 import LongTermService from '../../services/LongTermService';
 
@@ -72,7 +85,14 @@ const data: any = {
   ],
 };
 
-const options: any = {};
+const options: any = {
+  responsive: true,
+  plugins: {
+    legend: {
+      position: 'top' as const,
+    },
+  },
+};
 
 const monthCalories = 30 * 2000;
 
