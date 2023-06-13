@@ -79,7 +79,7 @@ class LongTermService {
       report[`${half.year}`][`${half.period}`].housing = housing;
 
       if(typeof half.car !== 'undefined') {
-        const car = half.car.maintenance.amount + (halfKm / 100) * half.car.consumption * half.car.fuel.amount;
+        const car = half.car.maintenance.amount + (halfKm / 100) * half.car.consumption * half.car.fuel.amount + (half.car.loan ? half.car.loan.amount : 0);
         if(car > 0) {
           report[`${half.year}`][`${half.period}`].car = (car / 6 /*months*/) / firstSalary.amount;
         }
