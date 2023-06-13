@@ -84,7 +84,7 @@ export default class ActivitiesTable extends React.Component<any, any> {
       const sources = filter([activity.source], sourceQuery)
       return sourceQuery.length === 0 || sources.length === 1;
     }).filter((activity: any) => {
-      const descriptions = filter([activity.description], descriptionQuery)
+      const descriptions = filter([activity.description, activity.category], descriptionQuery)
       return descriptionQuery.length === 0 || descriptions.length === 1;
     })
   }

@@ -86,7 +86,7 @@ class Savings extends React.Component<any, any> {
                             {fund}
                           </Table.TextCell>
                           <Table.TextCell>
-                            {account.funds[fund]} €
+                            {account.funds[fund].toFixed(2)} €
                           </Table.TextCell>
                         </Table.Row>
                       )
