@@ -94,14 +94,25 @@ class PropertyInvestments extends React.Component<any, any> {
 
     filled.labels = Object.keys(grouped);
     filled.datasets[0].data = filled.labels.map((i: any) => grouped[i].average);
-    console.log("hej", filled)
+    filled.mostRecent = filled.datasets[0].data[filled.datasets[0].data.length - 1];
     return filled;
   }
 
   getPropertyReport() {
+    const report = this.getReport();
+    const initialPrice = this.state.selectedProperty.purchasePrice.amount || 0;
+    const currentPrice = (report.mostRecent * this.state.selectedProperty.area) || 0;
+    const profit = currentPrice - initialPrice;
     return <div>
       <h2>{this.state.selectedProperty.name}</h2>
-      <Line data={this.getReport()} options={options} />
+      <p>{this.state.selectedProperty.address}</p>
+      <p>
+        <strong>Area:</strong> {this.state.selectedProperty.area} m² <br/>
+        <strong>Initial Price:</strong> {initialPrice.toFixed(2)} {this.state.selectedProperty.purchasePrice.currency} <br/>
+        <strong>Current Price:</strong> {currentPrice.toFixed(2)} {this.state.selectedProperty.purchasePrice.currency} &emsp;
+        <span style={{color:(profit > 0 ? 'green' : 'red')}}> {profit > 0 ? '+' : '-'}{profit}  {this.state.selectedProperty.purchasePrice.currency}</span>
+      </p>
+      <Line data={report} options={options} />
     </div>
   }
 
