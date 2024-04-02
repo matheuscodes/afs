@@ -153,6 +153,7 @@ class Gas extends React.Component<any, any> {
         this.state.selectedHome && this.state.selectedHome.gas ?
         Object.keys(this.state.selectedHome.gas).map(meter =>
           <div key={meter} >
+            <h2>{meter}</h2>
             <div>
               {this.getBills(this.state.selectedHome.gas[meter]).map((bill,index) =>
                 <Pane
