@@ -75,7 +75,7 @@
     "@marshallofsound/webpack-asset-relocator-loader": "0.5.0",
     "@types/electron": "1.6.10",
     "@types/react-dom": "18.2.24",
-    "@typescript-eslint/eslint-plugin": "7.5.0",
+    "@typescript-eslint/eslint-plugin": "7.6.0",
     "@typescript-eslint/parser": "7.5.0",
     "css-loader": "6.10.0",
     "electron": "29.2.0",
