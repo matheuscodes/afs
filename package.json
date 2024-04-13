@@ -85,7 +85,7 @@
     "node-loader": "2.0.0",
     "style-loader": "3.3.4",
     "ts-loader": "9.5.1",
-    "typescript": "5.4.4"
+    "typescript": "5.4.5"
   },
   "dependencies": {
     "@redux-devtools/extension": "3.3.0",
