@@ -70,7 +70,7 @@
     "@electron-forge/maker-deb": "7.3.1",
     "@electron-forge/maker-rpm": "7.4.0",
     "@electron-forge/maker-squirrel": "7.3.1",
-    "@electron-forge/maker-zip": "7.3.1",
+    "@electron-forge/maker-zip": "7.4.0",
     "@electron-forge/plugin-webpack": "7.3.1",
     "@marshallofsound/webpack-asset-relocator-loader": "0.5.0",
     "@types/electron": "1.6.10",
