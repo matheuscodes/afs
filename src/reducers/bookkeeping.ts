@@ -1,7 +1,6 @@
 import { BOOKKEEPING, ADD_ACTIVITY, LOAD_ACTIVITIES } from '../actions/bookkeeping'
 
 export default (state: any[] = [], action: any) => {
-  console.log("bookkeeping reducer", action)
   if(action.type === BOOKKEEPING) {
     switch (action.operation) {
       case ADD_ACTIVITY:

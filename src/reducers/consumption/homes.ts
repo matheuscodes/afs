@@ -2,7 +2,6 @@ import { Home, MeterPrice, Heater } from '../../models/Home'
 import { HOME_CONSUMPTION, UPDATE_HOMES, UPDATE_ELECTRICITY, UPDATE_GAS, UPDATE_WATER, UPDATE_HEATING } from '../../actions/consumption/home'
 
 export default (state: Record<string, Home> = {}, action: any) => {
-  console.log("home reducer", action);
   const sortByDateAsc = (a: any, b: any) => new Date(a.date).getTime() - new Date(b.date).getTime()
   const sortByDateDesc = (a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime()
   if(action.type === HOME_CONSUMPTION) {

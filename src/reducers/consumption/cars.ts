@@ -2,7 +2,6 @@ import { Car, CarTankEntry } from '../../models/Car'
 import { CAR_CONSUMPTION, UPDATE_CARS, UPDATE_CAR_TANK_ENTRIES } from '../../actions/consumption/car'
 
 export default (state: Record<string, Car> = {}, action: any) => {
-  console.log("car reducer", action);
   if(action.type === CAR_CONSUMPTION) {
     switch (action.operation) {
       case UPDATE_CARS:
