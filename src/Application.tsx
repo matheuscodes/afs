@@ -8,6 +8,7 @@ import Electricity from "./components/consumption/Electricity"
 import Upkeep from "./components/upkeep"
 import Savings from "./components/finances/savings"
 import PropertyInvestments from "./components/finances/investments/PropertyInvestments"
+import BookkeepingReports from "./components/finances/bookkeeping/BookkeepingReports"
 
 class Application extends React.Component<any, any> {
   constructor(props: any) {
@@ -20,6 +21,7 @@ class Application extends React.Component<any, any> {
         <Route path="/" element={<p>Nothing</p>} />
         <Route path="/car/fuel" element={<CarFuel />} />
         <Route path="/finances/bookkeeping" element={<Bookkeeping />} />
+        <Route path="/finances/bookkeeping/reports" element={<BookkeepingReports />} />
         <Route path="/finances/savings" element={<Savings />} />
         <Route path="/finances/upkeep" element={<Upkeep />} />
         <Route path="/finances/investments/properties" element={<PropertyInvestments />} />

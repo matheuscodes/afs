@@ -27,10 +27,21 @@ const createWindow = (): void => {
         label: 'Finances',
         submenu: [
           {
-              label: 'Bookkeeping',
-              click() {
-                  mainWindow.loadURL(`${MAIN_WINDOW_WEBPACK_ENTRY}#/finances/bookkeeping`);
-              }
+            label: 'Bookkeeping',
+            submenu: [
+              {
+                  label: 'Details',
+                  click() {
+                      mainWindow.loadURL(`${MAIN_WINDOW_WEBPACK_ENTRY}#/finances/bookkeeping`);
+                  }
+              },
+              {
+                  label: 'Reports',
+                  click() {
+                      mainWindow.loadURL(`${MAIN_WINDOW_WEBPACK_ENTRY}#/finances/bookkeeping/reports`);
+                  }
+              },
+            ]
           },
           {
               label: 'Savings',

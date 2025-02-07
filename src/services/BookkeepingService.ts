@@ -14,6 +14,30 @@ interface SmallActivity {
   category: string,
 }
 
+
+type Categories = string;
+type Data = {
+  label: string;
+  data: number[];
+  backgroundColor: string;
+}
+type CategorizedData = {
+  [key in Categories]: Data;
+}
+
+const categoryColor: {[key in string]: string} = {}
+
+function getRandomColor(category: string): any {
+    if(categoryColor[category]) return categoryColor[category];
+    const letters = '0123456789ABCDEF'.split('');
+    let color = '#';
+    for (var x = 0; x < 6; x++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    categoryColor[category] = color;
+    return color;
+}
+
 class Bookkeeping {
   openRequests: any = {}
 
@@ -247,6 +271,66 @@ class Bookkeeping {
       accounts: thisMonthPerAccount,
     }
 
+  }
+  yearlyOverview(activities: Activity[]): CategorizedData {
+    const years = {}
+    activities.reduce((report: any, current: Activity) => {
+        const year = current.date.toJSON().substring(0,4);
+        const month = parseInt(current.date.toJSON().substring(5,7)) - 1;
+        if (!report[year]) {
+            report[year] = {};
+        }
+        const category = current.category || 'Other';
+        if (!report[year][category]) {
+            report[year][category] = {
+                label: category,
+                data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                backgroundColor: getRandomColor(category),
+            }
+        }
+        const data = report[year][category].data;
+        if ((!current.transfer && current.value.amount < 0) || (current.transfer && category != 'Other')) {
+            if(current.value.amount > -5000) {
+                data[month] -= current.value.amount;
+            }
+        }
+        return report;
+    }, years)
+    return years;
+  }
+
+  categoryOverview(report: CategorizedData): any[] {
+    return Object.values(report).map(a => ({
+        label: a.label,
+        data: [{x: a.label, y: (a.data || []).reduce((a,b) => a + b, 0)/(a.data || []).filter(a => a > 0).length}],
+        backgroundColor: a.backgroundColor,
+    }))
+  }
+
+  categorySources(activities: Activity[], year: string): any {
+    const relevant = activities.filter(a => a.date.toJSON().startsWith(year));
+    const categories: {[key in string]: any} = {}
+    relevant.forEach((activity: Activity) => {
+        const month = parseInt(activity.date.toJSON().substring(5,7)) - 1;
+        const category = activity.category || 'Other';
+        if(!categories[category]) {
+            categories[category] = {}
+        }
+        if(!categories[category][activity.source]) {
+           categories[category][activity.source] = {
+              label: activity.source,
+              data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+              backgroundColor: getRandomColor(activity.source),
+          }
+        }
+        const data = categories[category][activity.source].data;
+        if ((!activity.transfer && activity.value.amount < 0) || (activity.transfer && category != 'Other')) {
+            if(activity.value.amount > -5000) {
+                data[month] -= activity.value.amount;
+            }
+        }
+    });
+    return categories;
   }
 }
 
