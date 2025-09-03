@@ -272,7 +272,7 @@ class Bookkeeping {
     }
 
   }
-  yearlyOverview(activities: Activity[]): CategorizedData {
+  yearlyOverview(activities: Activity[]): { [year: string]: CategorizedData } {
     const years = {}
     activities.reduce((report: any, current: Activity) => {
         const year = current.date.toJSON().substring(0,4);
@@ -299,7 +299,7 @@ class Bookkeeping {
     return years;
   }
 
-  categoryOverview(report: CategorizedData): any[] {
+  categoryOverview(report: CategorizedData = {}): any[] {
     return Object.values(report).map(a => ({
         label: a.label,
         data: [{x: a.label, y: (a.data || []).reduce((a,b) => a + b, 0)/(a.data || []).filter(a => a > 0).length}],

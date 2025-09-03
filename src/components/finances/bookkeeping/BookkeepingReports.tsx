@@ -17,6 +17,8 @@ import {
   Tooltip,
   Legend,
   ChartDatasetProperties,
+  ChartDataset,
+  ChartData
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 
@@ -101,13 +103,13 @@ class BookkeepingReports extends React.Component<any, any> {
 
   render() {
     const overviews = BookkeepingService.yearlyOverview(this.props.bookkeeping);
-
-    const data = {
+    const overviewDataset:ChartDataset<"bar", (number | [number, number])[]>[] = Object.values(overviews[this.state.year] || {});
+    const data: ChartData<"bar", (number | [number, number])[], unknown> = {
       labels,
-      datasets: Object.values(overviews[this.state.year] || {}),
+      datasets: overviewDataset,
     };
 
-    const datasets = BookkeepingService.categoryOverview(overviews[this.state.year] || {});
+    const datasets = BookkeepingService.categoryOverview(overviews[this.state.year]);
     const anotherData = {
       datasets,
     }
@@ -116,21 +118,21 @@ class BookkeepingReports extends React.Component<any, any> {
     const details = BookkeepingService.categorySources(this.props.bookkeeping, this.state.year);
     const sum = (a: any,b: any) => (a + b);
     const sorting = (a: any,b: any) => (b.data.reduce(sum, 0) - a.data.reduce(sum, 0));
-    const other = Object.values(details['Other'] || {});
+    const other:ChartDataset<"bar", (number | [number, number])[]>[] = Object.values(details['Other'] || {});
     other.sort(sorting);
-    const otherData = {
+    const otherData:ChartData<"bar", (number | [number, number])[], unknown> = {
       labels,
       datasets: other,
     };
-    const base = Object.values(details['Base'] || {});
+    const base:ChartDataset<"bar", (number | [number, number])[]>[] = Object.values(details['Base'] || {});
     base.sort(sorting);
     const baseData = {
       labels,
       datasets: base,
     };
-    const disposable = Object.values(details['Disposable'] || {});
+    const disposable :ChartDataset<"bar", (number | [number, number])[]>[] = Object.values(details['Disposable'] || {});
     disposable.sort(sorting);
-    const disposableData = {
+    const disposableData: ChartData<"bar", (number | [number, number])[], unknown> = {
       labels,
       datasets: disposable,
     };

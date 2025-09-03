@@ -160,7 +160,7 @@ ipcMain.on("loadFromStorageChannel", (event, request) => {
   }
   request.data = fs.readdirSync(`${ROOT_PATH}/${request.path}`)
     .map(i => fs.readFileSync(`${ROOT_PATH}/${request.path}/${i}`))
-    .join('')
+    .join('\n')
   mainWindow.webContents.send("fromStorageChannel", request);
 });
 

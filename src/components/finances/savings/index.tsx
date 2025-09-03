@@ -73,9 +73,9 @@ class Savings extends React.Component<any, any> {
             summary[bank].map((account: any) =>
               <div key={`savings-account-${account.name}`}>
                 <h3>{account.name}</h3>
-                Total: {Math.floor(-account.total) !== 0 ? account.total.toFixed(2) : '-'} €
+                Total: {parseInt(account.total.toFixed(2)) === 0 ? '-' : account.total.toFixed(2)} €
                 {
-                  account.total <= 0 ? '' :
+                  Math.floor(account.total) <= 0 ? '' :
                   <Table>
                     <Table.Body>
                     {
