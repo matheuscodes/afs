@@ -29,11 +29,15 @@ const categoryColor: {[key in string]: string} = {}
 
 function getRandomColor(category: string): any {
     if(categoryColor[category]) return categoryColor[category];
-    const letters = '0123456789ABCDEF'.split('');
-    let color = '#';
-    for (var x = 0; x < 6; x++) {
-      color += letters[Math.floor(Math.random() * 16)];
+    // Simple hash function (djb2)
+    let hash = 5381;
+    for (let i = 0; i < category.length; i++) {
+        hash = (hash * 33) ^ category.charCodeAt(i);
     }
+
+    // Convert hash to 6-digit hex
+    const color = "#" + ((hash >>> 0) & 0xFFFFFF).toString(16).padStart(6, "0");
+
     categoryColor[category] = color;
     return color;
 }
@@ -332,6 +336,32 @@ class Bookkeeping {
     });
     return categories;
   }
+
+    categoryDescriptions(activities: Activity[], year: string): any {
+      const relevant = activities.filter(a => a.date.toJSON().startsWith(year));
+      const categories: {[key in string]: any} = {}
+      relevant.forEach((activity: Activity) => {
+          const month = parseInt(activity.date.toJSON().substring(5,7)) - 1;
+          const category = activity.category || 'Other';
+          if(!categories[category]) {
+              categories[category] = {}
+          }
+          if(!categories[category][activity.description]) {
+             categories[category][activity.description] = {
+                label: activity.description,
+                data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                backgroundColor: getRandomColor(activity.description),
+            }
+          }
+          const data = categories[category][activity.description].data;
+          if ((!activity.transfer && activity.value.amount < 0) || (activity.transfer && category != 'Other')) {
+              if(activity.value.amount > -5000) {
+                  data[month] -= activity.value.amount;
+              }
+          }
+      });
+      return categories;
+    }
 }
 
 export default new Bookkeeping();

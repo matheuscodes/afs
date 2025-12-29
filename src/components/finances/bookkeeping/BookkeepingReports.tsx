@@ -115,7 +115,7 @@ class BookkeepingReports extends React.Component<any, any> {
     }
 
 
-    const details = BookkeepingService.categorySources(this.props.bookkeeping, this.state.year);
+    let details = BookkeepingService.categorySources(this.props.bookkeeping, this.state.year);
     const sum = (a: any,b: any) => (a + b);
     const sorting = (a: any,b: any) => (b.data.reduce(sum, 0) - a.data.reduce(sum, 0));
     const other:ChartDataset<"bar", (number | [number, number])[]>[] = Object.values(details['Other'] || {});
@@ -124,17 +124,19 @@ class BookkeepingReports extends React.Component<any, any> {
       labels,
       datasets: other,
     };
-    const base:ChartDataset<"bar", (number | [number, number])[]>[] = Object.values(details['Base'] || {});
-    base.sort(sorting);
-    const baseData = {
-      labels,
-      datasets: base,
-    };
     const disposable :ChartDataset<"bar", (number | [number, number])[]>[] = Object.values(details['Disposable'] || {});
     disposable.sort(sorting);
     const disposableData: ChartData<"bar", (number | [number, number])[], unknown> = {
       labels,
       datasets: disposable,
+    };
+
+    details = BookkeepingService.categoryDescriptions(this.props.bookkeeping, this.state.year);
+    const base:ChartDataset<"bar", (number | [number, number])[]>[] = Object.values(details['Base'] || {});
+    base.sort(sorting);
+    const baseData = {
+      labels,
+      datasets: base,
     };
 
     return <div>
