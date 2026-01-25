@@ -68,11 +68,13 @@ class Upkeep extends React.Component<any, any> {
               columns={{
                 "Maintenance": (half: any) => half.car ? <div>{(half.car.maintenance.amount).toFixed(2)} {half.car.maintenance.currency}</div> : '',
                 "Insurance": (half: any) => half.car ? <div>{(half.car.insurance.amount).toFixed(2)} {half.car.insurance.currency}</div> : '',
-                "Fuel": (half: any) => half.car ? <div>{(half.car.fuel.amount).toFixed(2)} {half.car.fuel.currency}</div> : '',
-                "Consumption": (half: any) => half.car ? <div>{(half.car.consumption).toFixed(2)} l/100km</div> : '',
-                "Total": (half: any) => half.car ? <strong>{
+                "Fuel": (half: any) => half.car && half.car.fuel ? <div>{(half.car.fuel.amount).toFixed(2)} {half.car.fuel.currency}</div> : '',
+                "Consumption": (half: any) => half.car && half.car.consumption ? <div>{(half.car.consumption).toFixed(2)} l/100km</div> : '',
+                "Total": (half: any) => half.car && half.car.fuel ? <strong>{
                   (half.car.maintenance.amount + half.car.insurance.amount + ((2500/100)*half.car.consumption*half.car.fuel.amount)).toFixed(2)
-                } {half.car.maintenance.currency}</strong> : '',
+                } {half.car.maintenance.currency}</strong> : (half.car && half.car.km ? <strong>{
+                   (half.car.maintenance.amount + half.car.insurance.amount + (half.car.km*half.car.kmPrice.amount)).toFixed(2)
+                 } {half.car.maintenance.currency}</strong> : ''),
               }}
               data={this.props.longTerm.upkeep} />
 

@@ -79,17 +79,54 @@ class LongTermService {
       report[`${half.year}`][`${half.period}`].housing = housing;
 
       if(typeof half.car !== 'undefined') {
-        const car = half.car.maintenance.amount + (halfKm / 100) * half.car.consumption * half.car.fuel.amount + (half.car.loan ? half.car.loan.amount : 0);
+        let car = 0;
+        if(half.car.consumption) {
+          car = half.car.maintenance.amount + (halfKm / 100) * half.car.consumption * half.car.fuel.amount + (half.car.loan ? half.car.loan.amount : 0);
+        } else if(half.car.km) {
+          car = half.car.maintenance.amount + (half.car.km * half.car.kmPrice.amount) + (half.car.loan ? half.car.loan.amount : 0);
+        }
         if(car > 0) {
           report[`${half.year}`][`${half.period}`].car = (car / 6 /*months*/) / firstSalary.amount;
         }
       }
 
     });
+    const inflation = {
+    }
+    Object.keys(report).forEach(year => {
+        if(!inflation[year]) {
+            inflation[year] = {}
+        }
+        Object.keys(report[year]).forEach(period => {
+            Object.keys(report[year][period]).forEach(metric => {
+                if(!inflation[year][metric]) {
+                    inflation[year][metric] = 0
+                }
+                inflation[year][metric] += (report[year][period][metric] / 2)
+            })
+            inflation[year]["costs"] = (inflation[year].housing || 0) + (inflation[year].groceries || 0) + (inflation[year].pet || 0) + (inflation[year].car || 0)
+        })
+    })
 
+    const thisYear = new Date().getFullYear()
+    for(let year = thisYear; year > 2009; year -= 1) {
+        Object.keys(inflation[year]).forEach(metric => {
+            if(inflation[year-1][metric] > 0) {
+                inflation[year][metric] = (inflation[year][metric] || 0) / inflation[year-1][metric]
+            } else if (inflation[year][metric] > 0) {
+                inflation[year][metric] = 100000
+            } else {
+                inflation[year][metric] = 0
+            }
+
+            inflation[year][metric] = (inflation[year][metric] - 1) * 100
+        })
+    }
+    delete inflation["2009"]
     return {
       base: firstSalary,
-      report
+      report,
+      inflation,
     };
   }
 

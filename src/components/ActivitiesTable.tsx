@@ -81,11 +81,15 @@ export default class ActivitiesTable extends React.Component<any, any> {
     if (sourceQuery.length === 0 && descriptionQuery.length === 0) return activities;
 
     return activities.filter((activity: any )=> {
-      const sources = filter([activity.source], sourceQuery)
-      return sourceQuery.length === 0 || sources.length === 1;
+      if(sourceQuery && activity.source) {
+        return (activity.source).includes(sourceQuery)
+      }
+      return true
     }).filter((activity: any) => {
-      const descriptions = filter([activity.description, activity.category], descriptionQuery)
-      return descriptionQuery.length === 0 || descriptions.length === 1;
+      if(descriptionQuery && activity.description) {
+        return (`${activity.description} ${activity.category}`).includes(descriptionQuery)
+      }
+      return true
     })
   }
 

@@ -101,8 +101,7 @@ class DetailsTable extends React.Component<any, any> {
     super(props);
   }
 
-  convertReport() {
-    const converted = LongTermService.calculateUpkeepReport(this.props.data);
+  convertReport(converted) {
     const filled = JSON.parse(JSON.stringify(data));
     const forecast: any = {
       income: 0,
@@ -115,6 +114,7 @@ class DetailsTable extends React.Component<any, any> {
     if(typeof converted.report !== 'undefined') {
       Object.keys(converted.report).forEach(year => {
         Object.keys(converted.report[year]).forEach(period => {
+          const amortization = new Date().getFullYear() - parseInt(year) + 1
           const axis = `${year}${period}`;
           const item = converted.report[year][period];
           filled.labels.push(axis);
@@ -125,17 +125,17 @@ class DetailsTable extends React.Component<any, any> {
             - (item.car || 0)
             - (item.savings || 0);
           filled.datasets[label.income].data.push(freeIncome);
-          forecast.income = (forecast.income + (item.income || 0)) / 2;
+          forecast.income = (amortization*forecast.income + (item.income || 0)) / (amortization + 1);
           filled.datasets[label.housing].data.push(item.housing);
-          forecast.housing = (forecast.housing + (item.housing || 0)) / 2;
+          forecast.housing = (amortization*forecast.housing + (item.housing || 0)) / (amortization + 1);
           filled.datasets[label.groceries].data.push(item.groceries);
-          forecast.groceries = (forecast.groceries + (item.groceries || 0)) / 2;
+          forecast.groceries = (amortization*forecast.groceries + (item.groceries || 0)) / (amortization + 1);
           filled.datasets[label.pet].data.push(item.pet);
-          forecast.pet = (forecast.pet + (item.pet || 0)) / 2;
+          forecast.pet = (amortization*forecast.pet + (item.pet || 0)) / (amortization + 1);
           filled.datasets[label.car].data.push(item.car);
-          forecast.car = (forecast.car + (item.car || 0)) / 2;
+          forecast.car = (amortization*forecast.car + (item.car || 0)) / (amortization + 1);
           filled.datasets[label.savings].data.push(item.savings);
-          forecast.savings = (forecast.savings + (item.savings || 0)) / 2;
+          forecast.savings = (forecast.savings + (item.savings || 0) / amortization) / (amortization + 1);
         });
       });
     }
@@ -157,11 +157,54 @@ class DetailsTable extends React.Component<any, any> {
   }
 
   render() {
+    const converted = LongTermService.calculateUpkeepReport(this.props.data);
+    console.log(converted)
+    const years = []
+    const thisYear = new Date().getFullYear()
+    for(let i = 2010; i <= thisYear; i+=1) {
+        years.push(i)
+    }
     return <div>
       <div className='header'>
         <h2 className='title'>History</h2>
+        {  converted.inflation ?
+            <Table border>
+              <Table.Body>
+
+              <Table.Head accountForScrollbar={false}>
+                <Table.TextHeaderCell>Metric</Table.TextHeaderCell>
+                { years.map((i) => (<Table.TextHeaderCell>{i}</Table.TextHeaderCell>)) }
+              </Table.Head>
+                <Table.Row height={'auto'}>
+                    <Table.TextCell>Income</Table.TextCell>
+                    { years.map((i) => (<Table.TextCell>{converted.inflation[i].income ? converted.inflation[i].income.toFixed(2) + '%' : '-'}</Table.TextCell>)) }
+                </Table.Row>
+                <Table.Row height={'auto'}>
+                    <Table.TextCell>Housing</Table.TextCell>
+                    { years.map((i) => (<Table.TextCell>{converted.inflation[i].housing ? converted.inflation[i].housing.toFixed(2) + '%' : '-'}</Table.TextCell>)) }
+                </Table.Row>
+                <Table.Row height={'auto'}>
+                    <Table.TextCell>Groceries</Table.TextCell>
+                    { years.map((i) => (<Table.TextCell>{converted.inflation[i].groceries ? converted.inflation[i].groceries.toFixed(2) + '%' : '-'}</Table.TextCell>)) }
+                </Table.Row>
+                <Table.Row height={'auto'}>
+                    <Table.TextCell>Pet</Table.TextCell>
+                    { years.map((i) => (<Table.TextCell>{converted.inflation[i].pet ? converted.inflation[i].pet.toFixed(2) + '%' : '-'}</Table.TextCell>)) }
+                </Table.Row>
+                <Table.Row height={'auto'}>
+                    <Table.TextCell>Car</Table.TextCell>
+                    { years.map((i) => (<Table.TextCell>{converted.inflation[i].car ? converted.inflation[i].car.toFixed(2) + '%' : '-'}</Table.TextCell>)) }
+                </Table.Row>
+                <Table.Head accountForScrollbar={false}>
+                    <Table.TextHeaderCell><strong>Total Inflation</strong></Table.TextHeaderCell>
+                    { years.map((i) => (<Table.TextHeaderCell><strong>{converted.inflation[i].costs ? converted.inflation[i].costs.toFixed(2) + '%' : '-'}</strong></Table.TextHeaderCell>)) }
+                </Table.Head>
+              </Table.Body>
+            </Table>
+            : ""
+        }
       </div>
-      <Line data={this.convertReport()} options={options} />
+      <Line data={this.convertReport(converted)} options={options} />
     </div>
   }
 }
