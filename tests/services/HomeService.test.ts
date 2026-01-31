@@ -29,18 +29,8 @@ import {
 } from '../../src/actions/consumption/home';
 
 describe('HomeService', () => {
-  const originalWindow = (global as any).window;
-
   beforeEach(() => {
     jest.clearAllMocks();
-    (global as any).window = originalWindow || {};
-    (global as any).window.filesystem = {
-      readFile: jest.fn(),
-    };
-  });
-
-  afterEach(() => {
-    (global as any).window = originalWindow;
   });
 
   test('fetchHomes dispatches parsed homes and skips empty lines', async () => {

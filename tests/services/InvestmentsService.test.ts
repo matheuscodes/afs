@@ -8,18 +8,9 @@ jest.mock('../../src/actions/investments/property', () => ({
 import { updateProperties, updateProperty } from '../../src/actions/investments/property';
 
 describe('InvestmentsService', () => {
-  const originalWindow = (global as any).window;
 
   beforeEach(() => {
     jest.clearAllMocks();
-    (global as any).window = originalWindow || {};
-    (global as any).window.filesystem = {
-      readFile: jest.fn(),
-    };
-  });
-
-  afterEach(() => {
-    (global as any).window = originalWindow;
   });
 
   test('fetchProperties parses multiple JSON lines, skipping empty lines, and dispatches updateProperties', async () => {
