@@ -5,6 +5,8 @@
   "description": "My Electron application description",
   "main": ".webpack/main",
   "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch",
     "start": "electron-forge start",
     "package-windows": "electron-forge package --arch x64 --platform win32 && cp -R base out/afs-win32-x64/storage",
     "package-linux": "electron-forge package --arch x64 --platform linux && cp -R base out/afs-linux-x64/storage",
@@ -66,6 +68,12 @@
     }
   },
   "devDependencies": {
+    "jest": "29.7.0",
+    "ts-jest": "29.1.1",
+    "@types/jest": "29.5.12",
+    "@testing-library/react": "14.1.2",
+    "@testing-library/jest-dom": "6.1.5",
+    "jest-environment-jsdom": "29.7.0",
     "@electron-forge/cli": "7.4.0",
     "@electron-forge/maker-deb": "7.4.0",
     "@electron-forge/maker-rpm": "7.4.0",

@@ -58,7 +58,6 @@ class Bookkeeping {
   }
 
   updateData(request: any) {
-    console.log("updateData", request);
     const { action, dispatch, dataParser } = this.openRequests[request.requestId];
     dispatch(action(dataParser(request.data)));
   }
