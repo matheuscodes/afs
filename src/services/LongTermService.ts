@@ -3,7 +3,7 @@ import { parseActivities } from '../models/Activity';
 import { parseAccounts } from '../models/Account';
 
 function isNotEmpty(str: string) {
-  return str &&  str.length > 0;
+  return str && str.trim().length > 0;
 }
 
 function parse(str: string) {
@@ -12,6 +12,9 @@ function parse(str: string) {
 
 const monthCalories = 30 * 2000;
 const halfKm = 2500;
+
+type InflationYearMetrics = Record<string, number>;
+type InflationMap = Record<number | string, InflationYearMetrics>;
 
 class LongTermService {
   loadUpkeeps() {
@@ -91,7 +94,7 @@ class LongTermService {
       }
 
     });
-    const inflation = {
+    const inflation: InflationMap = {
     }
     Object.keys(report).forEach(year => {
         if(!inflation[year]) {
