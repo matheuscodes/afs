@@ -3,7 +3,7 @@ import { parseActivities } from '../models/Activity';
 import { parseAccounts } from '../models/Account';
 
 function isNotEmpty(str: string) {
-  return str &&  str.trim().length > 0;
+  return str && str.trim().length > 0;
 }
 
 function parse(str: string) {
