@@ -9,8 +9,11 @@ import { Currency } from '../../../../src/models/Activity';
 
 // Mock the InvestmentsService to prevent actual file I/O
 jest.mock('../../../../src/services/InvestmentsService', () => ({
-  loadProperties: jest.fn(() => Promise.resolve({ type: 'LOAD_PROPERTIES', payload: {} })),
-  writeProperty: jest.fn(() => Promise.resolve({ type: 'WRITE_PROPERTY' }))
+  default: {
+    loadProperties: jest.fn(() => Promise.resolve({ type: 'LOAD_PROPERTIES', payload: {} })),
+    fetchProperties: jest.fn(() => (dispatch: any) => Promise.resolve()),
+    writeProperty: jest.fn(() => Promise.resolve({ type: 'WRITE_PROPERTY' }))
+  }
 }));
 
 const mockStore = configureStore([thunk]);

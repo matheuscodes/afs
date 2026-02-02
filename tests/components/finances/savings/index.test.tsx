@@ -9,8 +9,11 @@ import { Currency } from '../../../../src/models/Activity';
 
 // Mock the LongTermService to prevent actual file I/O
 jest.mock('../../../../src/services/LongTermService', () => ({
-  loadSavings: jest.fn(() => Promise.resolve({ type: 'LOAD_SAVINGS', payload: [] })),
-  writeSaving: jest.fn(() => Promise.resolve({ type: 'WRITE_SAVING' }))
+  default: {
+    loadSavings: jest.fn(() => Promise.resolve({ type: 'LOAD_SAVINGS', payload: [] })),
+    fetchSavings: jest.fn(() => (dispatch: any) => Promise.resolve()),
+    writeSaving: jest.fn(() => Promise.resolve({ type: 'WRITE_SAVING' }))
+  }
 }));
 
 const mockStore = configureStore([thunk]);

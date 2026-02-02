@@ -56,7 +56,7 @@ describe('BookkeepingReports', () => {
         <BookkeepingReports />
       </Provider>
     );
-    expect(container.querySelector('h1')).toHaveTextContent('Bookkeeping Reports');
+    expect(container.querySelector('h1')).toHaveTextContent('Reports');
   });
 
   test('componentDidMount calls fetchActivities', () => {

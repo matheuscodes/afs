@@ -19,5 +19,7 @@ module.exports = {
   },
   transformIgnorePatterns: [
     'node_modules/(?!(uuid)/)'
-  ]
+  ],
+  maxWorkers: 2,
+  workerIdleMemoryLimit: '512MB'
 };
