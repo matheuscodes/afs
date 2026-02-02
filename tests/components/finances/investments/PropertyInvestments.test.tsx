@@ -6,14 +6,12 @@ import configureStore from 'redux-mock-store';
 import { thunk } from 'redux-thunk';
 import PropertyInvestments from '../../../../src/components/finances/investments/PropertyInvestments';
 import { Currency } from '../../../../src/models/Activity';
+import { updateProperties, updateProperty } from '../../../../src/actions/investments/property';
 
 // Mock the InvestmentsService to prevent actual file I/O
 jest.mock('../../../../src/services/InvestmentsService', () => ({
-  default: {
-    loadProperties: jest.fn(() => Promise.resolve({ type: 'LOAD_PROPERTIES', payload: {} })),
-    fetchProperties: jest.fn(() => (dispatch: any) => Promise.resolve()),
-    writeProperty: jest.fn(() => Promise.resolve({ type: 'WRITE_PROPERTY' }))
-  }
+  fetchProperties: jest.fn(() => updateProperties([])),
+  fetchProperty: jest.fn(() => updateProperty("123", []))
 }));
 
 const mockStore = configureStore([thunk]);
@@ -49,7 +47,7 @@ describe('PropertyInvestments', () => {
         <PropertyInvestments />
       </Provider>
     );
-    expect(container.querySelector('h1')).toHaveTextContent('Property Investments');
+    expect(container.querySelector('h1')).toHaveTextContent('Properties');
   });
 
   test('componentDidMount calls fetchProperties', async () => {
