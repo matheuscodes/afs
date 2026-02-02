@@ -3,10 +3,11 @@ import { Provider } from 'react-redux';
 import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import configureStore from 'redux-mock-store';
+import { thunk } from 'redux-thunk';
 import PropertyInvestments from '../../../../src/components/finances/investments/PropertyInvestments';
 import { Currency } from '../../../../src/models/Activity';
 
-const mockStore = configureStore([]);
+const mockStore = configureStore([thunk]);
 
 describe('PropertyInvestments', () => {
   const mockProperties = {
@@ -51,7 +52,7 @@ describe('PropertyInvestments', () => {
       </Provider>
     );
     
-    expect(store.getState().properties).toEqual(mockProperties);
+    expect((store.getState() as any).properties).toEqual(mockProperties);
   });
 
   test('handles empty properties object', () => {

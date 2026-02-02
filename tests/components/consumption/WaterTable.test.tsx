@@ -21,7 +21,8 @@ describe('WaterTable', () => {
 
   test('renders water table with data', () => {
     const { container } = render(<WaterTable data={mockData} />);
-    expect(container.querySelector('table')).toBeInTheDocument();
+    const tableBody = container.querySelector('[data-evergreen-table-body]');
+    expect(tableBody).toBeInTheDocument();
   });
 
   test('displays table headers', () => {
@@ -56,7 +57,8 @@ describe('WaterTable', () => {
       warm: { readings: [] }
     };
     const { container } = render(<WaterTable data={coldOnlyData} />);
-    expect(container.querySelector('table')).toBeInTheDocument();
+    const tableBody = container.querySelector('[data-evergreen-table-body]');
+    expect(tableBody).toBeInTheDocument();
   });
 
   test('handles warm water only', () => {
@@ -65,7 +67,8 @@ describe('WaterTable', () => {
       warm: mockData.warm
     };
     const { container } = render(<WaterTable data={warmOnlyData} />);
-    expect(container.querySelector('table')).toBeInTheDocument();
+    const tableBody = container.querySelector('[data-evergreen-table-body]');
+    expect(tableBody).toBeInTheDocument();
   });
 
   test('handles missing cold readings', () => {
@@ -73,7 +76,8 @@ describe('WaterTable', () => {
       warm: mockData.warm
     };
     const { container } = render(<WaterTable data={noColData} />);
-    expect(container.querySelector('table')).toBeInTheDocument();
+    const tableBody = container.querySelector('[data-evergreen-table-body]');
+    expect(tableBody).toBeInTheDocument();
   });
 
   test('handles missing warm readings', () => {
@@ -81,7 +85,8 @@ describe('WaterTable', () => {
       cold: mockData.cold
     };
     const { container } = render(<WaterTable data={noWarmData} />);
-    expect(container.querySelector('table')).toBeInTheDocument();
+    const tableBody = container.querySelector('[data-evergreen-table-body]');
+    expect(tableBody).toBeInTheDocument();
   });
 
   test('groups readings by date', () => {
@@ -140,6 +145,7 @@ describe('WaterTable', () => {
       }
     };
     const { container } = render(<WaterTable data={dataWithoutDays} />);
-    expect(container.querySelector('table')).toBeInTheDocument();
+    const tableBody = container.querySelector('[data-evergreen-table-body]');
+    expect(tableBody).toBeInTheDocument();
   });
 });

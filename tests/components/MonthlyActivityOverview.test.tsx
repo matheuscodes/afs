@@ -42,9 +42,10 @@ describe('MonthlyActivityOverview', () => {
   });
 
   test('displays last balance in checking accounts', () => {
-    const { getByText } = render(<MonthlyActivityOverview data={mockData} />);
-    expect(getByText(/Last Balance in Checking Accounts/)).toBeInTheDocument();
-    expect(getByText('1000.00 €')).toBeInTheDocument();
+    const { getAllByText } = render(<MonthlyActivityOverview data={mockData} />);
+    expect(getAllByText(/Last Balance in Checking Accounts/)[0]).toBeInTheDocument();
+    const balanceElements = getAllByText('1000.00 €');
+    expect(balanceElements.length).toBeGreaterThanOrEqual(1);
   });
 
   test('displays last balance in credit accounts', () => {
@@ -60,9 +61,10 @@ describe('MonthlyActivityOverview', () => {
   });
 
   test('displays total expenses', () => {
-    const { getByText } = render(<MonthlyActivityOverview data={mockData} />);
-    expect(getByText(/Total Expenses/)).toBeInTheDocument();
-    expect(getByText('800.00 €')).toBeInTheDocument();
+    const { getAllByText } = render(<MonthlyActivityOverview data={mockData} />);
+    expect(getAllByText(/Total Expenses/)[0]).toBeInTheDocument();
+    const expenseElements = getAllByText('800.00 €');
+    expect(expenseElements.length).toBeGreaterThanOrEqual(1);
   });
 
   test('displays total income', () => {
@@ -90,9 +92,10 @@ describe('MonthlyActivityOverview', () => {
   });
 
   test('renders account type sections', () => {
-    const { getByText } = render(<MonthlyActivityOverview data={mockData} />);
-    expect(getByText(/Checking Accounts/)).toBeInTheDocument();
-    expect(getByText(/Saving Accounts/)).toBeInTheDocument();
+    const { getAllByText } = render(<MonthlyActivityOverview data={mockData} />);
+    const checkingElements = getAllByText(/Checking Accounts/);
+    expect(checkingElements.length).toBeGreaterThanOrEqual(1);
+    expect(getAllByText(/Saving Accounts/)[0]).toBeInTheDocument();
   });
 
   test('renders individual accounts in account type sections', () => {

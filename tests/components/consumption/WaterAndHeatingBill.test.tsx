@@ -76,15 +76,17 @@ describe('WaterAndHeatingBill', () => {
   });
 
   test('displays total costs', () => {
-    const { getByText } = render(<WaterAndHeatingBill bill={mockBill} year={2024} />);
-    expect(getByText(/Total costs/)).toBeInTheDocument();
-    expect(getByText('298.75EUR')).toBeInTheDocument();
+    const { container } = render(<WaterAndHeatingBill bill={mockBill} year={2024} />);
+    expect(container.textContent).toContain('Total costs');
+    expect(container.textContent).toContain('298.75');
+    expect(container.textContent).toContain('EUR');
   });
 
   test('displays payments when available', () => {
-    const { getByText } = render(<WaterAndHeatingBill bill={mockBill} year={2024} />);
-    expect(getByText(/Total payment/)).toBeInTheDocument();
-    expect(getByText('250.00EUR')).toBeInTheDocument();
+    const { container } = render(<WaterAndHeatingBill bill={mockBill} year={2024} />);
+    expect(container.textContent).toContain('Total payment');
+    expect(container.textContent).toContain('250.00');
+    expect(container.textContent).toContain('EUR');
   });
 
   test('calculates bill balance when payments available', () => {

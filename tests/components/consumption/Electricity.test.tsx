@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import configureStore from 'redux-mock-store';
-import thunk from 'redux-thunk';
+import { thunk } from 'redux-thunk';
 import Electricity from '../../../src/components/consumption/Electricity';
 import { Currency } from '../../../src/models/Activity';
 

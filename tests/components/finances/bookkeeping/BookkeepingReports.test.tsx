@@ -3,10 +3,11 @@ import { Provider } from 'react-redux';
 import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import configureStore from 'redux-mock-store';
+import { thunk } from 'redux-thunk';
 import BookkeepingReports from '../../../../src/components/finances/bookkeeping/BookkeepingReports';
 import { Currency } from '../../../../src/models/Activity';
 
-const mockStore = configureStore([]);
+const mockStore = configureStore([thunk]);
 
 describe('BookkeepingReports', () => {
   const mockActivities = [
