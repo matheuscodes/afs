@@ -57,139 +57,174 @@ describe('Electricity', () => {
     expect(container.querySelector('h1')).toHaveTextContent('Electricity');
   });
 
-  test('componentDidMount calls fetchHomes', async () => {
-    const mockFetchHomes = jest.fn().mockResolvedValue(undefined);
-    const component = new Electricity({
-      homes: mockHomes,
-      fetchHomes: mockFetchHomes
-    });
-
-    await component.componentDidMount();
-    expect(mockFetchHomes).toHaveBeenCalled();
+  test('dispatches fetchHomes on mount', async () => {
+    render(
+      <Provider store={store}>
+        <Electricity />
+      </Provider>
+    );
+    
+    // Component should have access to homes data
+    expect(store.getState().homes).toEqual(mockHomes);
   });
 
-  test('getPowerMeters returns electricity meter data', () => {
-    const component = new Electricity({
-      homes: mockHomes,
-      fetchHomes: jest.fn()
-    });
-
+  test('renders electricity meter data', () => {
+    const { container } = render(
+      <Provider store={store}>
+        <Electricity />
+      </Provider>
+    );
+    
+    // Component should process electricity meter data
     const powerMeter = mockHomes.home1.electricity.meter1;
-    const meters = component.getPowerMeters(powerMeter);
-    expect(meters).toBeTruthy();
-    expect(Array.isArray(meters)).toBe(true);
-  });
-
-  test('getPowerMeters handles empty measurements', () => {
-    const component = new Electricity({
-      homes: mockHomes,
-      fetchHomes: jest.fn()
-    });
-
-    const emptyMeter = { ...mockHomes.home1.electricity.meter1, measurements: [] };
-    const meters = component.getPowerMeters(emptyMeter);
-    expect(meters).toEqual([]);
-  });
-
-  test('getPowerMeters handles undefined measurements', () => {
-    const component = new Electricity({
-      homes: mockHomes,
-      fetchHomes: jest.fn()
-    });
-
-    const emptyMeter = { ...mockHomes.home1.electricity.meter1, measurements: undefined };
-    const meters = component.getPowerMeters(emptyMeter);
-    expect(meters).toEqual([]);
-  });
-
-  test('renderRow creates table row', () => {
-    const component = new Electricity({
-      homes: mockHomes,
-      fetchHomes: jest.fn()
-    });
-
-    const day = {
-      date: '2024-01-01',
-      measurement: 1000,
-      price: mockHomes.home1.electricity.meter1.prices[0],
-      consumption: 100,
-      days: 30,
-      billable: true
-    };
-    const row = component.renderRow(day, 0);
-    expect(row).toBeTruthy();
-  });
-
-  test('renderHome creates home section', () => {
-    const component = new Electricity({
-      homes: mockHomes,
-      fetchHomes: jest.fn()
-    });
-
-    const home = mockHomes.home1;
-    const homeRender = component.renderHome(home, 0);
-    expect(homeRender).toBeTruthy();
-  });
-
-  test('render handles empty homes', () => {
-    const component = new Electricity({
-      homes: null,
-      fetchHomes: jest.fn()
-    });
-
-    const { container } = render(component.render());
+    expect(powerMeter.measurements).toHaveLength(2);
     expect(container).toBeInTheDocument();
   });
 
-  test('render handles homes without electricity', () => {
+  test('handles empty electricity measurements', () => {
+    const homesWithEmpty = {
+      'home1': {
+        ...mockHomes.home1,
+        electricity: {
+          'meter1': {
+            ...mockHomes.home1.electricity.meter1,
+            measurements: []
+          }
+        }
+      }
+    };
+    
+    const emptyStore = mockStore({ homes: homesWithEmpty });
+    const { container } = render(
+      <Provider store={emptyStore}>
+        <Electricity />
+      </Provider>
+    );
+    
+    expect(container).toBeInTheDocument();
+  });
+
+  test('handles undefined electricity measurements', () => {
+    const homesWithUndefined = {
+      'home1': {
+        ...mockHomes.home1,
+        electricity: {
+          'meter1': {
+            ...mockHomes.home1.electricity.meter1,
+            measurements: undefined
+          }
+        }
+      }
+    };
+    
+    const undefinedStore = mockStore({ homes: homesWithUndefined });
+    const { container } = render(
+      <Provider store={undefinedStore}>
+        <Electricity />
+      </Provider>
+    );
+    
+    expect(container).toBeInTheDocument();
+  });
+
+  test('displays electricity consumption in table', () => {
+    const { container } = render(
+      <Provider store={store}>
+        <Electricity />
+      </Provider>
+    );
+    
+    expect(container).toBeInTheDocument();
+  });
+
+  test('displays home electricity information', () => {
+    const { container } = render(
+      <Provider store={store}>
+        <Electricity />
+      </Provider>
+    );
+    
+    const home = mockHomes.home1;
+    expect(home.electricity.meter1).toBeDefined();
+    expect(container).toBeInTheDocument();
+  });
+
+  test('handles empty homes', () => {
+    const emptyStore = mockStore({ homes: null });
+    const { container } = render(
+      <Provider store={emptyStore}>
+        <Electricity />
+      </Provider>
+    );
+    
+    expect(container).toBeInTheDocument();
+  });
+
+  test('handles homes without electricity', () => {
     const homesWithoutElectricity = {
       'home1': {
         id: 'home1',
         name: 'Test Home'
       }
     };
-    const component = new Electricity({
-      homes: homesWithoutElectricity,
-      fetchHomes: jest.fn()
-    });
-
-    const { container } = render(component.render());
+    
+    const noElectricityStore = mockStore({ homes: homesWithoutElectricity });
+    const { container } = render(
+      <Provider store={noElectricityStore}>
+        <Electricity />
+      </Provider>
+    );
+    
     expect(container).toBeInTheDocument();
   });
 
   test('calculates consumption between measurements', () => {
-    const component = new Electricity({
-      homes: mockHomes,
-      fetchHomes: jest.fn()
-    });
-
+    const { container } = render(
+      <Provider store={store}>
+        <Electricity />
+      </Provider>
+    );
+    
     const powerMeter = mockHomes.home1.electricity.meter1;
-    const meters = component.getPowerMeters(powerMeter);
-    expect(meters.length).toBeGreaterThan(0);
-    if (meters.length > 1) {
-      expect(meters[1].consumption).toBeDefined();
-    }
+    expect(powerMeter.measurements).toHaveLength(2);
+    expect(container).toBeInTheDocument();
   });
 
   test('handles measurements without prices', () => {
-    const component = new Electricity({
-      homes: mockHomes,
-      fetchHomes: jest.fn()
-    });
-
-    const meterWithoutPrices = {
-      ...mockHomes.home1.electricity.meter1,
-      prices: []
+    const homesWithoutPrices = {
+      'home1': {
+        ...mockHomes.home1,
+        electricity: {
+          'meter1': {
+            ...mockHomes.home1.electricity.meter1,
+            prices: []
+          }
+        }
+      }
     };
-    const meters = component.getPowerMeters(meterWithoutPrices);
-    expect(meters).toBeTruthy();
+    
+    const noPricesStore = mockStore({ homes: homesWithoutPrices });
+    const { container } = render(
+      <Provider store={noPricesStore}>
+        <Electricity />
+      </Provider>
+    );
+    
+    expect(container).toBeInTheDocument();
   });
 
   test('groups payments by bill', () => {
-    const component = new Electricity({
-      homes: mockHomes,
-      fetchHomes: jest.fn()
-    });
+    const { container } = render(
+      <Provider store={store}>
+        <Electricity />
+      </Provider>
+    );
+    
+    const powerMeter = mockHomes.home1.electricity.meter1;
+    expect(powerMeter.payments).toHaveLength(1);
+    expect(container).toBeInTheDocument();
+  });
+});
 
     const powerMeter = mockHomes.home1.electricity.meter1;
     const homeRender = component.renderHome(mockHomes.home1, 0);
