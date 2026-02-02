@@ -6,13 +6,15 @@ import configureStore from 'redux-mock-store';
 import { thunk } from 'redux-thunk';
 import Electricity from '../../../src/components/consumption/Electricity';
 import { Currency } from '../../../src/models/Activity';
+import { updateHomes, updateElectricity, updateGas, updateWater, updateHeating } from '../../../src/actions/consumption/home';
 
 // Mock the HomeService to prevent actual file I/O
 jest.mock('../../../src/services/HomeService', () => ({
-  default: {
-    fetchHomes: jest.fn(() => (dispatch: any) => Promise.resolve()),
-    updateHomes: jest.fn()
-  }
+    fetchHomes: jest.fn(() => updateHomes([])),
+    fetchElectricity: jest.fn(() => updateElectricity("1",[],[],[])),
+    fetchGas: jest.fn(() => updateGas("1",[],[],[])),
+    fetchWater: jest.fn(() => updateWater("1",[],[],[])),
+    fetchHeating: jest.fn(() => updateHeating("1",[],[],[])),
 }));
 
 const mockStore = configureStore([thunk]);
