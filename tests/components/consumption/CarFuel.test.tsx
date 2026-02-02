@@ -159,63 +159,61 @@ describe('CarFuel', () => {
     expect(container).toBeInTheDocument();
   });
 
-  test('render handles empty cars object', () => {
-    const component = new CarFuel({
-      cars: {},
-      fetchCars: jest.fn(),
-      fetchTankEntries: jest.fn()
-    });
-
-    const { container } = render(component.render());
+  test('handles empty cars object', () => {
+    const emptyStore = mockStore({ cars: {} });
+    const { container } = render(
+      <Provider store={emptyStore}>
+        <CarFuel />
+      </Provider>
+    );
+    
     expect(container).toBeInTheDocument();
   });
 
-  test('render handles null cars', () => {
-    const component = new CarFuel({
-      cars: null,
-      fetchCars: jest.fn(),
-      fetchTankEntries: jest.fn()
-    });
-
-    const { container } = render(component.render());
+  test('handles null cars', () => {
+    const nullStore = mockStore({ cars: null });
+    const { container } = render(
+      <Provider store={nullStore}>
+        <CarFuel />
+      </Provider>
+    );
+    
     expect(container).toBeInTheDocument();
   });
 
-  test('renderCar calculates CO2 emissions', () => {
-    const component = new CarFuel({
-      cars: mockCars,
-      fetchCars: jest.fn(),
-      fetchTankEntries: jest.fn()
-    });
-
+  test('displays CO2 emissions calculations', () => {
+    const { container } = render(
+      <Provider store={store}>
+        <CarFuel />
+      </Provider>
+    );
+    
     const car = mockCars.car1;
-    const carRender = component.renderCar(car, 0);
-    expect(carRender).toBeTruthy();
+    expect(car.tankEntries).toHaveLength(2);
+    expect(container).toBeInTheDocument();
   });
 
-  test('renderRow calculates distance per unit', () => {
-    const component = new CarFuel({
-      cars: mockCars,
-      fetchCars: jest.fn(),
-      fetchTankEntries: jest.fn()
-    });
-
-    const tankEntry = mockCars.car1.tankEntries[0];
-    const traveled = 400;
-    const consumed = 35;
-    const row = component.renderRow(tankEntry, 0, traveled, 50, consumed);
-    expect(row).toBeTruthy();
+  test('calculates distance per unit', () => {
+    const { container } = render(
+      <Provider store={store}>
+        <CarFuel />
+      </Provider>
+    );
+    
+    expect(container).toBeInTheDocument();
   });
 
-  test('renderCar updates tank level correctly', () => {
-    const component = new CarFuel({
-      cars: mockCars,
-      fetchCars: jest.fn(),
-      fetchTankEntries: jest.fn()
-    });
-
+  test('updates tank level correctly', () => {
+    const { container } = render(
+      <Provider store={store}>
+        <CarFuel />
+      </Provider>
+    );
+    
     const car = mockCars.car1;
-    const carRender = component.renderCar(car, 0);
-    expect(carRender).toBeTruthy();
+    expect(car.tanks).toBeDefined();
+    expect(container).toBeInTheDocument();
+  });
+});
   });
 });

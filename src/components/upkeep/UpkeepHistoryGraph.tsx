@@ -101,7 +101,7 @@ class DetailsTable extends React.Component<any, any> {
     super(props);
   }
 
-  convertReport(converted) {
+  convertReport(converted: any) {
     const filled = JSON.parse(JSON.stringify(data));
     const forecast: any = {
       income: 0,
