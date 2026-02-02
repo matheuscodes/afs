@@ -3,10 +3,11 @@ import { Provider } from 'react-redux';
 import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import configureStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
 import Electricity from '../../../src/components/consumption/Electricity';
 import { Currency } from '../../../src/models/Activity';
 
-const mockStore = configureStore([]);
+const mockStore = configureStore([thunk]);
 
 describe('Electricity', () => {
   const mockHomes = {
@@ -65,7 +66,7 @@ describe('Electricity', () => {
     );
     
     // Component should have access to homes data
-    expect(store.getState().homes).toEqual(mockHomes);
+    expect((store.getState() as any).homes).toEqual(mockHomes);
   });
 
   test('renders electricity meter data', () => {
@@ -88,7 +89,7 @@ describe('Electricity', () => {
         electricity: {
           'meter1': {
             ...mockHomes.home1.electricity.meter1,
-            measurements: []
+            measurements: [] as any
           }
         }
       }
@@ -111,7 +112,7 @@ describe('Electricity', () => {
         electricity: {
           'meter1': {
             ...mockHomes.home1.electricity.meter1,
-            measurements: undefined
+            measurements: undefined as any
           }
         }
       }
@@ -197,7 +198,7 @@ describe('Electricity', () => {
         electricity: {
           'meter1': {
             ...mockHomes.home1.electricity.meter1,
-            prices: []
+            prices: [] as any
           }
         }
       }
@@ -223,11 +224,5 @@ describe('Electricity', () => {
     const powerMeter = mockHomes.home1.electricity.meter1;
     expect(powerMeter.payments).toHaveLength(1);
     expect(container).toBeInTheDocument();
-  });
-});
-
-    const powerMeter = mockHomes.home1.electricity.meter1;
-    const homeRender = component.renderHome(mockHomes.home1, 0);
-    expect(homeRender).toBeTruthy();
   });
 });

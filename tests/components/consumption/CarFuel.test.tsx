@@ -3,11 +3,12 @@ import { Provider } from 'react-redux';
 import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import configureStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
 import CarFuel from '../../../src/components/consumption/CarFuel';
 import { Fuel, FuelUnit } from '../../../src/models/Car';
 import { Currency } from '../../../src/models/Activity';
 
-const mockStore = configureStore([]);
+const mockStore = configureStore([thunk]);
 
 describe('CarFuel', () => {
   const mockCars = {
@@ -16,21 +17,21 @@ describe('CarFuel', () => {
       name: 'Test Car',
       mileage: 50000,
       tanks: {
-        [Fuel.Gasoline]: 50
+        [Fuel.GASOLINE]: 50
       },
       tankEntries: [
         {
           date: '2024-01-15',
           mileage: 50100,
           tanked: 40,
-          fuel: Fuel.Gasoline,
+          fuel: Fuel.GASOLINE,
           paid: { amount: 60, currency: Currency.EUR }
         },
         {
           date: '2024-02-01',
           mileage: 50400,
           tanked: 35,
-          fuel: Fuel.Gasoline,
+          fuel: Fuel.GASOLINE,
           paid: { amount: 52.5, currency: Currency.EUR }
         }
       ]
@@ -64,7 +65,7 @@ describe('CarFuel', () => {
     );
     
     // Component should have access to cars data
-    expect(store.getState().cars).toEqual(mockCars);
+    expect((store.getState() as any).cars).toEqual(mockCars);
   });
 
   test('renders car fuel data', () => {
@@ -72,7 +73,8 @@ describe('CarFuel', () => {
       <Provider store={store}>
         <CarFuel />
       </Provider>
-     //Component should render tank entries
+    );
+    // Component should render tank entries
     const tankEntry = mockCars.car1.tankEntries[0];
     expect(tankEntry.mileage).toBe(50100);
     expect(container).toBeInTheDocument();
@@ -96,7 +98,7 @@ describe('CarFuel', () => {
       'car1': {
         ...mockCars.car1,
         tankEntries: [
-          { ...mockCars.car1.tankEntries[0], mileage: undefined }
+          { ...mockCars.car1.tankEntries[0], mileage: undefined as any }
         ]
       }
     };
@@ -213,7 +215,5 @@ describe('CarFuel', () => {
     const car = mockCars.car1;
     expect(car.tanks).toBeDefined();
     expect(container).toBeInTheDocument();
-  });
-});
   });
 });

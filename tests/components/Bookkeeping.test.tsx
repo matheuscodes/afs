@@ -3,10 +3,11 @@ import { Provider } from 'react-redux';
 import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import configureStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
 import Bookkeeping from '../../src/components/Bookkeeping';
 import { Activity, Currency } from '../../src/models/Activity';
 
-const mockStore = configureStore([]);
+const mockStore = configureStore([thunk]);
 
 describe('Bookkeeping', () => {
   const mockActivities: Activity[] = [
@@ -23,6 +24,7 @@ describe('Bookkeeping', () => {
       date: new Date('2024-02-20'),
       source: 'Test Source 2',
       description: 'Test Description 2',
+      category: 'Food',
       value: { amount: 200, currency: Currency.EUR },
       account: 'acc2',
       transfer: false

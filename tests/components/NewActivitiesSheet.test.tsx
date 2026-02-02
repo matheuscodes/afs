@@ -48,12 +48,12 @@ describe('NewActivitiesSheet', () => {
       ...component.state,
       activities: [
         {
-          date: '2024-01-15',
+          date: new Date('2024-01-15'),
           source: 'Test Source',
           description: 'Test Description',
           value: { amount: 100, currency: Currency.EUR },
           account: 'acc1'
-        }
+        } as any
       ]
     };
     component.setState = jest.fn();
@@ -67,11 +67,11 @@ describe('NewActivitiesSheet', () => {
       ...component.state,
       activities: [
         {
-          date: '2024-01-15',
+          date: new Date('2024-01-15'),
           source: 'Test Source',
           description: 'Test Description',
           value: { amount: 100, currency: Currency.EUR }
-        }
+        } as any
       ]
     };
     component.setState = jest.fn();
@@ -87,12 +87,12 @@ describe('NewActivitiesSheet', () => {
       ...component.state,
       activities: [
         {
-          date: '2024-01-15',
+          date: new Date('2024-01-15'),
           source: 'Test Source',
           description: 'Test Description',
           value: { amount: 100, currency: Currency.EUR },
           account: 'acc1'
-        }
+        } as any
       ]
     };
     component.setState = jest.fn();
@@ -141,16 +141,16 @@ describe('NewActivitiesSheet', () => {
       ...component.state,
       activities: [
         {
-          date: '2024-01-15',
+          date: new Date('2024-01-15'),
           source: 'Test Source',
           description: 'Test Description',
           value: { amount: 100, currency: Currency.EUR },
           account: 'acc1'
-        }
+        } as any
       ]
     };
     component.setState = jest.fn((state) => {
-      component.state = state;
+      component.state = state as any;
     });
     component.submitActivities();
     expect(component.state.activities.length).toBe(0);
@@ -158,9 +158,9 @@ describe('NewActivitiesSheet', () => {
 
   test('submitActivities closes the side sheet', () => {
     const component = new NewActivitiesSheet({ accounts: mockAccounts, submitActivity: mockSubmitActivity });
-    component.state.isShown = true;
+    (component.state as any).isShown = true;
     component.setState = jest.fn((state) => {
-      component.state = state;
+      component.state = state as any;
     });
     component.submitActivities();
     expect(component.state.isShown).toBe(false);

@@ -3,6 +3,7 @@ import { Provider } from 'react-redux';
 import { render, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import configureStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
 import Upkeep from '../../../src/components/upkeep/index';
 import { Currency } from '../../../src/models/Activity';
 
@@ -17,7 +18,7 @@ jest.mock('../../../src/services/LongTermService', () => ({
   updateUpkeeps: jest.fn()
 }));
 
-const mockStore = configureStore([]);
+const mockStore = configureStore([thunk]);
 
 describe('Upkeep', () => {
   const mockUpkeepData = [

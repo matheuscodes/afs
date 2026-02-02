@@ -69,7 +69,7 @@ describe('BookkeepingReports', () => {
     );
     
     // Verify component renders
-    expect(store.getState().bookkeeping).toEqual(mockActivities);
+    expect((store.getState() as any).bookkeeping).toEqual(mockActivities);
   });
 
   test('handles empty bookkeeping data', () => {

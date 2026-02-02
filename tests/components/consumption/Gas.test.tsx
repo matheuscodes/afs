@@ -3,10 +3,11 @@ import { Provider } from 'react-redux';
 import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import configureStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
 import Gas from '../../../src/components/consumption/Gas';
 import { Currency } from '../../../src/models/Activity';
 
-const mockStore = configureStore([]);
+const mockStore = configureStore([thunk]);
 
 describe('Gas', () => {
   const mockHomes = {
@@ -68,7 +69,7 @@ describe('Gas', () => {
     );
     
     // Component should have access to homes data
-    expect(store.getState().homes).toEqual(mockHomes);
+    expect((store.getState() as any).homes).toEqual(mockHomes);
   });
 
   test('renders gas meter data', () => {
@@ -91,7 +92,7 @@ describe('Gas', () => {
         gas: {
           'meter1': {
             ...mockHomes.home1.gas.meter1,
-            measurements: []
+            measurements: [] as any
           }
         }
       }
@@ -114,7 +115,7 @@ describe('Gas', () => {
         gas: {
           'meter1': {
             ...mockHomes.home1.gas.meter1,
-            measurements: undefined
+            measurements: undefined as any
           }
         }
       }
@@ -168,7 +169,7 @@ describe('Gas', () => {
   });
 
   test('render handles empty homes', () => {
-    const component = new Gas({
+    const component = new (Gas as any)({
       homes: null,
       fetchHomes: jest.fn()
     });
@@ -215,7 +216,7 @@ describe('Gas', () => {
         gas: {
           'meter1': {
             ...mockHomes.home1.gas.meter1,
-            prices: []
+            prices: [] as any
           }
         }
       }
