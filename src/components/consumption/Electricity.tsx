@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from "react-redux";
 import HomeService from '../../services/HomeService';
 import { Home, PowerMeter, MeterPayment, MeterPrice, MeterMeasurement } from '../../models/Home';
-import { updateHomes, updateElectricity, updateGas, updateWater, updateHeating } from '../../actions/consumption/home';
 import {
   Tab,
   Tablist,
