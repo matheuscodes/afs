@@ -78,13 +78,13 @@ describe('WaterAndHeatingBill', () => {
   test('displays total costs', () => {
     const { getByText } = render(<WaterAndHeatingBill bill={mockBill} year={2024} />);
     expect(getByText(/Total costs/)).toBeInTheDocument();
-    expect(getByText(/298.75EUR/)).toBeInTheDocument();
+    expect(getByText('298.75EUR')).toBeInTheDocument();
   });
 
   test('displays payments when available', () => {
     const { getByText } = render(<WaterAndHeatingBill bill={mockBill} year={2024} />);
     expect(getByText(/Total payment/)).toBeInTheDocument();
-    expect(getByText(/250.00EUR/)).toBeInTheDocument();
+    expect(getByText('250.00EUR')).toBeInTheDocument();
   });
 
   test('calculates bill balance when payments available', () => {
@@ -122,8 +122,9 @@ describe('WaterAndHeatingBill', () => {
   });
 
   test('displays base area for cold water', () => {
-    const { getByText } = render(<WaterAndHeatingBill bill={mockBill} year={2024} />);
-    expect(getByText(/50m²/)).toBeInTheDocument();
+    const { getAllByText } = render(<WaterAndHeatingBill bill={mockBill} year={2024} />);
+    const matches = getAllByText(/50m²/);
+    expect(matches.length).toBeGreaterThan(0);
   });
 
   test('displays base area for heaters', () => {

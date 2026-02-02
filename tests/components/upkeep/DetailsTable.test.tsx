@@ -33,7 +33,8 @@ describe('DetailsTable', () => {
         data={mockData}
       />
     );
-    expect(container.querySelector('table')).toBeInTheDocument();
+    const table = container.querySelector('[data-evergreen-table-body]');
+    expect(table).toBeInTheDocument();
   });
 
   test('displays table title', () => {
@@ -115,7 +116,8 @@ describe('DetailsTable', () => {
         data={[]}
       />
     );
-    expect(container.querySelector('table')).toBeInTheDocument();
+    const table = container.querySelector('[data-evergreen-table-body]');
+    expect(table).toBeInTheDocument();
   });
 
   test('handles single column', () => {

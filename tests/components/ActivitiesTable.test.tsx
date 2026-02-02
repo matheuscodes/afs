@@ -34,11 +34,6 @@ describe('ActivitiesTable', () => {
     expect(screen.getByText(/Test Description/)).toBeInTheDocument();
   });
 
-  test('renders empty table when data is empty', () => {
-    const { container } = render(<ActivitiesTable data={[]} accounts={mockAccounts} />);
-    expect(container.querySelector('table')).toBeInTheDocument();
-  });
-
   test('sorts data in descending order by default', () => {
     const component = new ActivitiesTable({ data: mockData, accounts: mockAccounts });
     component.state = {

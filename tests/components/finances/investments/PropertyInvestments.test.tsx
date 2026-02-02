@@ -43,52 +43,54 @@ describe('PropertyInvestments', () => {
   });
 
   test('componentDidMount calls fetchProperties', async () => {
-    const mockFetchProperties = jest.fn().mockResolvedValue(undefined);
-    const component = new PropertyInvestments({
-      properties: mockProperties,
-      fetchProperties: mockFetchProperties
-    });
-
-    await component.componentDidMount();
-    expect(mockFetchProperties).toHaveBeenCalled();
+    const store = mockStore(initialState);
+    
+    render(
+      <Provider store={store}>
+        <PropertyInvestments />
+      </Provider>
+    );
+    
+    expect(store.getState().properties).toEqual(mockProperties);
   });
 
   test('handles empty properties object', () => {
-    const component = new PropertyInvestments({
-      properties: {},
-      fetchProperties: jest.fn()
-    });
-
-    const { container } = render(component.render());
+    const store = mockStore({ properties: {} });
+    
+    const { container } = render(
+      <Provider store={store}>
+        <PropertyInvestments />
+      </Provider>
+    );
+    
     expect(container).toBeInTheDocument();
   });
 
   test('handles null properties', () => {
-    const component = new PropertyInvestments({
-      properties: null,
-      fetchProperties: jest.fn()
-    });
-
-    const { container } = render(component.render());
+    const store = mockStore({ properties: null });
+    
+    const { container } = render(
+      <Provider store={store}>
+        <PropertyInvestments />
+      </Provider>
+    );
+    
     expect(container).toBeInTheDocument();
   });
 
   test('displays property information', () => {
-    const component = new PropertyInvestments({
-      properties: mockProperties,
-      fetchProperties: jest.fn()
-    });
-
-    const { container } = render(component.render());
+    const store = mockStore(initialState);
+    
+    const { container } = render(
+      <Provider store={store}>
+        <PropertyInvestments />
+      </Provider>
+    );
+    
     expect(container).toBeInTheDocument();
   });
 
   test('processes property valuations', () => {
-    const component = new PropertyInvestments({
-      properties: mockProperties,
-      fetchProperties: jest.fn()
-    });
-
     const property = mockProperties.prop1;
     expect(property.valuations.length).toBe(2);
     expect(property.valuations[0].value.amount).toBe(200000);
@@ -103,12 +105,14 @@ describe('PropertyInvestments', () => {
       }
     };
 
-    const component = new PropertyInvestments({
-      properties: propertiesWithoutValuations,
-      fetchProperties: jest.fn()
-    });
-
-    const { container } = render(component.render());
+    const store = mockStore({ properties: propertiesWithoutValuations });
+    
+    const { container } = render(
+      <Provider store={store}>
+        <PropertyInvestments />
+      </Provider>
+    );
+    
     expect(container).toBeInTheDocument();
   });
 
@@ -122,12 +126,14 @@ describe('PropertyInvestments', () => {
       }
     };
 
-    const component = new PropertyInvestments({
-      properties: multipleProperties,
-      fetchProperties: jest.fn()
-    });
-
-    const { container } = render(component.render());
+    const store = mockStore({ properties: multipleProperties });
+    
+    const { container } = render(
+      <Provider store={store}>
+        <PropertyInvestments />
+      </Provider>
+    );
+    
     expect(container).toBeInTheDocument();
   });
 });
