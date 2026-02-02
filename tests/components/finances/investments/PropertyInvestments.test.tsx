@@ -7,6 +7,12 @@ import { thunk } from 'redux-thunk';
 import PropertyInvestments from '../../../../src/components/finances/investments/PropertyInvestments';
 import { Currency } from '../../../../src/models/Activity';
 
+// Mock the InvestmentsService to prevent actual file I/O
+jest.mock('../../../../src/services/InvestmentsService', () => ({
+  loadProperties: jest.fn(() => Promise.resolve({ type: 'LOAD_PROPERTIES', payload: {} })),
+  writeProperty: jest.fn(() => Promise.resolve({ type: 'WRITE_PROPERTY' }))
+}));
+
 const mockStore = configureStore([thunk]);
 
 describe('PropertyInvestments', () => {
@@ -102,7 +108,7 @@ describe('PropertyInvestments', () => {
     const propertiesWithoutValuations = {
       'prop1': {
         ...mockProperties.prop1,
-        valuations: []
+        valuations: [] as any
       }
     };
 

@@ -7,6 +7,12 @@ import { thunk } from 'redux-thunk';
 import Gas from '../../../src/components/consumption/Gas';
 import { Currency } from '../../../src/models/Activity';
 
+// Mock the HomeService to prevent actual file I/O
+jest.mock('../../../src/services/HomeService', () => ({
+  fetchHomes: jest.fn(() => (dispatch: any) => Promise.resolve()),
+  updateHomes: jest.fn()
+}));
+
 const mockStore = configureStore([thunk]);
 
 describe('Gas', () => {
@@ -169,12 +175,12 @@ describe('Gas', () => {
   });
 
   test('render handles empty homes', () => {
-    const component = new (Gas as any)({
-      homes: null,
-      fetchHomes: jest.fn()
-    });
-
-    const { container } = render(component.render());
+    const emptyStore = mockStore({ homes: null });
+    const { container } = render(
+      <Provider store={emptyStore}>
+        <Gas />
+      </Provider>
+    );
     expect(container).toBeInTheDocument();
   });
 

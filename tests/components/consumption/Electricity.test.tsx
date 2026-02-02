@@ -7,6 +7,12 @@ import { thunk } from 'redux-thunk';
 import Electricity from '../../../src/components/consumption/Electricity';
 import { Currency } from '../../../src/models/Activity';
 
+// Mock the HomeService to prevent actual file I/O
+jest.mock('../../../src/services/HomeService', () => ({
+  fetchHomes: jest.fn(() => (dispatch: any) => Promise.resolve()),
+  updateHomes: jest.fn()
+}));
+
 const mockStore = configureStore([thunk]);
 
 describe('Electricity', () => {

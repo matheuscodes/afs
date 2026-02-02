@@ -79,14 +79,14 @@ describe('WaterAndHeatingBill', () => {
     const { container } = render(<WaterAndHeatingBill bill={mockBill} year={2024} />);
     expect(container.textContent).toContain('Total costs');
     expect(container.textContent).toContain('298.75');
-    expect(container.textContent).toContain('EUR');
+    expect(container.textContent).toContain('€');
   });
 
   test('displays payments when available', () => {
     const { container } = render(<WaterAndHeatingBill bill={mockBill} year={2024} />);
     expect(container.textContent).toContain('Total payment');
     expect(container.textContent).toContain('250.00');
-    expect(container.textContent).toContain('EUR');
+    expect(container.textContent).toContain('€');
   });
 
   test('calculates bill balance when payments available', () => {

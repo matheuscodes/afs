@@ -8,6 +8,19 @@ import CarFuel from '../../../src/components/consumption/CarFuel';
 import { Fuel, FuelUnit } from '../../../src/models/Car';
 import { Currency } from '../../../src/models/Activity';
 
+// Mock the LongTermService to prevent actual file I/O
+jest.mock('../../../src/services/LongTermService', () => ({
+  fetchCars: jest.fn(() => (dispatch: any) => Promise.resolve()),
+  fetchTankEntries: jest.fn(() => (dispatch: any) => Promise.resolve()),
+  updateCars: jest.fn()
+}));
+
+// Mock the CarFuelService to prevent actual file I/O
+jest.mock('../../../src/services/CarFuelService', () => ({
+  loadEntries: jest.fn(() => Promise.resolve({ type: 'LOAD_TANK_ENTRIES', payload: [] })),
+  writeEntry: jest.fn(() => Promise.resolve({ type: 'WRITE_TANK_ENTRY' }))
+}));
+
 const mockStore = configureStore([thunk]);
 
 describe('CarFuel', () => {

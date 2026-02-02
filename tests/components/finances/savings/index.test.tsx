@@ -7,6 +7,12 @@ import { thunk } from 'redux-thunk';
 import Savings from '../../../../src/components/finances/savings/index';
 import { Currency } from '../../../../src/models/Activity';
 
+// Mock the LongTermService to prevent actual file I/O
+jest.mock('../../../../src/services/LongTermService', () => ({
+  loadSavings: jest.fn(() => Promise.resolve({ type: 'LOAD_SAVINGS', payload: [] })),
+  writeSaving: jest.fn(() => Promise.resolve({ type: 'WRITE_SAVING' }))
+}));
+
 const mockStore = configureStore([thunk]);
 
 describe('Savings', () => {
