@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from "react-redux";
 import HomeService from '../../services/HomeService';
 import { Home, PowerMeter, MeterPayment, MeterPrice, MeterMeasurement } from '../../models/Home';
+import { updateHomes, updateElectricity, updateGas, updateWater, updateHeating } from '../../../src/actions/consumption/home';
 import {
   Tab,
   Tablist,
@@ -9,6 +10,14 @@ import {
   Table,
   Heading,
 } from 'evergreen-ui'
+
+jest.mock('../../../src/services/HomeService', () => ({
+    fetchHomes: jest.fn(() => updateHomes([])),
+    fetchElectricity: jest.fn(() => updateElectricity("1",[],[],[])),
+    fetchGas: jest.fn(() => updateGas("1",[],[],[])),
+    fetchWater: jest.fn(() => updateWater("1",[],[],[])),
+    fetchHeating: jest.fn(() => updateHeating("1",[],[],[])),
+}));
 
 function getCurrentPrice(measurement: MeterMeasurement, prices: MeterPrice[]) {
   return prices.find((i: MeterPrice) => i.date < measurement.date);

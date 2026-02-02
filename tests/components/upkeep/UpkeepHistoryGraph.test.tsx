@@ -4,11 +4,6 @@ import '@testing-library/jest-dom';
 import UpkeepHistoryGraph from '../../../src/components/upkeep/UpkeepHistoryGraph';
 import { Currency } from '../../../src/models/Activity';
 
-// Mock Chart.js to avoid canvas issues in tests
-jest.mock('react-chartjs-2', () => ({
-  Line: () => <div data-testid="line-chart">Chart</div>
-}));
-
 describe('UpkeepHistoryGraph', () => {
   const mockData = [
     {
