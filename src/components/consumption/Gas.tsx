@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from "react-redux";
 import HomeService from '../../services/HomeService';
 import { Home, GasMeter, MeterPayment, MeterPrice, MeterMeasurement } from '../../models/Home';
-import { groupedPayments, dateDifference, getCurrentPrice } from '../../models/Bills';
+import { groupedPayments as groupedPaymentsImport, dateDifference as dateDifferenceImport, getCurrentPrice as getCurrentPriceImport } from '../../models/Bills';
 import {
   Tab,
   Tablist,
@@ -10,6 +10,9 @@ import {
   Table,
   Heading,
 } from 'evergreen-ui'
+
+// Export utility functions for testing
+export { groupedPaymentsImport as groupedPayments, dateDifferenceImport as dateDifference, getCurrentPriceImport as getCurrentPrice };
 
 const ColumnFlex = {
   date: 1,
@@ -24,7 +27,8 @@ const ColumnFlex = {
   cost: 1,
 }
 
-class Gas extends React.Component<any, any> {
+// Export unconnected component for testing
+export class Gas extends React.Component<any, any> {
   constructor(props: any) {
     super(props);
     this.state = {}
@@ -43,10 +47,10 @@ class Gas extends React.Component<any, any> {
       const item = {
         date: measurement.date,
         measurement: measurement.measurement,
-        price: getCurrentPrice(measurement, gasMeter.prices),
+        price: getCurrentPriceImport(measurement, gasMeter.prices),
         consumption: lastMeasurement ? measurement.measurement - lastMeasurement : 0,
         energy: lastMeasurement ? (measurement.measurement - lastMeasurement) * gasMeter.combustion * gasMeter.condition : 0,
-        days: lastDate ? dateDifference(measurement.date, lastDate) : 0,
+        days: lastDate ? dateDifferenceImport(measurement.date, lastDate) : 0,
         billable: measurement.billable
       }
       const cost = {
@@ -63,14 +67,14 @@ class Gas extends React.Component<any, any> {
   getBills(gasMeter: GasMeter): any[] {
     if(!gasMeter.payments) return [];
 
-    const groups = groupedPayments(gasMeter.payments);
+    const groups = groupedPaymentsImport(gasMeter.payments);
     const all = [] as any[];
     let lastDate: string;
     let lastMeasurement: number;
     let sumUnitCosts = 0;
     let sumBaseCosts = 0;
     this.getGasMeters(gasMeter).forEach((measurement,index) => {
-      const price = getCurrentPrice(measurement, gasMeter.prices);
+      const price = getCurrentPriceImport(measurement, gasMeter.prices);
       sumUnitCosts += measurement.consumption * price.unit.amount * gasMeter.combustion * gasMeter.condition;
       sumBaseCosts += measurement.days * price.base.amount;
       if(measurement.billable || index === (gasMeter.measurements.length - 1)) {
@@ -85,7 +89,7 @@ class Gas extends React.Component<any, any> {
           to: measurement.date,
           bill: measurement.bill,
           consumption: lastMeasurement ? (measurement.measurement - lastMeasurement) * gasMeter.combustion * gasMeter.condition : 0,
-          days: lastDate ? dateDifference(measurement.date, lastDate) : 0,
+          days: lastDate ? dateDifferenceImport(measurement.date, lastDate) : 0,
           payments: payments,
         }
         const unitCost = {
