@@ -1,6 +1,4 @@
 import React from 'react'
-// TODO: Remove this dependency.
-import { filter } from 'fuzzaldrin-plus'
 import {
   Table,
   Popover,
@@ -75,7 +73,7 @@ export default class ActivitiesTable extends React.Component<any, any> {
     })
   }
 
-  filter = (activities: any) => {
+  const filter = (activities: any) => {
     const sourceQuery = this.state.searchQuery.source.trim();
     const descriptionQuery = this.state.searchQuery.description.trim();
 
