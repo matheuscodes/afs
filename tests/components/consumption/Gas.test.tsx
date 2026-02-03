@@ -709,7 +709,7 @@ describe('Gas Component', () => {
     // When prices are missing, getCurrentPrice returns undefined
     // This will cause a TypeError when accessing .unit.amount
     expect(() => component.getGasMeters(gasMeter)).toThrow(TypeError);
-    expect(() => component.getGasMeters(gasMeter)).toThrow(/Cannot read propert/);
+    expect(() => component.getGasMeters(gasMeter)).toThrow(/Cannot read properties/);
   });
 
   test('getBills handles intermediate non-billable measurements', () => {
