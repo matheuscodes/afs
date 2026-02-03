@@ -24,11 +24,8 @@ module.exports = {
   },
   moduleNameMapper: {
     '^electron$': '<rootDir>/tests/__mocks__/electron.ts',
-    '^uuid$': require.resolve('uuid')
+    '^uuid$': '<rootDir>/tests/__mocks__/uuid.ts',
   },
-  transformIgnorePatterns: [
-    'node_modules/(?!(uuid)/)'
-  ],
   maxWorkers: 2,
   workerIdleMemoryLimit: '512MB'
 };

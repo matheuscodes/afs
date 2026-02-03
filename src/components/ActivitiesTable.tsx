@@ -1,5 +1,4 @@
 import React from 'react'
-import { filter } from 'fuzzaldrin-plus'
 import {
   Table,
   Popover,

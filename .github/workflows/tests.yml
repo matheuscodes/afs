@@ -24,13 +24,12 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version-file: '.nvmrc'
           cache: 'npm'
 
       - name: Install dependencies
         run: |
-          npm ci
-          npm install canvas
+          npm ci --force
 
       - name: Run tests
         run: npm run test
