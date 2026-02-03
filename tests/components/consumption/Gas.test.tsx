@@ -57,6 +57,7 @@ describe('Gas Utility Functions', () => {
       
       const result = getCurrentPrice(measurement, prices);
       expect(result).toBeDefined();
+      // getCurrentPrice uses find() which returns the first match (2024-01-01 price)
       expect(result?.unit.amount).toBe(0.15);
     });
   });
@@ -325,7 +326,7 @@ describe('Gas Component', () => {
     const row = component.renderRow(measurementEntry, 0);
     
     expect(row).toBeDefined();
-    expect(row.key).toBe('electricity-0');
+    expect(row.key).toBe('gas-0');
   });
 
   test('renderRow handles first measurement with no consumption', () => {
@@ -354,7 +355,7 @@ describe('Gas Component', () => {
     const row = component.renderRow(measurementEntry, 0);
     
     expect(row).toBeDefined();
-    expect(row.key).toBe('electricity-0');
+    expect(row.key).toBe('gas-0');
   });
 
   test('render returns valid React element', () => {
@@ -706,9 +707,9 @@ describe('Gas Component', () => {
     const gasMeter = mockHomesNoPrices.home1.gas.meter1;
     
     // When prices are missing, getCurrentPrice returns undefined
-    // This will cause an error when accessing .unit.amount
-    // We test that the component handles this scenario
-    expect(() => component.getGasMeters(gasMeter)).toThrow();
+    // This will cause a TypeError when accessing .unit.amount
+    expect(() => component.getGasMeters(gasMeter)).toThrow(TypeError);
+    expect(() => component.getGasMeters(gasMeter)).toThrow(/Cannot read propert/);
   });
 
   test('getBills handles intermediate non-billable measurements', () => {

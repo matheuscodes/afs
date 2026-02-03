@@ -121,7 +121,7 @@ export class Gas extends React.Component<any, any> {
   }
 
   renderRow(measurementEntry: any, index: number) {
-    return <Table.Row key={`electricity-${index}`} height={'auto'}>
+    return <Table.Row key={`gas-${index}`} height={'auto'}>
       <Table.TextCell flex={ColumnFlex.date}>{measurementEntry.date}</Table.TextCell>
       <Table.TextCell flex={ColumnFlex.measurement}>{measurementEntry.measurement.toFixed(3)}m³</Table.TextCell>
       <Table.TextCell flex={ColumnFlex.consumption}>{measurementEntry.days ? `${measurementEntry.consumption.toFixed(3)}m³` : ''}</Table.TextCell>
