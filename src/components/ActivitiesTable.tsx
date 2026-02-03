@@ -1,4 +1,5 @@
 import React from 'react'
+// TODO: Remove this dependency.
 import { filter } from 'fuzzaldrin-plus'
 import {
   Table,
