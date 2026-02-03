@@ -73,7 +73,7 @@ export default class ActivitiesTable extends React.Component<any, any> {
     })
   }
 
-  const filter = (activities: any) => {
+  filter = (activities: any) => {
     const sourceQuery = this.state.searchQuery.source.trim();
     const descriptionQuery = this.state.searchQuery.description.trim();
 
