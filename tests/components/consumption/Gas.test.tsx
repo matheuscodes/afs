@@ -48,7 +48,7 @@ describe('Gas Utility Functions', () => {
       expect(result).toBeUndefined();
     });
 
-    test('returns latest price when multiple prices match', () => {
+    test('returns first price when multiple prices match', () => {
       const measurement: any = { date: '2024-02-15', measurement: 550, billable: true };
       const prices: any = [
         { date: '2024-01-01', unit: { amount: 0.15, currency: Currency.EUR }, base: { amount: 8, currency: Currency.EUR } },
@@ -649,7 +649,6 @@ describe('Gas Component', () => {
   });
 
   test('tab click triggers fetchGas and updates state', () => {
-    const mockFetchGas = jest.fn();
     const { getByText } = render(
       <Provider store={store}>
         <ConnectedGas />
