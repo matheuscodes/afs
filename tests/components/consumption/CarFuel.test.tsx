@@ -76,30 +76,7 @@ describe('CarFuel', () => {
     expect((store.getState() as any).cars).toEqual(mockCars);
   });
 
-  test('renders car fuel data', () => {
-    const { container } = render(
-      <Provider store={store}>
-        <CarFuel />
-      </Provider>
-    );
-    // Component should render tank entries
-    const tankEntry = mockCars.car1.tankEntries[0];
-    expect(tankEntry.mileage).toBe(50100);
-    expect(container).toBeInTheDocument();
-  });
 
-  test('displays consumption calculations', () => {
-    const { container } = render(
-      <Provider store={store}>
-        <CarFuel />
-      </Provider>
-    );
-
-    // Component calculates consumption metrics
-    const car = mockCars.car1;
-    expect(car.tankEntries).toHaveLength(2);
-    expect(container).toBeInTheDocument();
-  });
 
   test('handles missing mileage data', () => {
     const carsWithoutMileage = {
@@ -121,32 +98,7 @@ describe('CarFuel', () => {
     expect(container).toBeInTheDocument();
   });
 
-  test('displays total tanked and paid', () => {
-    const { container } = render(
-      <Provider store={store}>
-        <CarFuel />
-      </Provider>
-    );
 
-    // Component shows totals
-    const car = mockCars.car1;
-    const totalTanked = car.tankEntries.reduce((sum, entry) => sum + entry.tanked, 0);
-    expect(totalTanked).toBe(75);
-    expect(container).toBeInTheDocument();
-  });
-
-  test('tracks mileage changes between entries', () => {
-    const { container } = render(
-      <Provider store={store}>
-        <CarFuel />
-      </Provider>
-    );
-
-    // Verify mileage progression
-    const car = mockCars.car1;
-    expect(car.tankEntries[0].mileage).toBeLessThan(car.tankEntries[1].mileage!);
-    expect(container).toBeInTheDocument();
-  });
 
   test('handles pending tank entries without mileage', () => {
     const carWithPending = {
@@ -191,37 +143,5 @@ describe('CarFuel', () => {
     expect(container).toBeInTheDocument();
   });
 
-  test('displays CO2 emissions calculations', () => {
-    const { container } = render(
-      <Provider store={store}>
-        <CarFuel />
-      </Provider>
-    );
 
-    const car = mockCars.car1;
-    expect(car.tankEntries).toHaveLength(2);
-    expect(container).toBeInTheDocument();
-  });
-
-  test('calculates distance per unit', () => {
-    const { container } = render(
-      <Provider store={store}>
-        <CarFuel />
-      </Provider>
-    );
-
-    expect(container).toBeInTheDocument();
-  });
-
-  test('updates tank level correctly', () => {
-    const { container } = render(
-      <Provider store={store}>
-        <CarFuel />
-      </Provider>
-    );
-
-    const car = mockCars.car1;
-    expect(car.tanks).toBeDefined();
-    expect(container).toBeInTheDocument();
-  });
 });

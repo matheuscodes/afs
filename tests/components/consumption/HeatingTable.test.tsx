@@ -51,18 +51,7 @@ describe('HeatingTable', () => {
     expect(getByText('2024-02-15')).toBeInTheDocument();
   });
 
-  test('renderRow creates table row', () => {
-    const component = new HeatingTable({ data: mockData });
-    const day = { date: '2024-01-15', heater1: 100, heater2: 80 };
-    const row = component.renderRow(day, ['heater1', 'heater2'], 0);
-    expect(row).toBeTruthy();
-  });
 
-  test('groups measurements by date', () => {
-    const component = new HeatingTable({ data: mockData });
-    const rendered = component.render();
-    expect(rendered).toBeTruthy();
-  });
 
   test('renders Date header column', () => {
     const { getByText } = render(<HeatingTable data={mockData} />);

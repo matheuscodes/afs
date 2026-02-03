@@ -112,12 +112,7 @@ describe('MonthlyActivityOverview', () => {
     expect(getByText(/Entertainment/)).toBeInTheDocument();
   });
 
-  test('displays category amounts', () => {
-    const { getByText } = render(<MonthlyActivityOverview data={mockData} />);
-    expect(getByText(/Food/)).toBeInTheDocument();
-    expect(getByText(/Transport/)).toBeInTheDocument();
-    expect(getByText(/Entertainment/)).toBeInTheDocument();
-  });
+
 
   test('renders all category keys from categorized data', () => {
     const { getByText } = render(<MonthlyActivityOverview data={mockData} />);

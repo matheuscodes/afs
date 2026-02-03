@@ -344,3 +344,4 @@ const mapDispatchToProps = (dispatch: any) => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(WaterAndHeating);
+export { WaterAndHeating as UnconnectedWaterAndHeating };
