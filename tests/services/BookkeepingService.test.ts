@@ -1,4 +1,3 @@
-import { v4 as uuidv4 } from "uuid";
 import BookkeepingService from "../../src/services/BookkeepingService";
 import { Currency, Activity } from "../../src/models/Activity";
 import { Account, AccountType } from "../../src/models/Account";
