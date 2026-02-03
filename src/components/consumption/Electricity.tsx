@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from "react-redux";
 import HomeService from '../../services/HomeService';
 import { Home, PowerMeter, MeterPayment, MeterPrice, MeterMeasurement } from '../../models/Home';
+import { getCurrentPrice } from '../../models/Bills';
 import {
   Tab,
   Tablist,
@@ -9,10 +10,6 @@ import {
   Table,
   Heading,
 } from 'evergreen-ui'
-
-export function getCurrentPrice(measurement: MeterMeasurement, prices: MeterPrice[]) {
-  return prices.find((i: MeterPrice) => i.date < measurement.date);
-}
 
 export function dateDifference(a: string | Date, b: string | Date) {
   return (new Date(a).getTime() - new Date(b).getTime()) / (1000 * 60 * 60 * 24)
