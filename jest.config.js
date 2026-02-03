@@ -1,6 +1,6 @@
 module.exports = {
   preset: 'ts-jest',
-  testMatch: ['<rootDir>/tests/**/*.test.ts'],
+  testMatch: ['<rootDir>/tests/**/*.test.ts', '<rootDir>/tests/**/*.test.tsx'],
   testEnvironment: 'jsdom',
   setupFilesAfterEnv: ['<rootDir>/tests/setupTests.ts'],
   collectCoverage: true,
@@ -14,6 +14,12 @@ module.exports = {
     }
   },
   moduleNameMapper: {
-    '^electron$': '<rootDir>/tests/__mocks__/electron.ts'
-  }
+    '^electron$': '<rootDir>/tests/__mocks__/electron.ts',
+    '^uuid$': require.resolve('uuid')
+  },
+  transformIgnorePatterns: [
+    'node_modules/(?!(uuid)/)'
+  ],
+  maxWorkers: 2,
+  workerIdleMemoryLimit: '512MB'
 };
