@@ -191,7 +191,7 @@ describe('WaterAndHeating', () => {
     });
 
     test('renders tables and bills when home is selected', () => {
-      const { container } = render(
+      render(
         <Provider store={store}>
           <WaterAndHeating />
         </Provider>
