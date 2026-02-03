@@ -177,27 +177,27 @@ class DetailsTable extends React.Component<any, any> {
               </Table.Head>
                 <Table.Row height={'auto'}>
                     <Table.TextCell>Income</Table.TextCell>
-                    { years.map((i) => (<Table.TextCell>{converted.inflation[i] && converted.inflation[i].income ? converted.inflation[i].income.toFixed(2) + '%' : '-'}</Table.TextCell>)) }
+                    { years.map((i) => (<Table.TextCell>{converted.inflation[i]?.income ? converted.inflation[i].income.toFixed(2) + '%' : '-'}</Table.TextCell>)) }
                 </Table.Row>
                 <Table.Row height={'auto'}>
                     <Table.TextCell>Housing</Table.TextCell>
-                    { years.map((i) => (<Table.TextCell>{converted.inflation[i] && converted.inflation[i].housing ? converted.inflation[i].housing.toFixed(2) + '%' : '-'}</Table.TextCell>)) }
+                    { years.map((i) => (<Table.TextCell>{converted.inflation[i]?.housing ? converted.inflation[i].housing.toFixed(2) + '%' : '-'}</Table.TextCell>)) }
                 </Table.Row>
                 <Table.Row height={'auto'}>
                     <Table.TextCell>Groceries</Table.TextCell>
-                    { years.map((i) => (<Table.TextCell>{converted.inflation[i] && converted.inflation[i].groceries ? converted.inflation[i].groceries.toFixed(2) + '%' : '-'}</Table.TextCell>)) }
+                    { years.map((i) => (<Table.TextCell>{converted.inflation[i]?.groceries ? converted.inflation[i].groceries.toFixed(2) + '%' : '-'}</Table.TextCell>)) }
                 </Table.Row>
                 <Table.Row height={'auto'}>
                     <Table.TextCell>Pet</Table.TextCell>
-                    { years.map((i) => (<Table.TextCell>{converted.inflation[i] && converted.inflation[i].pet ? converted.inflation[i].pet.toFixed(2) + '%' : '-'}</Table.TextCell>)) }
+                    { years.map((i) => (<Table.TextCell>{converted.inflation[i]?.pet ? converted.inflation[i].pet.toFixed(2) + '%' : '-'}</Table.TextCell>)) }
                 </Table.Row>
                 <Table.Row height={'auto'}>
                     <Table.TextCell>Car</Table.TextCell>
-                    { years.map((i) => (<Table.TextCell>{converted.inflation[i] && converted.inflation[i].car ? converted.inflation[i].car.toFixed(2) + '%' : '-'}</Table.TextCell>)) }
+                    { years.map((i) => (<Table.TextCell>{converted.inflation[i]?.car ? converted.inflation[i].car.toFixed(2) + '%' : '-'}</Table.TextCell>)) }
                 </Table.Row>
                 <Table.Head accountForScrollbar={false}>
                     <Table.TextHeaderCell><strong>Total Inflation</strong></Table.TextHeaderCell>
-                    { years.map((i) => (<Table.TextHeaderCell><strong>{converted.inflation[i] && converted.inflation[i].costs ? converted.inflation[i].costs.toFixed(2) + '%' : '-'}</strong></Table.TextHeaderCell>)) }
+                    { years.map((i) => (<Table.TextHeaderCell><strong>{converted.inflation[i]?.costs ? converted.inflation[i].costs.toFixed(2) + '%' : '-'}</strong></Table.TextHeaderCell>)) }
                 </Table.Head>
               </Table.Body>
             </Table>
