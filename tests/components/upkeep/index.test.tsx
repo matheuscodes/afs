@@ -15,7 +15,9 @@ jest.mock('react-chartjs-2', () => ({
 // Mock the LongTermService to prevent actual API calls
 jest.mock('../../../src/services/LongTermService', () => ({
   fetchUpkeeps: jest.fn(() => (dispatch: any) => Promise.resolve()),
-  updateUpkeeps: jest.fn()
+  updateUpkeeps: jest.fn(),
+  calculateUpkeepReport: jest.fn(() => ({ periods: [], groceries: [], pet: [], housing: [], car: [], income: [] })),
+  loadUpkeeps: jest.fn(() => (dispatch: any) => Promise.resolve())
 }));
 
 const mockStore = configureStore([thunk]);
@@ -84,114 +86,13 @@ describe('Upkeep', () => {
     jest.restoreAllMocks();
   });
 
-  test('uses Redux Provider pattern', () => {
-    // Verify Redux store is properly configured
-    expect(store.getState()).toEqual(initialState);
-  });
-
-  test('componentDidMount calls fetchUpkeeps', async () => {
-    // With the Redux Provider pattern, componentDidMount is called automatically
-    // and we verify it through the rendered component not crashing
-    expect(store).toBeDefined();
-  });
-
-  test('renders upkeep data structure', () => {
-    const { longTerm } = store.getState();
-    expect(longTerm.upkeep).toHaveLength(1);
-  });
-
-  test('renders UpkeepHistoryGraph data', () => {
-    const { longTerm } = store.getState();
-    expect(longTerm.upkeep[0].year).toBe(2024);
-  });
-
-  test('renders Groceries table structure', () => {
-    const { longTerm } = store.getState();
-    const upkeep = longTerm.upkeep[0];
-    expect(upkeep.groceries).toBeDefined();
-    expect(upkeep.groceries).toHaveLength(2);
-  });
-
-  test('renders Pet table structure', () => {
-    const { longTerm } = store.getState();
-    const upkeep = longTerm.upkeep[0];
-    expect(upkeep.pet).toBeDefined();
-    expect(upkeep.pet.food).toBeDefined();
-  });
-
-  test('renders Housing table structure', () => {
-    const { longTerm } = store.getState();
-    const upkeep = longTerm.upkeep[0];
-    expect(upkeep.housing).toBeDefined();
-    expect(upkeep.housing.cost).toBeDefined();
-  });
-
-  test('renders Car table structure', () => {
-    const { longTerm } = store.getState();
-    const upkeep = longTerm.upkeep[0];
-    expect(upkeep.car).toBeDefined();
-    expect(upkeep.car.fuel).toBeDefined();
-  });
-
-  test('renders Income table structure', () => {
-    const { longTerm } = store.getState();
-    const upkeep = longTerm.upkeep[0];
-    expect(upkeep.salary).toBeDefined();
-  });
-
-  test('handles empty upkeep data', () => {
-    const emptyStore = mockStore({
-      longTerm: { upkeep: null }
-    });
-    expect((emptyStore.getState() as any).longTerm.upkeep).toBeNull();
-  });
-
-  test('handles upkeep data without car', () => {
-    const dataWithoutCar = [{
-      ...mockUpkeepData[0],
-      car: undefined as any
-    }];
-
-    const storeWithoutCar = mockStore({
-      longTerm: { upkeep: dataWithoutCar }
-    });
-    expect((storeWithoutCar.getState() as any).longTerm.upkeep[0].car).toBeUndefined();
-  });
-
-  test('handles upkeep data with car using km pricing', () => {
-    const dataWithKmPricing = [{
-      ...mockUpkeepData[0],
-      car: {
-        ...mockUpkeepData[0].car,
-        fuel: undefined as any,
-        km: 10000,
-        kmPrice: { amount: 0.5, currency: Currency.EUR }
-      }
-    }];
-
-    const storeWithKmPricing = mockStore({
-      longTerm: { upkeep: dataWithKmPricing }
-    });
-    const upkeep = (storeWithKmPricing.getState() as any).longTerm.upkeep[0];
-    expect(upkeep.car.km).toBe(10000);
-  });
-
-  test('handles upkeep data with savings', () => {
-    const { longTerm } = store.getState();
-    expect(longTerm.upkeep[0].savings).toBeDefined();
-    expect(longTerm.upkeep[0].savings.amount).toBe(500);
-  });
-
-  test('handles upkeep data without savings', () => {
-    const dataWithoutSavings = [{
-      ...mockUpkeepData[0],
-      savings: undefined as any
-    }];
-
-    const storeWithoutSavings = mockStore({
-      longTerm: { upkeep: dataWithoutSavings }
-    });
-    expect((storeWithoutSavings.getState() as any).longTerm.upkeep[0].savings).toBeUndefined();
+  test('renders Upkeep component with data', () => {
+    const { container } = render(
+      <Provider store={store}>
+        <Upkeep />
+      </Provider>
+    );
+    expect(container).toBeTruthy();
   });
 
   test('calculates groceries budget correctly', () => {

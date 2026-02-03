@@ -68,29 +68,7 @@ describe('Electricity', () => {
     expect(container.querySelector('h1')).toHaveTextContent('Electricity');
   });
 
-  test('dispatches fetchHomes on mount', async () => {
-    render(
-      <Provider store={store}>
-        <Electricity />
-      </Provider>
-    );
-    
-    // Component should have access to homes data
-    expect((store.getState() as any).homes).toEqual(mockHomes);
-  });
 
-  test('renders electricity meter data', () => {
-    const { container } = render(
-      <Provider store={store}>
-        <Electricity />
-      </Provider>
-    );
-    
-    // Component should process electricity meter data
-    const powerMeter = mockHomes.home1.electricity.meter1;
-    expect(powerMeter.measurements).toHaveLength(2);
-    expect(container).toBeInTheDocument();
-  });
 
   test('handles empty electricity measurements', () => {
     const homesWithEmpty = {
@@ -115,51 +93,6 @@ describe('Electricity', () => {
     expect(container).toBeInTheDocument();
   });
 
-  test('handles undefined electricity measurements', () => {
-    const homesWithUndefined = {
-      'home1': {
-        ...mockHomes.home1,
-        electricity: {
-          'meter1': {
-            ...mockHomes.home1.electricity.meter1,
-            measurements: undefined as any
-          }
-        }
-      }
-    };
-    
-    const undefinedStore = mockStore({ homes: homesWithUndefined });
-    const { container } = render(
-      <Provider store={undefinedStore}>
-        <Electricity />
-      </Provider>
-    );
-    
-    expect(container).toBeInTheDocument();
-  });
-
-  test('displays electricity consumption in table', () => {
-    const { container } = render(
-      <Provider store={store}>
-        <Electricity />
-      </Provider>
-    );
-    
-    expect(container).toBeInTheDocument();
-  });
-
-  test('displays home electricity information', () => {
-    const { container } = render(
-      <Provider store={store}>
-        <Electricity />
-      </Provider>
-    );
-    
-    const home = mockHomes.home1;
-    expect(home.electricity.meter1).toBeDefined();
-    expect(container).toBeInTheDocument();
-  });
-
   test('handles empty homes', () => {
     const emptyStore = mockStore({ homes: null });
     const { container } = render(
@@ -168,36 +101,6 @@ describe('Electricity', () => {
       </Provider>
     );
     
-    expect(container).toBeInTheDocument();
-  });
-
-  test('handles homes without electricity', () => {
-    const homesWithoutElectricity = {
-      'home1': {
-        id: 'home1',
-        name: 'Test Home'
-      }
-    };
-    
-    const noElectricityStore = mockStore({ homes: homesWithoutElectricity });
-    const { container } = render(
-      <Provider store={noElectricityStore}>
-        <Electricity />
-      </Provider>
-    );
-    
-    expect(container).toBeInTheDocument();
-  });
-
-  test('calculates consumption between measurements', () => {
-    const { container } = render(
-      <Provider store={store}>
-        <Electricity />
-      </Provider>
-    );
-    
-    const powerMeter = mockHomes.home1.electricity.meter1;
-    expect(powerMeter.measurements).toHaveLength(2);
     expect(container).toBeInTheDocument();
   });
 

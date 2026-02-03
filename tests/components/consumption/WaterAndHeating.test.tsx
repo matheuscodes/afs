@@ -108,81 +108,12 @@ describe('WaterAndHeating', () => {
     jest.restoreAllMocks();
   });
 
-  test('uses Redux Provider pattern', () => {
-    // Verify Redux store is properly configured
-    expect(store.getState()).toEqual(initialState);
-  });
-
-  test('componentDidMount calls fetchHomes', async () => {
-    // With the Redux Provider pattern, componentDidMount is called automatically
-    // and we verify it through the rendered component not crashing
-    expect(store).toBeDefined();
-  });
-
-  test('renders home section structure', () => {
-    // Verify store has homes data
-    const homes = store.getState().homes;
-    expect(homes).toBeDefined();
-    expect(homes.home1).toBeDefined();
-  });
-
-  test('handles empty homes data', () => {
-    const emptyStore = mockStore({ homes: null });
-    expect(emptyStore.getState()).toEqual({ homes: null });
-  });
-
-  test('initializes with correct state', () => {
-    expect(store.getState()).toEqual(initialState);
-  });
-
-  test('handles homes without water data', () => {
-    const homesWithoutWater = {
-      'home1': {
-        id: 'home1',
-        name: 'Test Home',
-        area: 100
-      }
-    };
-    const storeWithoutWater = mockStore({ homes: homesWithoutWater });
-    expect((storeWithoutWater.getState() as any).homes.home1).toBeDefined();
-  });
-
-  test('handles homes without heating data', () => {
-    const homesWithoutHeating = {
-      'home1': {
-        id: 'home1',
-        name: 'Test Home',
-        area: 100,
-        water: mockHomes.home1.water
-      }
-    };
-    const storeWithoutHeating = mockStore({ homes: homesWithoutHeating });
-    expect((storeWithoutHeating.getState() as any).homes.home1.water).toBeDefined();
-  });
-
-  test('processes water meter data structure', () => {
-    const homes = store.getState().homes;
-    const home = homes.home1;
-    expect(home.water.warm.measurements).toHaveLength(2);
-  });
-
-  test('processes heating data structure', () => {
-    const homes = store.getState().homes;
-    const home = homes.home1;
-    expect(home.heating.heaters).toBeDefined();
-  });
-
-  test('handles multiple homes', () => {
-    const multipleHomes = {
-      ...mockHomes,
-      'home2': {
-        ...mockHomes.home1,
-        id: 'home2',
-        name: 'Second Home'
-      }
-    };
-    const storeWithMultipleHomes = mockStore({ homes: multipleHomes });
-    const state = storeWithMultipleHomes.getState();
-    expect(Object.keys((state as any).homes)).toHaveLength(2);
+  test('renders WaterAndHeating component', () => {
+    const { container } = render(
+      <Provider store={store}>
+        <WaterAndHeating />
+      </Provider>
+    );
+    expect(container).toBeTruthy();
   });
 });

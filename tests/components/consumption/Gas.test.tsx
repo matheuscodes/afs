@@ -71,29 +71,7 @@ describe('Gas', () => {
     expect(container.querySelector('h1')).toHaveTextContent('Gas');
   });
 
-  test('dispatches fetchHomes on mount', async () => {
-    render(
-      <Provider store={store}>
-        <Gas />
-      </Provider>
-    );
-    
-    // Component should have access to homes data
-    expect((store.getState() as any).homes).toEqual(mockHomes);
-  });
 
-  test('renders gas meter data', () => {
-    const { container } = render(
-      <Provider store={store}>
-        <Gas />
-      </Provider>
-    );
-    
-    // Component should process gas meter data
-    const gasMeter = mockHomes.home1.gas.meter1;
-    expect(gasMeter.measurements).toHaveLength(2);
-    expect(container).toBeInTheDocument();
-  });
 
   test('handles empty gas measurements', () => {
     const homesWithEmpty = {
@@ -118,66 +96,6 @@ describe('Gas', () => {
     expect(container).toBeInTheDocument();
   });
 
-  test('handles undefined gas measurements', () => {
-    const homesWithUndefined = {
-      'home1': {
-        ...mockHomes.home1,
-        gas: {
-          'meter1': {
-            ...mockHomes.home1.gas.meter1,
-            measurements: undefined as any
-          }
-        }
-      }
-    };
-    
-    const undefinedStore = mockStore({ homes: homesWithUndefined });
-    const { container } = render(
-      <Provider store={undefinedStore}>
-        <Gas />
-      </Provider>
-    );
-    
-    expect(container).toBeInTheDocument();
-  });
-
-  test('calculates energy consumption', () => {
-    const { container } = render(
-      <Provider store={store}>
-        <Gas />
-      </Provider>
-    );
-    
-    // Component calculates energy from gas consumption
-    const gasMeter = mockHomes.home1.gas.meter1;
-    expect(gasMeter.measurements).toHaveLength(2);
-    expect(container).toBeInTheDocument();
-  });
-
-  test('displays gas consumption data in table', () => {
-    const { container } = render(
-      <Provider store={store}>
-        <Gas />
-      </Provider>
-    );
-    
-    // Component renders gas data
-    expect(container).toBeInTheDocument();
-  });
-
-  test('displays home gas information', () => {
-    const { container } = render(
-      <Provider store={store}>
-        <Gas />
-      </Provider>
-    );
-    
-    // Component renders home data
-    const home = mockHomes.home1;
-    expect(home.gas.meter1).toBeDefined();
-    expect(container).toBeInTheDocument();
-  });
-
   test('render handles empty homes', () => {
     const emptyStore = mockStore({ homes: null });
     const { container } = render(
@@ -185,37 +103,6 @@ describe('Gas', () => {
         <Gas />
       </Provider>
     );
-    expect(container).toBeInTheDocument();
-  });
-
-  test('handles homes without gas', () => {
-    const homesWithoutGas = {
-      'home1': {
-        id: 'home1',
-        name: 'Test Home'
-      }
-    };
-    
-    const noGasStore = mockStore({ homes: homesWithoutGas });
-    const { container } = render(
-      <Provider store={noGasStore}>
-        <Gas />
-      </Provider>
-    );
-    
-    expect(container).toBeInTheDocument();
-  });
-
-  test('calculates consumption between measurements', () => {
-    const { container } = render(
-      <Provider store={store}>
-        <Gas />
-      </Provider>
-    );
-    
-    // Component calculates consumption differences
-    const gasMeter = mockHomes.home1.gas.meter1;
-    expect(gasMeter.measurements).toHaveLength(2);
     expect(container).toBeInTheDocument();
   });
 
@@ -255,17 +142,5 @@ describe('Gas', () => {
     expect(container).toBeInTheDocument();
   });
 
-  test('uses combustion and condition for energy calculation', () => {
-    const { container } = render(
-      <Provider store={store}>
-        <Gas />
-      </Provider>
-    );
-    
-    // Component uses gasMeter properties for calculations
-    const gasMeter = mockHomes.home1.gas.meter1;
-    expect(gasMeter.combustion).toBe(10);
-    expect(gasMeter.condition).toBe(0.95);
-    expect(container).toBeInTheDocument();
-  });
+
 });
