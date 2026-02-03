@@ -16,7 +16,7 @@ jest.mock('react-chartjs-2', () => ({
 jest.mock('../../../src/services/LongTermService', () => ({
   fetchUpkeeps: jest.fn(() => (dispatch: any) => Promise.resolve()),
   updateUpkeeps: jest.fn(),
-  calculateUpkeepReport: jest.fn(() => ({ base: 1, inflation: {}, report: {} })),
+  calculateUpkeepReport: jest.fn(() => ({ base: 1, inflation: { 2010: {}}, report: {2010: {"H1":{}}} })),
   loadUpkeeps: jest.fn(() => (dispatch: any) => Promise.resolve())
 }));
 
