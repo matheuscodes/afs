@@ -16,7 +16,7 @@ module.exports = {
   ],
   coverageThreshold: {
     global: {
-      branches: 45,
+      branches: 48,  // Slightly lower than other metrics as branch coverage is harder to achieve
       functions: 70,
       lines: 70,
       statements: 70
