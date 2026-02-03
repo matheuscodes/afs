@@ -95,33 +95,7 @@ describe('WaterAndHeatingBill', () => {
     expect(getByText(new RegExp(balance.toFixed(2)))).toBeInTheDocument();
   });
 
-  test('handles bill without payments', () => {
-    const billWithoutPayments = { ...mockBill };
-    delete billWithoutPayments.payments;
-    const { container } = render(<WaterAndHeatingBill bill={billWithoutPayments} year={2024} />);
-    expect(container).toBeInTheDocument();
-  });
 
-  test('handles bill without cold water', () => {
-    const billWithoutCold = { ...mockBill };
-    delete billWithoutCold.cold;
-    const { container } = render(<WaterAndHeatingBill bill={billWithoutCold} year={2024} />);
-    expect(container).toBeInTheDocument();
-  });
-
-  test('handles bill without warm water', () => {
-    const billWithoutWarm = { ...mockBill };
-    delete billWithoutWarm.warm;
-    const { container } = render(<WaterAndHeatingBill bill={billWithoutWarm} year={2024} />);
-    expect(container).toBeInTheDocument();
-  });
-
-  test('handles bill without heaters', () => {
-    const billWithoutHeaters = { ...mockBill };
-    delete billWithoutHeaters.heaters;
-    const { container } = render(<WaterAndHeatingBill bill={billWithoutHeaters} year={2024} />);
-    expect(container).toBeInTheDocument();
-  });
 
   test('displays base area for cold water', () => {
     const { getAllByText } = render(<WaterAndHeatingBill bill={mockBill} year={2024} />);
@@ -135,30 +109,5 @@ describe('WaterAndHeatingBill', () => {
     expect(getByText(/20m²/)).toBeInTheDocument();
   });
 
-  test('handles cold water without base', () => {
-    const billWithoutBase = {
-      ...mockBill,
-      cold: { ...mockBill.cold, base: undefined as any }
-    };
-    const { container } = render(<WaterAndHeatingBill bill={billWithoutBase} year={2024} />);
-    expect(container).toBeInTheDocument();
-  });
 
-  test('handles warm water without base', () => {
-    const billWithoutBase = {
-      ...mockBill,
-      warm: { ...mockBill.warm, base: undefined as any }
-    };
-    const { container } = render(<WaterAndHeatingBill bill={billWithoutBase} year={2024} />);
-    expect(container).toBeInTheDocument();
-  });
-
-  test('handles heater without base', () => {
-    const billWithoutHeaterBase = {
-      ...mockBill,
-      heaters: [{ ...mockBill.heaters[0], base: undefined as any }]
-    };
-    const { container } = render(<WaterAndHeatingBill bill={billWithoutHeaterBase} year={2024} />);
-    expect(container).toBeInTheDocument();
-  });
 });

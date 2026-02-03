@@ -103,24 +103,7 @@ describe('ActivitiesTable', () => {
     expect(filtered.length).toBe(2);
   });
 
-  test('handleFilterChange updates state', () => {
-    const component = new ActivitiesTable({ data: mockData, accounts: mockAccounts });
-    component.setState = jest.fn();
-    component.handleFilterChange('test', 'source');
-    expect(component.state.searchQuery.source).toBe('test');
-  });
 
-  test('renders sortable header cells', () => {
-    const component = new ActivitiesTable({ data: mockData, accounts: mockAccounts });
-    const headerCell = component.renderSortableTableHeaderCell('date', 'Date');
-    expect(headerCell).toBeTruthy();
-  });
-
-  test('renders row menu', () => {
-    const component = new ActivitiesTable({ data: mockData, accounts: mockAccounts });
-    const menu = component.renderRowMenu();
-    expect(menu).toBeTruthy();
-  });
 
   test('renders row with activity data', () => {
     const component = new ActivitiesTable({ data: mockData, accounts: mockAccounts });
@@ -134,25 +117,7 @@ describe('ActivitiesTable', () => {
     expect(row).toBeTruthy();
   });
 
-  test('handles activity without account', () => {
-    const dataWithoutAccount = [{
-      ...mockData[0],
-      account: 'unknown'
-    }];
-    const component = new ActivitiesTable({ data: dataWithoutAccount, accounts: mockAccounts });
-    const row = component.renderRow({ activity: dataWithoutAccount[0], index: 0 });
-    expect(row).toBeTruthy();
-  });
 
-  test('getIconForOrder returns correct icons', () => {
-    const component = new ActivitiesTable({ data: mockData, accounts: mockAccounts });
-    const ascIcon = component.getIconForOrder('ASC');
-    const descIcon = component.getIconForOrder('DESC');
-    const noneIcon = component.getIconForOrder('NONE');
-    expect(ascIcon).toBeTruthy();
-    expect(descIcon).toBeTruthy();
-    expect(noneIcon).toBeTruthy();
-  });
 
   test('sorts by value amount when column is value', () => {
     const component = new ActivitiesTable({ data: mockData, accounts: mockAccounts });

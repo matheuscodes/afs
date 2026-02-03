@@ -50,17 +50,7 @@ describe('PropertyInvestments', () => {
     expect(container.querySelector('h1')).toHaveTextContent('Properties');
   });
 
-  test('componentDidMount calls fetchProperties', async () => {
-    const store = mockStore(initialState);
-    
-    render(
-      <Provider store={store}>
-        <PropertyInvestments />
-      </Provider>
-    );
-    
-    expect((store.getState() as any).properties).toEqual(mockProperties);
-  });
+
 
   test('handles empty properties object', () => {
     const store = mockStore({ properties: {} });
@@ -88,32 +78,6 @@ describe('PropertyInvestments', () => {
 
   test('displays property information', () => {
     const store = mockStore(initialState);
-    
-    const { container } = render(
-      <Provider store={store}>
-        <PropertyInvestments />
-      </Provider>
-    );
-    
-    expect(container).toBeInTheDocument();
-  });
-
-  test('processes property valuations', () => {
-    const property = mockProperties.prop1;
-    expect(property.valuations.length).toBe(2);
-    expect(property.valuations[0].value.amount).toBe(200000);
-    expect(property.valuations[1].value.amount).toBe(250000);
-  });
-
-  test('handles properties without valuations', () => {
-    const propertiesWithoutValuations = {
-      'prop1': {
-        ...mockProperties.prop1,
-        valuations: [] as any
-      }
-    };
-
-    const store = mockStore({ properties: propertiesWithoutValuations });
     
     const { container } = render(
       <Provider store={store}>

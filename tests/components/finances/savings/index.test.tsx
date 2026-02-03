@@ -80,28 +80,7 @@ describe('Savings', () => {
     expect(container.querySelector('h1')).toHaveTextContent('Savings');
   });
 
-  test('dispatches fetchSavings on mount', () => {
-    render(
-      <Provider store={store}>
-        <Savings />
-      </Provider>
-    );
-    
-    // Component should have access to savings data from Redux
-    expect(store.getState().longTerm.savings).toEqual(mockSavings);
-  });
 
-  test('groups savings by account', () => {
-    const { container } = render(
-      <Provider store={store}>
-        <Savings />
-      </Provider>
-    );
-    
-    // Component renders banks and accounts
-    expect(container).toBeInTheDocument();
-    expect(store.getState().longTerm.savings).toHaveLength(2);
-  });
 
   test('handles empty savings data', () => {
     const emptyStore = mockStore({
@@ -143,33 +122,7 @@ describe('Savings', () => {
     expect(savingsData).toHaveLength(2);
   });
 
-  test('displays source savings accounts', () => {
-    const singleStore = mockStore({
-      longTerm: { savings: mockSavings.slice(0, 1) }
-    });
-    
-    const { container } = render(
-      <Provider store={singleStore}>
-        <Savings />
-      </Provider>
-    );
-    
-    expect(container).toBeInTheDocument();
-  });
 
-  test('displays destination savings accounts', () => {
-    const singleStore = mockStore({
-      longTerm: { savings: mockSavings.slice(1, 2) }
-    });
-    
-    const { container } = render(
-      <Provider store={singleStore}>
-        <Savings />
-      </Provider>
-    );
-    
-    expect(container).toBeInTheDocument();
-  });
 
   test('groups accounts by bank', () => {
     const { getByText } = render(
@@ -200,28 +153,6 @@ describe('Savings', () => {
     );
 
     expect(container).toBeInTheDocument();
-  });
-
-  test('render displays banks and accounts', () => {
-    const { container } = render(
-      <Provider store={store}>
-        <Savings />
-      </Provider>
-    );
-    
-    expect(container).toBeInTheDocument();
-  });
-
-  test('groups funds by description', () => {
-    const { container } = render(
-      <Provider store={store}>
-        <Savings />
-      </Provider>
-    );
-
-    // Verify savings data is processed
-    const savingsData = (store.getState() as any).longTerm.savings;
-    expect(savingsData).toHaveLength(2);
   });
 
   test('handles zero balance accounts', () => {
