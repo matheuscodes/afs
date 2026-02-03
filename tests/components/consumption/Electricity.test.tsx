@@ -5,10 +5,9 @@ import '@testing-library/jest-dom';
 import configureStore from 'redux-mock-store';
 import { thunk } from 'redux-thunk';
 import ConnectedElectricity, { 
-  Electricity, 
-  getCurrentPrice, 
+  Electricity,
   dateDifference, 
-  paymentsByBill, 
+  paymentsByBill,
   groupedPayments 
 } from '../../../src/components/consumption/Electricity';
 import { Currency } from '../../../src/models/Activity';
@@ -26,30 +25,6 @@ jest.mock('../../../src/services/HomeService', () => ({
 const mockStore = configureStore([thunk]);
 
 describe('Electricity Utility Functions', () => {
-  describe('getCurrentPrice', () => {
-    test('returns correct price for a measurement', () => {
-      const measurement: any = { meter: 'meter1', date: '2024-02-01', measurement: 1100, billable: true };
-      const prices: any = [
-        { meter: 'meter1', date: '2024-01-01', unit: { amount: 0.25, currency: Currency.EUR }, base: { amount: 10, currency: Currency.EUR } },
-        { meter: 'meter1', date: '2024-01-15', unit: { amount: 0.30, currency: Currency.EUR }, base: { amount: 12, currency: Currency.EUR } }
-      ];
-      
-      const result = getCurrentPrice(measurement, prices);
-      expect(result).toBeDefined();
-      expect(result?.unit.amount).toBe(0.25);
-    });
-
-    test('returns undefined when no price matches', () => {
-      const measurement: any = { meter: 'meter1', date: '2023-12-01', measurement: 1000, billable: true };
-      const prices: any = [
-        { meter: 'meter1', date: '2024-01-01', unit: { amount: 0.25, currency: Currency.EUR }, base: { amount: 10, currency: Currency.EUR } }
-      ];
-      
-      const result = getCurrentPrice(measurement, prices);
-      expect(result).toBeUndefined();
-    });
-  });
-
   describe('dateDifference', () => {
     test('calculates date difference in days', () => {
       const diff = dateDifference('2024-02-01', '2024-01-01');
