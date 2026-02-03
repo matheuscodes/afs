@@ -1,10 +1,16 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { render } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import configureStore from 'redux-mock-store';
 import { thunk } from 'redux-thunk';
-import Electricity from '../../../src/components/consumption/Electricity';
+import ConnectedElectricity, { 
+  Electricity, 
+  getCurrentPrice, 
+  dateDifference, 
+  paymentsByBill, 
+  groupedPayments 
+} from '../../../src/components/consumption/Electricity';
 import { Currency } from '../../../src/models/Activity';
 import { updateHomes, updateElectricity, updateGas, updateWater, updateHeating } from '../../../src/actions/consumption/home';
 
@@ -19,26 +25,112 @@ jest.mock('../../../src/services/HomeService', () => ({
 
 const mockStore = configureStore([thunk]);
 
-describe('Electricity', () => {
-  const mockHomes = {
+describe('Electricity Utility Functions', () => {
+  describe('getCurrentPrice', () => {
+    test('returns correct price for a measurement', () => {
+      const measurement: any = { meter: 'meter1', date: '2024-02-01', measurement: 1100, billable: true };
+      const prices: any = [
+        { meter: 'meter1', date: '2024-01-01', unit: { amount: 0.25, currency: Currency.EUR }, base: { amount: 10, currency: Currency.EUR } },
+        { meter: 'meter1', date: '2024-01-15', unit: { amount: 0.30, currency: Currency.EUR }, base: { amount: 12, currency: Currency.EUR } }
+      ];
+      
+      const result = getCurrentPrice(measurement, prices);
+      expect(result).toBeDefined();
+      expect(result?.unit.amount).toBe(0.25);
+    });
+
+    test('returns undefined when no price matches', () => {
+      const measurement: any = { meter: 'meter1', date: '2023-12-01', measurement: 1000, billable: true };
+      const prices: any = [
+        { meter: 'meter1', date: '2024-01-01', unit: { amount: 0.25, currency: Currency.EUR }, base: { amount: 10, currency: Currency.EUR } }
+      ];
+      
+      const result = getCurrentPrice(measurement, prices);
+      expect(result).toBeUndefined();
+    });
+  });
+
+  describe('dateDifference', () => {
+    test('calculates date difference in days', () => {
+      const diff = dateDifference('2024-02-01', '2024-01-01');
+      expect(diff).toBe(31);
+    });
+
+    test('handles negative differences', () => {
+      const diff = dateDifference('2024-01-01', '2024-02-01');
+      expect(diff).toBe(-31);
+    });
+
+    test('handles same dates', () => {
+      const diff = dateDifference('2024-01-01', '2024-01-01');
+      expect(diff).toBe(0);
+    });
+  });
+
+  describe('paymentsByBill', () => {
+    test('groups payments by bill ID', () => {
+      const payments: any = [
+        { meter: 'meter1', date: '2024-01-15', value: { amount: 50, currency: Currency.EUR }, bill: 'bill-01' },
+        { meter: 'meter1', date: '2024-01-20', value: { amount: 30, currency: Currency.EUR }, bill: 'bill-01' },
+        { meter: 'meter1', date: '2024-02-15', value: { amount: 60, currency: Currency.EUR }, bill: 'bill-02' }
+      ];
+
+      const result = paymentsByBill(payments);
+      expect(Object.keys(result)).toHaveLength(2);
+      expect(result['bill-01']).toHaveLength(2);
+      expect(result['bill-02']).toHaveLength(1);
+    });
+
+    test('handles empty payments array', () => {
+      const result = paymentsByBill([]);
+      expect(Object.keys(result)).toHaveLength(0);
+    });
+  });
+
+  describe('groupedPayments', () => {
+    test('aggregates payments by bill with date ranges and sums', () => {
+      const payments: any = [
+        { meter: 'meter1', date: new Date('2024-01-15'), value: { amount: 50, currency: Currency.EUR }, bill: 'bill-01' },
+        { meter: 'meter1', date: new Date('2024-01-20'), value: { amount: 30, currency: Currency.EUR }, bill: 'bill-01' }
+      ];
+
+      const result = groupedPayments(payments);
+      expect(result).toHaveLength(1);
+      expect(result[0].sum.amount).toBe(80);
+      expect(result[0].bill).toBe('bill-01');
+    });
+
+    test('handles empty payments', () => {
+      const result = groupedPayments([]);
+      expect(result).toHaveLength(0);
+    });
+  });
+});
+
+describe('Electricity Component', () => {
+  const mockHomes: any = {
     'home1': {
       id: 'home1',
       name: 'Test Home',
+      area: 100,
+      water: { warm: {}, cold: {} },
       electricity: {
         'meter1': {
           measurements: [
-            { date: '2024-01-01', measurement: 1000, billable: true },
-            { date: '2024-02-01', measurement: 1100, billable: true }
+            { meter: 'meter1', date: '2024-01-01', measurement: 1000, billable: true },
+            { meter: 'meter1', date: '2024-02-01', measurement: 1100, billable: true }
           ],
           prices: [
             {
-              date: '2024-01-01',
+              meter: 'meter1',
+              date: '2023-12-31',
               unit: { amount: 0.25, currency: Currency.EUR },
               base: { amount: 10, currency: Currency.EUR }
             }
           ],
           payments: [
             {
+              meter: 'meter1',
               date: '2024-01-15',
               value: { amount: 50, currency: Currency.EUR },
               bill: 'bill-2024-01'
@@ -62,22 +154,188 @@ describe('Electricity', () => {
   test('renders Electricity component', () => {
     const { container } = render(
       <Provider store={store}>
-        <Electricity />
+        <ConnectedElectricity />
       </Provider>
     );
     expect(container.querySelector('h1')).toHaveTextContent('Electricity');
   });
 
+  test('calls fetchHomes on mount', async () => {
+    const mockFetchHomes = jest.fn();
+    const component = new Electricity({ 
+      fetchHomes: mockFetchHomes,
+      fetchElectricity: jest.fn(),
+      homes: null
+    });
 
+    await component.componentDidMount();
+    expect(mockFetchHomes).toHaveBeenCalled();
+  });
+
+  test('renders home tabs when homes are available', () => {
+    const { getByText } = render(
+      <Provider store={store}>
+        <ConnectedElectricity />
+      </Provider>
+    );
+    
+    expect(getByText('Test Home')).toBeInTheDocument();
+  });
+
+  test('getPowerMeters processes measurements correctly', () => {
+    const component = new Electricity({ 
+      fetchHomes: jest.fn(),
+      fetchElectricity: jest.fn(),
+      homes: mockHomes
+    });
+
+    const powerMeter = mockHomes.home1.electricity.meter1;
+    const result = component.getPowerMeters(powerMeter);
+    
+    expect(result).toHaveLength(2);
+    expect(result[0].measurement).toBe(1000);
+    expect(result[0].consumption).toBe(0);
+    expect(result[0].days).toBe(0);
+    
+    expect(result[1].consumption).toBe(100);
+    expect(result[1].days).toBeGreaterThan(0);
+  });
+
+  test('getPowerMeters calculates costs correctly', () => {
+    const component = new Electricity({ 
+      fetchHomes: jest.fn(),
+      fetchElectricity: jest.fn(),
+      homes: mockHomes
+    });
+
+    const powerMeter = mockHomes.home1.electricity.meter1;
+    const result = component.getPowerMeters(powerMeter);
+    
+    expect(result[1].cost).toBeDefined();
+    expect(result[1].cost.amount).toBeGreaterThan(0);
+    expect(result[1].cost.currency).toBe(Currency.EUR);
+  });
+
+  test('getBills processes billable measurements', () => {
+    const component = new Electricity({ 
+      fetchHomes: jest.fn(),
+      fetchElectricity: jest.fn(),
+      homes: mockHomes
+    });
+
+    const powerMeter = mockHomes.home1.electricity.meter1;
+    const bills = component.getBills(powerMeter);
+    
+    expect(bills).toHaveLength(1);
+    expect(bills[0].from).toBeDefined();
+    expect(bills[0].to).toBeDefined();
+    expect(bills[0].consumption).toBe(100);
+  });
+
+  test('getBills calculates costs correctly', () => {
+    const component = new Electricity({ 
+      fetchHomes: jest.fn(),
+      fetchElectricity: jest.fn(),
+      homes: mockHomes
+    });
+
+    const powerMeter = mockHomes.home1.electricity.meter1;
+    const bills = component.getBills(powerMeter);
+    
+    expect(bills[0].cost.unit).toBeDefined();
+    expect(bills[0].cost.base).toBeDefined();
+    expect(bills[0].cost.total).toBeDefined();
+    expect(bills[0].cost.total.amount).toBeGreaterThan(0);
+  });
+
+  test('renderRow creates table row', () => {
+    const component = new Electricity({ 
+      fetchHomes: jest.fn(),
+      fetchElectricity: jest.fn(),
+      homes: mockHomes
+    });
+
+    const measurementEntry = {
+      date: '2024-01-01',
+      measurement: 1000,
+      consumption: 100,
+      days: 31,
+      price: {
+        unit: { amount: 0.25, currency: Currency.EUR },
+        base: { amount: 10, currency: Currency.EUR }
+      },
+      cost: {
+        amount: 335,
+        currency: Currency.EUR
+      }
+    };
+
+    const row = component.renderRow(measurementEntry, 0);
+    
+    expect(row).toBeDefined();
+    expect(row.key).toBe('electricity-0');
+  });
+
+  test('renderRow handles first measurement with no consumption', () => {
+    const component = new Electricity({ 
+      fetchHomes: jest.fn(),
+      fetchElectricity: jest.fn(),
+      homes: mockHomes
+    });
+
+    const measurementEntry = {
+      date: '2024-01-01',
+      measurement: 1000,
+      consumption: 0,
+      days: 0,
+      price: {
+        unit: { amount: 0.25, currency: Currency.EUR },
+        base: { amount: 10, currency: Currency.EUR }
+      },
+      cost: {
+        amount: 0,
+        currency: Currency.EUR
+      }
+    };
+
+    const row = component.renderRow(measurementEntry, 0);
+    
+    expect(row).toBeDefined();
+    expect(row.key).toBe('electricity-0');
+  });
+
+  test('render returns valid React element', () => {
+    const component = new Electricity({ 
+      fetchHomes: jest.fn(),
+      fetchElectricity: jest.fn(),
+      homes: mockHomes
+    });
+
+    const renderOutput = component.render();
+    
+    expect(renderOutput).toBeDefined();
+    expect(renderOutput.type).toBe('div');
+  });
+
+  test('handles empty homes', () => {
+    const emptyStore = mockStore({ homes: null });
+    const { container } = render(
+      <Provider store={emptyStore}>
+        <ConnectedElectricity />
+      </Provider>
+    );
+    
+    expect(container).toBeInTheDocument();
+  });
 
   test('handles empty electricity measurements', () => {
-    const homesWithEmpty = {
+    const homesWithEmpty: any = {
       'home1': {
         ...mockHomes.home1,
         electricity: {
           'meter1': {
             ...mockHomes.home1.electricity.meter1,
-            measurements: [] as any
+            measurements: []
           }
         }
       }
@@ -86,56 +344,188 @@ describe('Electricity', () => {
     const emptyStore = mockStore({ homes: homesWithEmpty });
     const { container } = render(
       <Provider store={emptyStore}>
-        <Electricity />
+        <ConnectedElectricity />
       </Provider>
     );
     
     expect(container).toBeInTheDocument();
   });
 
-  test('handles empty homes', () => {
-    const emptyStore = mockStore({ homes: null });
-    const { container } = render(
-      <Provider store={emptyStore}>
-        <Electricity />
-      </Provider>
-    );
-    
-    expect(container).toBeInTheDocument();
-  });
-
-  test('handles measurements without prices', () => {
-    const homesWithoutPrices = {
+  test('getBills handles multiple billable measurements', () => {
+    const mockHomesWithMultiple: any = {
       'home1': {
-        ...mockHomes.home1,
+        id: 'home1',
+        name: 'Test Home',
+        area: 100,
+        water: { warm: {}, cold: {} },
         electricity: {
           'meter1': {
-            ...mockHomes.home1.electricity.meter1,
-            prices: [] as any
+            measurements: [
+              { meter: 'meter1', date: '2024-01-01', measurement: 1000, billable: true },
+              { meter: 'meter1', date: '2024-01-15', measurement: 1050, billable: false },
+              { meter: 'meter1', date: '2024-02-01', measurement: 1100, billable: true },
+              { meter: 'meter1', date: '2024-03-01', measurement: 1200, billable: true }
+            ],
+            prices: [
+              {
+                meter: 'meter1',
+                date: '2023-12-31',
+                unit: { amount: 0.25, currency: Currency.EUR },
+                base: { amount: 10, currency: Currency.EUR }
+              }
+            ],
+            payments: []
           }
         }
       }
     };
+
+    const component = new Electricity({ 
+      fetchHomes: jest.fn(),
+      fetchElectricity: jest.fn(),
+      homes: mockHomesWithMultiple
+    });
+
+    const powerMeter = mockHomesWithMultiple.home1.electricity.meter1;
+    const bills = component.getBills(powerMeter);
     
-    const noPricesStore = mockStore({ homes: homesWithoutPrices });
-    const { container } = render(
-      <Provider store={noPricesStore}>
-        <Electricity />
-      </Provider>
-    );
-    
-    expect(container).toBeInTheDocument();
+    expect(bills.length).toBeGreaterThan(0);
+    bills.forEach(bill => {
+      expect(bill.from).toBeDefined();
+      expect(bill.to).toBeDefined();
+      expect(bill.consumption).toBeGreaterThanOrEqual(0);
+    });
   });
 
-  test('groups payments by bill', () => {
-    const { container } = render(
-      <Provider store={store}>
-        <Electricity />
-      </Provider>
-    );
+  test('getBills handles last measurement even if not billable', () => {
+    const mockHomesLastNotBillable: any = {
+      'home1': {
+        id: 'home1',
+        name: 'Test Home',
+        area: 100,
+        water: { warm: {}, cold: {} },
+        electricity: {
+          'meter1': {
+            measurements: [
+              { meter: 'meter1', date: '2024-01-01', measurement: 1000, billable: true },
+              { meter: 'meter1', date: '2024-02-01', measurement: 1100, billable: false }
+            ],
+            prices: [
+              {
+                meter: 'meter1',
+                date: '2023-12-31',
+                unit: { amount: 0.25, currency: Currency.EUR },
+                base: { amount: 10, currency: Currency.EUR }
+              }
+            ],
+            payments: []
+          }
+        }
+      }
+    };
+
+    const component = new Electricity({ 
+      fetchHomes: jest.fn(),
+      fetchElectricity: jest.fn(),
+      homes: mockHomesLastNotBillable
+    });
+
+    const powerMeter = mockHomesLastNotBillable.home1.electricity.meter1;
+    const bills = component.getBills(powerMeter);
     
-    const powerMeter = mockHomes.home1.electricity.meter1;
-    expect(powerMeter.payments).toHaveLength(1);
-    expect(container).toBeInTheDocument();
+    expect(bills).toHaveLength(1);
+  });
+
+  test('getBills skips first billable without previous measurement', () => {
+    const mockHomesSingleBillable: any = {
+      'home1': {
+        id: 'home1',
+        name: 'Test Home',
+        area: 100,
+        water: { warm: {}, cold: {} },
+        electricity: {
+          'meter1': {
+            measurements: [
+              { meter: 'meter1', date: '2024-01-01', measurement: 1000, billable: true }
+            ],
+            prices: [
+              {
+                meter: 'meter1',
+                date: '2023-12-31',
+                unit: { amount: 0.25, currency: Currency.EUR },
+                base: { amount: 10, currency: Currency.EUR }
+              }
+            ],
+            payments: []
+          }
+        }
+      }
+    };
+
+    const component = new Electricity({ 
+      fetchHomes: jest.fn(),
+      fetchElectricity: jest.fn(),
+      homes: mockHomesSingleBillable
+    });
+
+    const powerMeter = mockHomesSingleBillable.home1.electricity.meter1;
+    const bills = component.getBills(powerMeter);
+    
+    expect(bills).toHaveLength(0);
+  });
+
+  test('component has initial empty state', () => {
+    const component = new Electricity({ 
+      fetchHomes: jest.fn(),
+      fetchElectricity: jest.fn(),
+      homes: mockHomes
+    });
+
+    expect(component.state).toEqual({});
+  });
+
+  test('getPowerMeters handles measurements with various dates', () => {
+    const mockHomesVariousDates: any = {
+      'home1': {
+        id: 'home1',
+        name: 'Test Home',
+        area: 100,
+        water: { warm: {}, cold: {} },
+        electricity: {
+          'meter1': {
+            measurements: [
+              { meter: 'meter1', date: '2024-01-01', measurement: 1000, billable: true },
+              { meter: 'meter1', date: '2024-01-15', measurement: 1050, billable: false },
+              { meter: 'meter1', date: '2024-02-01', measurement: 1100, billable: true },
+              { meter: 'meter1', date: '2024-03-01', measurement: 1200, billable: true }
+            ],
+            prices: [
+              {
+                meter: 'meter1',
+                date: '2023-12-01',
+                unit: { amount: 0.25, currency: Currency.EUR },
+                base: { amount: 10, currency: Currency.EUR }
+              }
+            ],
+            payments: []
+          }
+        }
+      }
+    };
+
+    const component = new Electricity({ 
+      fetchHomes: jest.fn(),
+      fetchElectricity: jest.fn(),
+      homes: mockHomesVariousDates
+    });
+
+    const powerMeter = mockHomesVariousDates.home1.electricity.meter1;
+    const result = component.getPowerMeters(powerMeter);
+    
+    expect(result).toHaveLength(4);
+    expect(result[0].consumption).toBe(0);
+    expect(result[1].consumption).toBe(50);
+    expect(result[2].consumption).toBe(50);
+    expect(result[3].consumption).toBe(100);
   });
 });
