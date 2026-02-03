@@ -6,6 +6,16 @@ import configureStore from 'redux-mock-store';
 import { thunk } from 'redux-thunk';
 import BookkeepingReports from '../../../../src/components/finances/bookkeeping/BookkeepingReports';
 import { Currency } from '../../../../src/models/Activity';
+import { loadActivities } from '../../../../src/actions/bookkeeping';
+
+// Mock the BookkeepingService to prevent actual file I/O
+jest.mock('../../../../src/services/BookkeepingService', () => ({
+  loadActivities: jest.fn(() => loadActivities([])),
+  yearlyOverview: jest.fn(() => ({})),
+  categoryOverview: jest.fn(() => ({})),
+  categorySources: jest.fn(() => ({})),
+  categoryDescriptions: jest.fn(() => ({})),
+}));
 
 const mockStore = configureStore([thunk]);
 
@@ -52,26 +62,26 @@ describe('BookkeepingReports', () => {
   test('dummy test', () => {
     expect(1).toBeDefined();
   });
-//  test('renders BookkeepingReports component', () => {
-//    const { container } = render(
-//      <Provider store={store}>
-//        <BookkeepingReports />
-//      </Provider>
-//    );
-//    expect(container.querySelector('h1')).toHaveTextContent('Reports');
-//  });
-//
-//
-//
-//  test('handles empty bookkeeping data', () => {
-//    const store = mockStore({ bookkeeping: [] });
-//
-//    const { container } = render(
-//      <Provider store={store}>
-//        <BookkeepingReports />
-//      </Provider>
-//    );
-//
-//    expect(container).toBeInTheDocument();
-//  });
+  test('renders BookkeepingReports component', () => {
+    const { container } = render(
+      <Provider store={store}>
+        <BookkeepingReports />
+      </Provider>
+    );
+    expect(container.querySelector('h1')).toHaveTextContent('Reports');
+  });
+
+
+
+  test('handles empty bookkeeping data', () => {
+    const store = mockStore({ bookkeeping: [] });
+
+    const { container } = render(
+      <Provider store={store}>
+        <BookkeepingReports />
+      </Provider>
+    );
+
+    expect(container).toBeInTheDocument();
+  });
 });
