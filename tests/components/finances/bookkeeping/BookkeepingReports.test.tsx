@@ -6,6 +6,21 @@ import configureStore from 'redux-mock-store';
 import { thunk } from 'redux-thunk';
 import BookkeepingReports from '../../../../src/components/finances/bookkeeping/BookkeepingReports';
 import { Currency } from '../../../../src/models/Activity';
+import { loadActivities } from '../../../../src/actions/bookkeeping';
+
+// Mock Chart.js to avoid canvas issues in tests
+jest.mock('react-chartjs-2', () => ({
+  Bar: () => <div data-testid="bar-chart">Chart</div>
+}));
+
+// Mock the BookkeepingService to prevent actual file I/O
+jest.mock('../../../../src/services/BookkeepingService', () => ({
+  loadActivities: jest.fn(() => loadActivities([])),
+  yearlyOverview: jest.fn(() => ({})),
+  categoryOverview: jest.fn(() => ({})),
+  categorySources: jest.fn(() => ({})),
+  categoryDescriptions: jest.fn(() => ({})),
+}));
 
 const mockStore = configureStore([thunk]);
 
@@ -49,29 +64,27 @@ describe('BookkeepingReports', () => {
   beforeEach(() => {
     store = mockStore(initialState);
   });
-  test('dummy test', () => {
-    expect(1).toBeDefined();
+  
+  test('renders BookkeepingReports component', () => {
+    const { container } = render(
+      <Provider store={store}>
+        <BookkeepingReports />
+      </Provider>
+    );
+    expect(container.querySelector('h1')).toHaveTextContent('Reports');
   });
-//  test('renders BookkeepingReports component', () => {
-//    const { container } = render(
-//      <Provider store={store}>
-//        <BookkeepingReports />
-//      </Provider>
-//    );
-//    expect(container.querySelector('h1')).toHaveTextContent('Reports');
-//  });
-//
-//
-//
-//  test('handles empty bookkeeping data', () => {
-//    const store = mockStore({ bookkeeping: [] });
-//
-//    const { container } = render(
-//      <Provider store={store}>
-//        <BookkeepingReports />
-//      </Provider>
-//    );
-//
-//    expect(container).toBeInTheDocument();
-//  });
+
+
+
+  test('handles empty bookkeeping data', () => {
+    const store = mockStore({ bookkeeping: [] });
+
+    const { container } = render(
+      <Provider store={store}>
+        <BookkeepingReports />
+      </Provider>
+    );
+
+    expect(container).toBeInTheDocument();
+  });
 });
