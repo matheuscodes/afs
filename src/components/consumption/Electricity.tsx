@@ -10,15 +10,15 @@ import {
   Heading,
 } from 'evergreen-ui'
 
-function getCurrentPrice(measurement: MeterMeasurement, prices: MeterPrice[]) {
+export function getCurrentPrice(measurement: MeterMeasurement, prices: MeterPrice[]) {
   return prices.find((i: MeterPrice) => i.date < measurement.date);
 }
 
-function dateDifference(a: string | Date, b: string | Date) {
+export function dateDifference(a: string | Date, b: string | Date) {
   return (new Date(a).getTime() - new Date(b).getTime()) / (1000 * 60 * 60 * 24)
 }
 
-function paymentsByBill(payments: MeterPayment[]): Record<string, any> {
+export function paymentsByBill(payments: MeterPayment[]): Record<string, any> {
   return payments.reduce((acc: Record<string, any[]>, payment: MeterPayment) => {
     const key = `${payment.bill}`;
     // Group initialization
@@ -33,7 +33,7 @@ function paymentsByBill(payments: MeterPayment[]): Record<string, any> {
   }, {});
 }
 
-function groupedPayments(payments: MeterPayment[]): any[] {
+export function groupedPayments(payments: MeterPayment[]): any[] {
   const groupBy: Record<string, any> = paymentsByBill(payments);
   return Object.keys(groupBy).map((i: string) => groupBy[i]).map((group: any) => {
     return {
@@ -61,7 +61,7 @@ const ColumnFlex = {
   cost: 1,
 }
 
-class Electricity extends React.Component<any, any> {
+export class Electricity extends React.Component<any, any> {
   constructor(props: any) {
     super(props);
     this.state = {}
