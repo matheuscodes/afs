@@ -86,7 +86,7 @@
     "@typescript-eslint/parser": "8.56.1",
     "css-loader": "7.1.4",
     "electron": "40.8.0",
-    "eslint": "10.0.2",
+    "eslint": "10.1.0",
     "eslint-plugin-import": "2.32.0",
     "jest": "30.2.0",
     "jest-environment-jsdom": "30.2.0",
