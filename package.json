@@ -98,7 +98,7 @@
     "typescript": "5.9.3"
   },
   "dependencies": {
-    "@redux-devtools/extension": "3.3.0",
+    "@redux-devtools/extension": "4.0.0",
     "canvas": "3.2.1",
     "chart.js": "4.5.1",
     "electron-squirrel-startup": "1.0.1",
