@@ -105,7 +105,7 @@
     "evergreen-ui": "7.1.9",
     "react": "19.2.4",
     "react-chartjs-2": "5.3.1",
-    "react-dom": "19.2.4",
+    "react-dom": "19.2.5",
     "react-redux": "9.2.0",
     "react-router-dom": "7.14.0",
     "redux": "5.0.1",
