@@ -3,6 +3,9 @@ module.exports = {
   testMatch: ['<rootDir>/tests/**/*.test.ts', '<rootDir>/tests/**/*.test.tsx'],
   testEnvironment: 'jsdom',
   setupFilesAfterEnv: ['<rootDir>/tests/setupTests.ts'],
+  transform: {
+    '^.+\\.tsx?$': ['ts-jest', { diagnostics: false }],
+  },
   collectCoverage: true,
   collectCoverageFrom: [
     'src/**/*.{ts,tsx}',
