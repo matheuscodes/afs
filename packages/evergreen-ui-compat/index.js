@@ -97,16 +97,20 @@ function Popover(props) {
       {
         onClick: () => setIsOpen(!isOpen),
         role: 'button',
+        'aria-expanded': isOpen,
         tabIndex: 0,
         onKeyDown: (event) => {
           if (event.key === 'Enter' || event.key === ' ') {
+            if (event.key === ' ') {
+              event.preventDefault();
+            }
             setIsOpen(!isOpen);
           }
         }
       },
       props.children
     ),
-    isOpen && content ? React.createElement('div', { role: 'dialog' }, content) : null
+    isOpen && content ? React.createElement('div', { role: 'dialog', 'aria-modal': true, 'aria-label': 'Popover content' }, content) : null
   );
 }
 
@@ -149,9 +153,11 @@ function SideSheet(props) {
 }
 
 function TextInputField(props) {
-  const label = props.label ? React.createElement('label', null, props.label) : null;
+  const inputId = React.useId();
+  const label = props.label ? React.createElement('label', { htmlFor: inputId }, props.label) : null;
   const input = React.createElement('input', {
     ...cleanProps(props, ['label', 'isInvalid']),
+    id: inputId,
     style: toStyle(props),
     value: props.value,
     onChange: props.onChange
@@ -160,9 +166,11 @@ function TextInputField(props) {
 }
 
 function SelectField(props) {
-  const label = props.label ? React.createElement('label', null, props.label) : null;
+  const selectId = React.useId();
+  const label = props.label ? React.createElement('label', { htmlFor: selectId }, props.label) : null;
   const select = React.createElement('select', {
     ...cleanProps(props, ['label']),
+    id: selectId,
     style: toStyle(props),
     value: props.value,
     onChange: props.onChange
