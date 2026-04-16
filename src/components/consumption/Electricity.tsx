@@ -69,13 +69,18 @@ export class Electricity extends React.Component<any, any> {
   }
 
   getPowerMeters(powerMeter: PowerMeter): any[] {
+    const measurements = powerMeter.measurements || [];
+    const fallbackPrice = {
+      unit: { amount: 0, currency: '' },
+      base: { amount: 0, currency: '' },
+    };
     let lastDate: Date;
     let lastMeasurement: number;
-    return powerMeter.measurements.map(measurement => {
+    return measurements.map(measurement => {
       const item = {
         date: measurement.date,
         measurement: measurement.measurement,
-        price: getCurrentPrice(measurement, powerMeter.prices),
+        price: getCurrentPrice(measurement, powerMeter.prices) || fallbackPrice,
         consumption: lastMeasurement ? measurement.measurement - lastMeasurement : 0,
         days: lastDate ? dateDifference(measurement.date, lastDate) : 0,
         billable: measurement.billable
@@ -92,17 +97,22 @@ export class Electricity extends React.Component<any, any> {
   }
 
   getBills(powerMeter: PowerMeter): any[] {
-    const groups = groupedPayments(powerMeter.payments);
+    const groups = groupedPayments(powerMeter.payments || []);
+    const measurements = powerMeter.measurements || [];
+    const fallbackPrice = {
+      unit: { amount: 0, currency: '' },
+      base: { amount: 0, currency: '' },
+    };
     const all = [] as any[];
     let lastDate: string;
     let lastMeasurement: number;
     let sumUnitCosts = 0;
     let sumBaseCosts = 0;
     this.getPowerMeters(powerMeter).forEach((measurement,index) => {
-      const price = getCurrentPrice(measurement, powerMeter.prices);
+      const price = getCurrentPrice(measurement, powerMeter.prices) || fallbackPrice;
       sumUnitCosts += measurement.consumption * price.unit.amount;
       sumBaseCosts += measurement.days * price.base.amount;
-      if(measurement.billable || index === (powerMeter.measurements.length - 1)) {
+      if(measurement.billable || index === (measurements.length - 1)) {
         if(!lastMeasurement || !lastDate) {
           lastMeasurement = measurement.measurement;
           lastDate = measurement.date;

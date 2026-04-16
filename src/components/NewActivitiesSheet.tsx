@@ -54,7 +54,7 @@ export default class NewActivitiesSheet extends React.Component<any, NewActiviti
 
   submitActivities() {
     this.state.activities.forEach(activity => {
-      activity.account = (activity.account || this.defaultAccount());
+      activity.account = activity.account || this.defaultAccount() || "";
       activity.date = new Date(activity.date);
       this.props.submitActivity(activity);
     });
@@ -170,7 +170,7 @@ export default class NewActivitiesSheet extends React.Component<any, NewActiviti
                   onChange={(e: any) => {
                     activity.transfer = e.target.checked;
                     if(activity.transfer) {
-                      activity.source = this.defaultAccount();
+                      activity.source = this.defaultAccount() || "";
                     } else {
                       activity.source = "";
                     }

@@ -25,7 +25,7 @@ class CarFuel extends React.Component<any, any> {
     await this.props.fetchTankEntries()
   }
 
-  renderRow(tankEntry: CarTankEntry, index: number, traveled: number, level: number, consumed: number) {
+  renderRow(tankEntry: CarTankEntry, index: number, traveled: number | undefined, level: number, consumed: number | undefined) {
     let consumptionperkm = undefined;
     let distanceperunit = undefined;
     if(traveled && consumed) {
@@ -70,7 +70,7 @@ class CarFuel extends React.Component<any, any> {
       }
       totalTanked += entry.tanked;
       totalPaid += entry.paid.amount;
-      return this.renderRow(entry,index,traveled,tankLevel[entry.fuel], consumed)
+      return this.renderRow(entry, index, traveled, tankLevel[entry.fuel] ?? 0, consumed)
     });
     const totalMileage = (lastMileage - car.mileage);
     return <div key={`car-consumption-${index}`}>

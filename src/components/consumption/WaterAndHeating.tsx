@@ -24,6 +24,10 @@ class WaterAndHeating extends React.Component<any, any> {
 
   getWaterReadings(waterMeter: WaterMeter, area: number): any[] {
     if(!waterMeter.measurements) return [];
+    const fallbackPrice = {
+      unit: { amount: 0, currency: '' },
+      base: { amount: 0, currency: '' },
+    };
 
     let lastDate: Date;
     let lastMeasurement: number;
@@ -31,7 +35,7 @@ class WaterAndHeating extends React.Component<any, any> {
       const item = {
         date: measurement.date,
         measurement: measurement.measurement,
-        price: getCurrentPrice(measurement, waterMeter.prices),
+        price: getCurrentPrice(measurement, waterMeter.prices) || fallbackPrice,
         consumption: typeof lastMeasurement !== 'undefined' ? measurement.measurement - lastMeasurement : 0,
         days: lastDate ? dateDifference(measurement.date, lastDate) : 0,
         billable: measurement.billable
@@ -49,6 +53,10 @@ class WaterAndHeating extends React.Component<any, any> {
 
   getHeaterReadings(heater: Heater, area: number): any[] {
     if(!heater.measurements) return [];
+    const fallbackPrice = {
+      unit: { amount: 0, currency: '' },
+      base: { amount: 0, currency: '' },
+    };
 
     let lastDate: Date;
     let lastMeasurement: number = 0;
@@ -56,7 +64,7 @@ class WaterAndHeating extends React.Component<any, any> {
       const item = {
         date: measurement.date,
         measurement: measurement.measurement,
-        price: getCurrentPrice(measurement, heater.prices),
+        price: getCurrentPrice(measurement, heater.prices) || fallbackPrice,
         consumption: measurement.measurement - lastMeasurement,
         days: lastDate ? dateDifference(measurement.date, lastDate) : 0,
         billable: measurement.billable
@@ -115,6 +123,10 @@ class WaterAndHeating extends React.Component<any, any> {
 
   getBills(meter: any, area: number, readings: any): any {
     if(!meter.payments) return {readings};
+    const fallbackPrice = {
+      unit: { amount: 0, currency: '' },
+      base: { amount: 0, currency: '' },
+    };
     const firstYear = readings ? new Date(readings.map((i: any) => new Date(i.date)).sort((a: any, b: any) => a - b)[0]).getFullYear() : 0;
     const lastYear = readings ? new Date(readings.map((i: any) => new Date(i.date)).sort((a: any, b: any) => b - a)[0]).getFullYear() : 0;
 
@@ -145,7 +157,7 @@ class WaterAndHeating extends React.Component<any, any> {
         });
 
       if(currentReading && previousReading) {
-        const price = getCurrentPrice(currentReading, meter.prices);
+        const price = getCurrentPrice(currentReading, meter.prices) || fallbackPrice;
 
         const item = {
           from: previousReading.date,
@@ -179,7 +191,7 @@ class WaterAndHeating extends React.Component<any, any> {
           }
         }
       } else if(currentReading) {
-        const price = getCurrentPrice(currentReading, meter.prices);
+        const price = getCurrentPrice(currentReading, meter.prices) || fallbackPrice;
 
         const item = {
           to: currentReading.date,

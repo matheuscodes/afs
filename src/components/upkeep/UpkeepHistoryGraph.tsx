@@ -158,7 +158,6 @@ class DetailsTable extends React.Component<any, any> {
 
   render() {
     const converted = LongTermService.calculateUpkeepReport(this.props.data);
-    console.log(converted)
     const years = []
     const thisYear = new Date().getFullYear()
     for(let i = 2010; i <= thisYear; i+=1) {

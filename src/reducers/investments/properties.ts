@@ -1,7 +1,6 @@
 import { INVESTMENT_PROPERTY, UPDATE_PROPERTIES, UPDATE_PROPERTY } from '../../actions/investments/property'
 
 export default (state: Record<string, any> = {}, action: any) => {
-  console.log("investment property reducer", action);
   if(action.type === INVESTMENT_PROPERTY) {
     switch (action.operation) {
       case UPDATE_PROPERTIES:

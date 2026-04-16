@@ -39,15 +39,15 @@ export class Gas extends React.Component<any, any> {
   }
 
   getGasMeters(gasMeter: GasMeter): any[] {
-    if(!gasMeter.measurements) return [];
+    const measurements = gasMeter.measurements || [];
 
     let lastDate: Date;
     let lastMeasurement: number;
-    return gasMeter.measurements.map(measurement => {
+    return measurements.map(measurement => {
       const item = {
         date: measurement.date,
         measurement: measurement.measurement,
-        price: getCurrentPriceImport(measurement, gasMeter.prices),
+        price: getCurrentPriceImport(measurement, gasMeter.prices)!,
         consumption: lastMeasurement ? measurement.measurement - lastMeasurement : 0,
         energy: lastMeasurement ? (measurement.measurement - lastMeasurement) * gasMeter.combustion * gasMeter.condition : 0,
         days: lastDate ? dateDifferenceImport(measurement.date, lastDate) : 0,
@@ -66,18 +66,18 @@ export class Gas extends React.Component<any, any> {
 
   getBills(gasMeter: GasMeter): any[] {
     if(!gasMeter.payments) return [];
-
-    const groups = groupedPaymentsImport(gasMeter.payments);
+    const groups = groupedPaymentsImport(gasMeter.payments || []);
+    const measurements = gasMeter.measurements || [];
     const all = [] as any[];
     let lastDate: string;
     let lastMeasurement: number;
     let sumUnitCosts = 0;
     let sumBaseCosts = 0;
     this.getGasMeters(gasMeter).forEach((measurement,index) => {
-      const price = getCurrentPriceImport(measurement, gasMeter.prices);
+      const price = getCurrentPriceImport(measurement, gasMeter.prices)!;
       sumUnitCosts += measurement.consumption * price.unit.amount * gasMeter.combustion * gasMeter.condition;
       sumBaseCosts += measurement.days * price.base.amount;
-      if(measurement.billable || index === (gasMeter.measurements.length - 1)) {
+      if(measurement.billable || index === (measurements.length - 1)) {
         if(!lastMeasurement || !lastDate) {
           lastMeasurement = measurement.measurement;
           lastDate = measurement.date;

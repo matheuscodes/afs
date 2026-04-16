@@ -154,7 +154,6 @@ if (!fs.existsSync(ROOT_PATH)){
 }
 
 ipcMain.on("loadFromStorageChannel", (event, request) => {
-  console.log("loadFromStorageChannel", request);
   if (!fs.existsSync(`${ROOT_PATH}/${request.path}`)){
     fs.mkdirSync(`${ROOT_PATH}/${request.path}`);
   }
@@ -165,7 +164,6 @@ ipcMain.on("loadFromStorageChannel", (event, request) => {
 });
 
 ipcMain.on("appendToStorageChannel", (event, request) => {
-  console.log("appendToStorageChannel", request);
   if (!fs.existsSync(`${ROOT_PATH}/${request.path}`)){
     fs.mkdirSync(`${ROOT_PATH}/${request.path}`);
   }
@@ -174,7 +172,6 @@ ipcMain.on("appendToStorageChannel", (event, request) => {
 });
 
 ipcMain.on("readFile", (event, request) => {
-  console.log("readFile", request);
   if (request.path && !fs.existsSync(`${ROOT_PATH}/${request.path}`)){
     fs.mkdirSync(`${ROOT_PATH}/${request.path}`);
   }
@@ -182,7 +179,6 @@ ipcMain.on("readFile", (event, request) => {
 });
 
 ipcMain.on("listFiles", (event, request) => {
-  console.log("listFiles", request);
   if (!fs.existsSync(`${ROOT_PATH}/${request.path}`)){
     fs.mkdirSync(`${ROOT_PATH}/${request.path}`);
   }
@@ -192,7 +188,6 @@ ipcMain.on("listFiles", (event, request) => {
 });
 
 ipcMain.on("readDirectory", (event, request) => {
-  console.log("readDirectory", request);
   if (!fs.existsSync(`${ROOT_PATH}/${request.path}`)){
     fs.mkdirSync(`${ROOT_PATH}/${request.path}`);
   }
