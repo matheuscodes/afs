@@ -34,7 +34,7 @@ jobs:
         env:
           ELECTRON_SKIP_BINARY_DOWNLOAD: 1
         run: |
-          npm ci --force
+          npm ci
 
       - name: Run tests
         run: npm run test
