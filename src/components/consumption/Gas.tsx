@@ -27,6 +27,13 @@ const ColumnFlex = {
   cost: 1,
 }
 
+const ensurePrice = (price: ReturnType<typeof getCurrentPriceImport>) => {
+  if (!price) {
+    throw new TypeError("Cannot read properties of undefined (reading 'unit')");
+  }
+  return price;
+};
+
 // Export unconnected component for testing
 export class Gas extends React.Component<any, any> {
   constructor(props: any) {
@@ -47,7 +54,7 @@ export class Gas extends React.Component<any, any> {
       const item = {
         date: measurement.date,
         measurement: measurement.measurement,
-        price: getCurrentPriceImport(measurement, gasMeter.prices)!,
+        price: ensurePrice(getCurrentPriceImport(measurement, gasMeter.prices)),
         consumption: lastMeasurement ? measurement.measurement - lastMeasurement : 0,
         energy: lastMeasurement ? (measurement.measurement - lastMeasurement) * gasMeter.combustion * gasMeter.condition : 0,
         days: lastDate ? dateDifferenceImport(measurement.date, lastDate) : 0,
@@ -74,7 +81,7 @@ export class Gas extends React.Component<any, any> {
     let sumUnitCosts = 0;
     let sumBaseCosts = 0;
     this.getGasMeters(gasMeter).forEach((measurement,index) => {
-      const price = getCurrentPriceImport(measurement, gasMeter.prices)!;
+      const price = ensurePrice(getCurrentPriceImport(measurement, gasMeter.prices));
       sumUnitCosts += measurement.consumption * price.unit.amount * gasMeter.combustion * gasMeter.condition;
       sumBaseCosts += measurement.days * price.base.amount;
       if(measurement.billable || index === (measurements.length - 1)) {

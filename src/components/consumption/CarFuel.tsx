@@ -25,7 +25,7 @@ class CarFuel extends React.Component<any, any> {
     await this.props.fetchTankEntries()
   }
 
-  renderRow(tankEntry: CarTankEntry, index: number, traveled: number | undefined, level: number, consumed: number | undefined) {
+  renderRow(tankEntry: CarTankEntry, index: number, traveled: number | undefined, level: number | undefined, consumed: number | undefined) {
     let consumptionperkm = undefined;
     let distanceperunit = undefined;
     if(traveled && consumed) {
@@ -37,7 +37,7 @@ class CarFuel extends React.Component<any, any> {
       <Table.TextCell>{tankEntry.mileage ? tankEntry.mileage + 'km' : ''}</Table.TextCell>
       <Table.TextCell>{`${tankEntry.tanked} ${FuelUnit[tankEntry.fuel]}`}</Table.TextCell>
       <Table.TextCell>{tankEntry.paid.amount + tankEntry.paid.currency}</Table.TextCell>
-      <Table.TextCell>{level.toFixed(2)}</Table.TextCell>
+      <Table.TextCell>{(level ?? 0).toFixed(2)}</Table.TextCell>
       <Table.TextCell>{consumed ? consumed.toFixed(2) + FuelUnit[tankEntry.fuel] : ''}</Table.TextCell>
       <Table.TextCell>{traveled ? traveled + 'km' : ''}</Table.TextCell>
       <Table.TextCell>{consumptionperkm ? (consumptionperkm * 100).toFixed(2) + FuelUnit[tankEntry.fuel] + '/100km' : '' }</Table.TextCell>
