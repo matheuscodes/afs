@@ -61,7 +61,7 @@ function Text(props) {
 }
 
 function Avatar(props) {
-  return React.createElement('span', { ...cleanProps(props), style: toStyle(props), role: 'img', 'aria-label': props['aria-label'] || 'avatar' }, props.children || '◯');
+  return React.createElement('span', { ...cleanProps(props), style: toStyle(props), role: 'img', 'aria-label': props['aria-label'] || 'user avatar' }, props.children || '◯');
 }
 
 function IconButton(props) {
@@ -88,6 +88,19 @@ const Position = {
 
 function Popover(props) {
   const [isOpen, setIsOpen] = React.useState(false);
+  const triggerRef = React.useRef(null);
+  const dialogRef = React.useRef(null);
+
+  React.useEffect(() => {
+    if (isOpen && dialogRef.current) {
+      dialogRef.current.focus();
+      return;
+    }
+    if (!isOpen && triggerRef.current) {
+      triggerRef.current.focus();
+    }
+  }, [isOpen]);
+
   const content = typeof props.content === 'function' ? props.content({ close: () => setIsOpen(false) }) : props.content;
   return React.createElement(
     'div',
@@ -98,19 +111,18 @@ function Popover(props) {
         onClick: () => setIsOpen(!isOpen),
         role: 'button',
         'aria-expanded': isOpen,
+        ref: triggerRef,
         tabIndex: 0,
         onKeyDown: (event) => {
           if (event.key === 'Enter' || event.key === ' ') {
-            if (event.key === ' ') {
-              event.preventDefault();
-            }
+            if (event.key === ' ') event.preventDefault();
             setIsOpen(!isOpen);
           }
         }
       },
       props.children
     ),
-    isOpen && content ? React.createElement('div', { role: 'dialog', 'aria-modal': true, 'aria-label': 'Popover content' }, content) : null
+    isOpen && content ? React.createElement('div', { role: 'dialog', 'aria-modal': true, 'aria-label': 'Popover content', tabIndex: -1, ref: dialogRef, onKeyDown: (event) => event.key === 'Escape' && setIsOpen(false) }, content) : null
   );
 }
 
@@ -207,7 +219,7 @@ function Tab(props) {
   }, props.children);
 }
 
-function tablePart(tag, extraExclude = []) {
+function createTableComponent(tag, extraExclude = []) {
   return function Part(props) {
     return React.createElement(tag, { ...cleanProps(props, ['accountForScrollbar', ...extraExclude]), style: toStyle(props) }, props.children);
   }
@@ -228,15 +240,15 @@ function Table(props) {
   return React.createElement('div', { ...cleanProps(props, ['border']), style: { ...toStyle(props), border: props.border ? DEFAULT_BORDER : undefined } }, props.children);
 }
 
-Table.Head = tablePart('div');
+Table.Head = createTableComponent('div');
 Table.Body = function TableBody(props) {
-  return React.createElement('div', { ...cleanProps(props, ['accountForScrollbar']), style: toStyle(props), 'data-evergreen-table-body': '' }, props.children);
+  return React.createElement('div', { ...cleanProps(props, ['accountForScrollbar']), style: toStyle(props), 'data-evergreen-table-body': 'true' }, props.children);
 };
-Table.Row = tablePart('div');
-Table.TextCell = tablePart('div');
-Table.Cell = tablePart('div');
-Table.HeaderCell = tablePart('div');
-Table.TextHeaderCell = tablePart('div');
+Table.Row = createTableComponent('div');
+Table.TextCell = createTableComponent('div');
+Table.Cell = createTableComponent('div');
+Table.HeaderCell = createTableComponent('div');
+Table.TextHeaderCell = createTableComponent('div');
 Table.SearchHeaderCell = SearchHeaderCell;
 
 module.exports = {
