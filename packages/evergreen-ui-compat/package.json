@@ -1,0 +1,10 @@
+{
+  "name": "evergreen-ui",
+  "version": "7.1.9-react19-compat",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "peerDependencies": {
+    "react": ">=19",
+    "react-dom": ">=19"
+  }
+}
