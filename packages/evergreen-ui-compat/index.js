@@ -61,7 +61,7 @@ function Text(props) {
 }
 
 function Avatar(props) {
-  return React.createElement('span', { ...cleanProps(props), style: toStyle(props) }, props.children || '◯');
+  return React.createElement('span', { ...cleanProps(props), style: toStyle(props), role: 'img', 'aria-label': props['aria-label'] || 'avatar' }, props.children || '◯');
 }
 
 function IconButton(props) {
@@ -87,8 +87,27 @@ const Position = {
 };
 
 function Popover(props) {
-  const content = typeof props.content === 'function' ? props.content({ close: () => {} }) : props.content;
-  return React.createElement('div', { style: toStyle(props) }, props.children, content ? React.createElement('div', { style: { display: 'none' } }, content) : null);
+  const [isOpen, setIsOpen] = React.useState(false);
+  const content = typeof props.content === 'function' ? props.content({ close: () => setIsOpen(false) }) : props.content;
+  return React.createElement(
+    'div',
+    { style: toStyle(props) },
+    React.createElement(
+      'div',
+      {
+        onClick: () => setIsOpen(!isOpen),
+        role: 'button',
+        tabIndex: 0,
+        onKeyDown: (event) => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            setIsOpen(!isOpen);
+          }
+        }
+      },
+      props.children
+    ),
+    isOpen && content ? React.createElement('div', { role: 'dialog' }, content) : null
+  );
 }
 
 function Menu(props) {
