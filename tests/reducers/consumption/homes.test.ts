@@ -9,6 +9,8 @@ import {
 } from '../../../src/actions/consumption/home';
 
 describe('consumption/homes reducer', () => {
+  const emptyConsumptionPayload = { homeId: 'missing', prices: [], payments: [], measurements: [] };
+
   test('UPDATE_HOMES merges homes into state', () => {
     const payload = [{ id: 'h1', name: 'Home1' }];
     const next = reducer({}, { type: HOME_CONSUMPTION, operation: UPDATE_HOMES, payload } as any);
@@ -33,8 +35,7 @@ describe('consumption/homes reducer', () => {
 
   test('UPDATE_ELECTRICITY returns unchanged state when home does not exist', () => {
     const initial: any = {};
-    const payload = { homeId: 'missing', prices: [], payments: [], measurements: [] };
-    const next = reducer(initial, { type: HOME_CONSUMPTION, operation: UPDATE_ELECTRICITY, payload } as any);
+    const next = reducer(initial, { type: HOME_CONSUMPTION, operation: UPDATE_ELECTRICITY, payload: emptyConsumptionPayload } as any);
     expect(next).toBe(initial);
   });
 
@@ -52,8 +53,7 @@ describe('consumption/homes reducer', () => {
 
   test('UPDATE_GAS returns unchanged state when home does not exist', () => {
     const initial: any = {};
-    const payload = { homeId: 'missing', prices: [], payments: [], measurements: [] };
-    const next = reducer(initial, { type: HOME_CONSUMPTION, operation: UPDATE_GAS, payload } as any);
+    const next = reducer(initial, { type: HOME_CONSUMPTION, operation: UPDATE_GAS, payload: emptyConsumptionPayload } as any);
     expect(next).toBe(initial);
   });
 
@@ -83,8 +83,7 @@ describe('consumption/homes reducer', () => {
 
   test('UPDATE_HEATING returns unchanged state when home does not exist', () => {
     const initial: any = {};
-    const payload = { homeId: 'missing', prices: [], payments: [], measurements: [] };
-    const next = reducer(initial, { type: HOME_CONSUMPTION, operation: UPDATE_HEATING, payload } as any);
+    const next = reducer(initial, { type: HOME_CONSUMPTION, operation: UPDATE_HEATING, payload: emptyConsumptionPayload } as any);
     expect(next).toBe(initial);
   });
 });
