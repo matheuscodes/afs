@@ -1,5 +1,12 @@
 const React = require('react');
 
+const DEFAULT_BORDER = '1px solid #e5e7eb';
+const SELECTED_TAB_BORDER = '1px solid #2563eb';
+const DEFAULT_TAB_BORDER = '1px solid #d1d5db';
+const SELECTED_TAB_BACKGROUND = '#eff6ff';
+const DEFAULT_TAB_BACKGROUND = '#fff';
+const DEFAULT_SHADOW = '0 1px 3px rgba(0,0,0,0.12)';
+
 const styleProps = new Set([
   'display', 'width', 'height', 'padding', 'paddingTop', 'paddingBottom', 'paddingLeft', 'paddingRight',
   'margin', 'marginTop', 'marginBottom', 'marginLeft', 'marginRight', 'flex', 'flexBasis', 'justifyContent',
@@ -14,10 +21,10 @@ function toStyle(props) {
     }
   }
   if (props.border) {
-    style.border = style.border || '1px solid #e5e7eb';
+    style.border = style.border || DEFAULT_BORDER;
   }
   if (props.elevation) {
-    style.boxShadow = style.boxShadow || '0 1px 3px rgba(0,0,0,0.12)';
+    style.boxShadow = style.boxShadow || DEFAULT_SHADOW;
   }
   return style;
 }
@@ -167,8 +174,8 @@ function Tab(props) {
     onClick: props.onSelect,
     style: {
       ...toStyle(props),
-      border: props.isSelected ? '1px solid #2563eb' : '1px solid #d1d5db',
-      background: props.isSelected ? '#eff6ff' : '#fff'
+      border: props.isSelected ? SELECTED_TAB_BORDER : DEFAULT_TAB_BORDER,
+      background: props.isSelected ? SELECTED_TAB_BACKGROUND : DEFAULT_TAB_BACKGROUND
     }
   }, props.children);
 }
@@ -191,7 +198,7 @@ function SearchHeaderCell(props) {
 }
 
 function Table(props) {
-  return React.createElement('div', { ...cleanProps(props, ['border']), style: { ...toStyle(props), border: props.border ? '1px solid #e5e7eb' : undefined } }, props.children);
+  return React.createElement('div', { ...cleanProps(props, ['border']), style: { ...toStyle(props), border: props.border ? DEFAULT_BORDER : undefined } }, props.children);
 }
 
 Table.Head = tablePart('div');
