@@ -1,14 +1,13 @@
 import React from 'react';
 import { connect } from "react-redux";
 import HomeService from '../../services/HomeService';
-import { Home, PowerMeter, MeterPayment, MeterPrice, MeterMeasurement } from '../../models/Home';
+import { Home, PowerMeter, MeterPayment } from '../../models/Home';
 import { getCurrentPrice } from '../../models/Bills';
 import {
   Tab,
   Tablist,
   Pane,
   Table,
-  Heading,
 } from 'evergreen-ui'
 
 export function dateDifference(a: string | Date, b: string | Date) {
@@ -64,8 +63,12 @@ export class Electricity extends React.Component<any, any> {
     this.state = {}
   }
 
-  async componentDidMount() {
+  async loadData() {
     await this.props.fetchHomes()
+  }
+
+  componentDidMount() {
+    void this.loadData();
   }
 
   getPowerMeters(powerMeter: PowerMeter): any[] {
@@ -179,22 +182,22 @@ export class Electricity extends React.Component<any, any> {
             onSelect={
               () => {
                 this.props.fetchElectricity(home.id)
-                this.setState({...this.state, selectedHome: home})
+                this.setState({ selectedHome: home })
               }
             }
-            isSelected={this.state.selectedHome && home.id === this.state.selectedHome.id} >
+            isSelected={home.id === this.state.selectedHome?.id} >
             {home.name}
           </Tab>
         ))}
       </Tablist>
       {
-        this.state.selectedHome && this.state.selectedHome.electricity ?
+        this.state.selectedHome?.electricity ?
         Object.keys(this.state.selectedHome.electricity).map(meter =>
           <div key={meter} >
             <div>
-              {this.getBills(this.state.selectedHome.electricity[meter]).map((bill,index) =>
+              {this.getBills(this.state.selectedHome.electricity[meter]).map((bill) =>
                 <Pane
-                  key={`bill-${index}`}
+                  key={`bill-${bill.from}-${bill.to}`}
                   elevation={2}
                   width={'46%'}
                   display={'inline-block'}
@@ -276,7 +279,7 @@ export class Electricity extends React.Component<any, any> {
                 </Table.TextHeaderCell>
               </Table.Head>
               <Table.Body>
-                {this.getPowerMeters(this.state.selectedHome.electricity[meter]).map(this.renderRow)}
+                {this.getPowerMeters(this.state.selectedHome.electricity[meter]).map((measurementEntry: any, index: number) => this.renderRow(measurementEntry, index))}
               </Table.Body>
             </Table>
           </div>

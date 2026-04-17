@@ -1,13 +1,6 @@
 import React from 'react';
-import { connect } from "react-redux";
-import HomeService from '../../services/HomeService';
-import { Home } from '../../models/Home'
 import {
-  Tab,
-  Tablist,
-  Pane,
   Table,
-  Heading,
 } from 'evergreen-ui'
 
 const ColumnFlex = {
@@ -18,10 +11,6 @@ const ColumnFlex = {
 }
 
 class WaterTable extends React.Component<any, any> {
-  constructor(props: any) {
-    super(props);
-  }
-
   renderRow(day: any, index: number) {
     return <Table.Row key={`water-table-${index}`} height={'auto'}>
       <Table.TextCell flex={ColumnFlex.date}>{day.cold ? day.cold.date : day.warm.date}</Table.TextCell>

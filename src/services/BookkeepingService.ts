@@ -32,7 +32,7 @@ function getRandomColor(category: string): any {
     // Simple hash function (djb2)
     let hash = 5381;
     for (let i = 0; i < category.length; i++) {
-        hash = (hash * 33) ^ category.charCodeAt(i);
+        hash = (hash * 33) ^ (category.codePointAt(i) || 0);
     }
 
     // Convert hash to 6-digit hex
@@ -205,14 +205,14 @@ class Bookkeeping {
                                    .flatMap((account: Account) => accountActivities[account.id]);
 
     const lastMonth: any = {
-      credit: creditActivities.filter(lastMonthFilter).reduce(reducer, {amount:0, currency: Currency.EUR}),
-      checking: checkingActivities.filter(lastMonthFilter).reduce(reducer, {amount:0, currency: Currency.EUR}),
-      cash: cashActivities.filter(lastMonthFilter).reduce(reducer, {amount:0, currency: Currency.EUR}),
+      credit: creditActivities.filter(lastMonthFilter).reduce((accumulator: Charge, activity: SmallActivity) => reducer(accumulator, activity), {amount:0, currency: Currency.EUR}),
+      checking: checkingActivities.filter(lastMonthFilter).reduce((accumulator: Charge, activity: SmallActivity) => reducer(accumulator, activity), {amount:0, currency: Currency.EUR}),
+      cash: cashActivities.filter(lastMonthFilter).reduce((accumulator: Charge, activity: SmallActivity) => reducer(accumulator, activity), {amount:0, currency: Currency.EUR}),
     }
     const thisMonth: any = {
-      credit: creditActivities.filter(thisMonthFilter).reduce(reducer, {amount:0, currency: Currency.EUR}),
-      checking: checkingActivities.filter(thisMonthFilter).reduce(reducer, {amount:0, currency: Currency.EUR}),
-      cash: cashActivities.filter(thisMonthFilter).reduce(reducer, {amount:0, currency: Currency.EUR}),
+      credit: creditActivities.filter(thisMonthFilter).reduce((accumulator: Charge, activity: SmallActivity) => reducer(accumulator, activity), {amount:0, currency: Currency.EUR}),
+      checking: checkingActivities.filter(thisMonthFilter).reduce((accumulator: Charge, activity: SmallActivity) => reducer(accumulator, activity), {amount:0, currency: Currency.EUR}),
+      cash: cashActivities.filter(thisMonthFilter).reduce((accumulator: Charge, activity: SmallActivity) => reducer(accumulator, activity), {amount:0, currency: Currency.EUR}),
     }
 
     const total = checkingActivities.concat(cashActivities).concat(creditActivities);
@@ -243,7 +243,7 @@ class Bookkeeping {
           .forEach((account: Account) => {
             const balance = accountActivities[account.id]
               .filter(tillNowFilter)
-              .reduce(reducer, {amount:0, currency: Currency.EUR});
+              .reduce((accumulator: Charge, activity: SmallActivity) => reducer(accumulator, activity), {amount:0, currency: Currency.EUR});
             thisMonthPerAccount[account.type].push({
               balance,
               ...account
@@ -267,8 +267,8 @@ class Bookkeeping {
         },
       },
       total: {
-        expenses: total.filter(filterByExpense).reduce(reducer, {amount:0, currency: Currency.EUR}),
-        income: total.filter(filterByIncome).reduce(reducer, {amount:0, currency: Currency.EUR})
+        expenses: total.filter(filterByExpense).reduce((accumulator: Charge, activity: SmallActivity) => reducer(accumulator, activity), {amount:0, currency: Currency.EUR}),
+        income: total.filter(filterByIncome).reduce((accumulator: Charge, activity: SmallActivity) => reducer(accumulator, activity), {amount:0, currency: Currency.EUR})
       },
       categorized: total.filter(filterByExpense).reduce(reduceByCategory, {}),
       accounts: thisMonthPerAccount,
@@ -277,29 +277,29 @@ class Bookkeeping {
   }
   yearlyOverview(activities: Activity[]): { [year: string]: CategorizedData } {
     const years = {}
-    activities.reduce((report: any, current: Activity) => {
+    const report = activities.reduce((currentReport: any, current: Activity) => {
         const year = current.date.toJSON().substring(0,4);
-        const month = parseInt(current.date.toJSON().substring(5,7)) - 1;
-        if (!report[year]) {
-            report[year] = {};
+        const month = Number.parseInt(current.date.toJSON().substring(5,7), 10) - 1;
+        if (!currentReport[year]) {
+            currentReport[year] = {};
         }
         const category = current.category || 'Other';
-        if (!report[year][category]) {
-            report[year][category] = {
+        if (!currentReport[year][category]) {
+            currentReport[year][category] = {
                 label: category,
                 data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                 backgroundColor: getRandomColor(category),
             }
         }
-        const data = report[year][category].data;
+        const data = currentReport[year][category].data;
         if ((!current.transfer && current.value.amount < 0) || (current.transfer && category != 'Other')) {
             if(current.value.amount > -5000) {
                 data[month] -= current.value.amount;
             }
         }
-        return report;
+        return currentReport;
     }, years)
-    return years;
+    return report;
   }
 
   categoryOverview(report: CategorizedData = {}): any[] {
@@ -314,7 +314,7 @@ class Bookkeeping {
     const relevant = activities.filter(a => a.date.toJSON().startsWith(year));
     const categories: {[key in string]: any} = {}
     relevant.forEach((activity: Activity) => {
-        const month = parseInt(activity.date.toJSON().substring(5,7)) - 1;
+        const month = Number.parseInt(activity.date.toJSON().substring(5,7), 10) - 1;
         const category = activity.category || 'Other';
         if(!categories[category]) {
             categories[category] = {}
@@ -340,7 +340,7 @@ class Bookkeeping {
       const relevant = activities.filter(a => a.date.toJSON().startsWith(year));
       const categories: {[key in string]: any} = {}
       relevant.forEach((activity: Activity) => {
-          const month = parseInt(activity.date.toJSON().substring(5,7)) - 1;
+          const month = Number.parseInt(activity.date.toJSON().substring(5,7), 10) - 1;
           const category = activity.category || 'Other';
           if(!categories[category]) {
               categories[category] = {}

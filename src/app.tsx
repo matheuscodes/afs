@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { createRoot } from 'react-dom/client';
-import { Button } from 'evergreen-ui';
 import Application from './Application';
 
 import { Provider } from "react-redux";

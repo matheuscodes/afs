@@ -1,13 +1,7 @@
 import React from 'react';
-import { connect } from "react-redux";
-import HomeService from '../../services/HomeService';
-import { Home, MeterMeasurement } from '../../models/Home'
+import { MeterMeasurement } from '../../models/Home'
 import {
-  Tab,
-  Tablist,
-  Pane,
   Table,
-  Heading,
 } from 'evergreen-ui'
 
 const ColumnFlex = {
@@ -16,10 +10,6 @@ const ColumnFlex = {
 }
 
 class HeatingTable extends React.Component<any, any> {
-  constructor(props: any) {
-    super(props);
-  }
-
   renderRow(day: any, keyOrder: any[], index: number) {
     return <Table.Row key={`heating-table-${index}`} height={'auto'}>
       <Table.TextCell flex={ColumnFlex.date}>{day.date}</Table.TextCell>
@@ -33,7 +23,7 @@ class HeatingTable extends React.Component<any, any> {
     const { heating } = this.props.data;
     const keys = Object.keys(heating.heaters);
     const report: any = {};
-    if(heating && heating.heaters) {
+    if(heating?.heaters) {
       Object.keys(heating.heaters).forEach((key: string) => {
         if(heating.heaters[key].readings) {
           heating.heaters[key].readings.forEach((measurement: MeterMeasurement) => {
@@ -53,8 +43,8 @@ class HeatingTable extends React.Component<any, any> {
         <Table.TextHeaderCell flex={ColumnFlex.date}>
           Date
         </Table.TextHeaderCell>
-        { keys.map((key, index) =>
-          <Table.TextHeaderCell key={`heating-measurement-${key}-${index}`} flex={ColumnFlex.measurement}>
+        { keys.map((key) =>
+          <Table.TextHeaderCell key={`heating-measurement-${key}`} flex={ColumnFlex.measurement}>
             {heating.heaters[key].location} <br/>
             {heating.heaters[key].id}
           </Table.TextHeaderCell>

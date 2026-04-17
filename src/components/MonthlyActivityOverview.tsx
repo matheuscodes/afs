@@ -2,17 +2,6 @@ import React from 'react'
 import {
   Pane,
   Table,
-  Popover,
-  Position,
-  Menu,
-  Avatar,
-  Text,
-  IconButton,
-  ArrowUpIcon,
-  ArrowDownIcon,
-  CaretDownIcon,
-  MoreIcon,
-  TextDropdownButton
 } from 'evergreen-ui'
 
 export default class MonthlyActivityOverview extends React.Component<any, any> {

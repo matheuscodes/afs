@@ -16,13 +16,13 @@ const ColumnFlex = {
 }
 
 class CarFuel extends React.Component<any, any> {
-  constructor(props: any) {
-    super(props);
-  }
-
-  async componentDidMount() {
+  async loadData() {
     await this.props.fetchCars()
     await this.props.fetchTankEntries()
+  }
+
+  componentDidMount() {
+    void this.loadData();
   }
 
   renderRow(tankEntry: CarTankEntry, index: number, traveled: number | undefined, level: number | undefined, consumed: number | undefined) {

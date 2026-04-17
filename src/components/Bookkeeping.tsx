@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from "react-redux";
 import { addActivity } from "../actions/bookkeeping";
-import { Activity, Currency } from "../models/Activity";
+import { Activity } from "../models/Activity";
 import ActivitiesTable from '../components/ActivitiesTable'
 import NewActivitiesSheet from '../components/NewActivitiesSheet'
 import BookkeepingService from '../services/BookkeepingService'
@@ -44,7 +44,7 @@ class Bookkeeping extends React.Component<any, any> {
     const months = this.props.bookkeeping
       .filter((i: any) => (i.date.getFullYear()) === this.state.year)
       .map((i: any) => i.date.getMonth())
-      .map((i: any) => parseInt(i));
+      .map((i: any) => Number.parseInt(`${i}`, 10));
     return Array.from( new Set<number>(months) ).sort((a: number, b: number) => a - b);
   }
 
@@ -65,7 +65,7 @@ class Bookkeeping extends React.Component<any, any> {
         {this.availableYears().map((year: number) => (
           <Tab
             key={year}
-            onSelect={() => this.setState({...this.state, year, month: undefined})}
+            onSelect={() => this.setState({ year, month: undefined })}
             isSelected={year === this.state.year} >
             {year}
           </Tab>
@@ -75,7 +75,7 @@ class Bookkeeping extends React.Component<any, any> {
         {this.availableMonths().map((month: number) => (
           <Tab
             key={month}
-            onSelect={() => this.setState({...this.state, month})}
+            onSelect={() => this.setState({ month })}
             isSelected={month === this.state.month}
           >
             {MONTHS[month]}
@@ -83,7 +83,7 @@ class Bookkeeping extends React.Component<any, any> {
         ))}
       </Tablist>
       {
-        typeof this.state.month !== 'undefined' ?
+        this.state.month !== undefined ?
         <Pane padding={16} flex={1}>
           <MonthlyActivityOverview
             data={BookkeepingService.monthlyOverview(

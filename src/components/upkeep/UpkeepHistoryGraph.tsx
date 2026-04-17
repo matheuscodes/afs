@@ -114,7 +114,7 @@ class DetailsTable extends React.Component<any, any> {
     if(typeof converted.report !== 'undefined') {
       Object.keys(converted.report).forEach(year => {
         Object.keys(converted.report[year]).forEach(period => {
-          const amortization = new Date().getFullYear() - parseInt(year) + 1
+          const amortization = new Date().getFullYear() - Number.parseInt(year, 10) + 1
           const axis = `${year}${period}`;
           const item = converted.report[year][period];
           filled.labels.push(axis);

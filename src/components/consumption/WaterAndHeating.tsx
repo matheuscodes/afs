@@ -5,11 +5,10 @@ import { Home, WaterMeter, Heater } from '../../models/Home';
 import WaterTable from './WaterTable'
 import HeatingTable from './HeatingTable'
 import WaterAndHeatingBill from './WaterAndHeatingBill'
-import { groupedPayments, dateDifference, getCurrentPrice } from '../../models/Bills';
+import { dateDifference, getCurrentPrice } from '../../models/Bills';
 import {
   Tab,
   Tablist,
-  Pane,
 } from 'evergreen-ui'
 
 class WaterAndHeating extends React.Component<any, any> {
@@ -18,8 +17,12 @@ class WaterAndHeating extends React.Component<any, any> {
     this.state = {}
   }
 
-  async componentDidMount() {
+  async loadData() {
     await this.props.fetchHomes()
+  }
+
+  componentDidMount() {
+    void this.loadData();
   }
 
   getWaterReadings(waterMeter: WaterMeter, area: number): any[] {
@@ -36,7 +39,7 @@ class WaterAndHeating extends React.Component<any, any> {
         date: measurement.date,
         measurement: measurement.measurement,
         price: getCurrentPrice(measurement, waterMeter.prices) || fallbackPrice,
-        consumption: typeof lastMeasurement !== 'undefined' ? measurement.measurement - lastMeasurement : 0,
+        consumption: lastMeasurement !== undefined ? measurement.measurement - lastMeasurement : 0,
         days: lastDate ? dateDifference(measurement.date, lastDate) : 0,
         billable: measurement.billable
       }
@@ -135,7 +138,6 @@ class WaterAndHeating extends React.Component<any, any> {
       groups.push(i)
     }
 
-    const all = [] as any[];
     let lastDate: string;
     let lastMeasurement: number;
     const bills: Record<string, any> = {};
@@ -247,7 +249,7 @@ class WaterAndHeating extends React.Component<any, any> {
       }
     }
     const yearly: Record<string, any> = {}
-    if(allBills.cold && allBills.cold.bills) {
+    if(allBills.cold?.bills) {
       Object.keys(allBills.cold.bills).forEach((year: string) => {
         if(!yearly[year]) {
           yearly[year] = JSON.parse(JSON.stringify(base));
@@ -262,7 +264,7 @@ class WaterAndHeating extends React.Component<any, any> {
         yearly[year].cost.total.currency = allBills.cold.bills[year].cost.total.currency;
       });
     }
-    if(allBills.warm && allBills.warm.bills) {
+    if(allBills.warm?.bills) {
       Object.keys(allBills.warm.bills).forEach((year: string) => {
         if(!yearly[year]) {
           yearly[year] = JSON.parse(JSON.stringify(base));
@@ -277,7 +279,7 @@ class WaterAndHeating extends React.Component<any, any> {
         yearly[year].cost.total.currency = allBills.warm.bills[year].cost.total.currency;
       });
     }
-    if(allBills.heating && allBills.heating.heaters) {
+    if(allBills.heating?.heaters) {
       Object.keys(allBills.heating.heaters).forEach(heater => {
         if(allBills.heating.heaters[heater].bills) {
           Object.keys(allBills.heating.heaters[heater].bills).forEach((year: string) => {
@@ -320,10 +322,10 @@ class WaterAndHeating extends React.Component<any, any> {
               () => {
                 this.props.fetchWater(home.id)
                 this.props.fetchHeating(home.id)
-                this.setState({...this.state, selectedHome: home})
+                this.setState({ selectedHome: home })
               }
             }
-            isSelected={this.state.selectedHome && home.id === this.state.selectedHome.id} >
+            isSelected={home.id === this.state.selectedHome?.id} >
             {home.name}
           </Tab>
         ))}
@@ -331,8 +333,8 @@ class WaterAndHeating extends React.Component<any, any> {
       {allBills ?
         <div>
           { Object.keys(overviews).map(
-            (overview: any, index: number) => <WaterAndHeatingBill
-              key={`bill-overview-${index}`}
+            (overview: any) => <WaterAndHeatingBill
+              key={`bill-overview-${overview}`}
               bill={overviews[overview]}
               year={overview} />
           )}

@@ -2,18 +2,10 @@ import React from 'react';
 import { connect } from "react-redux";
 import LongTermService from '../../../services/LongTermService';
 import {
-  Tab,
-  Tablist,
-  Pane,
   Table,
-  Heading,
 } from 'evergreen-ui'
 
 class Savings extends React.Component<any, any> {
-  constructor(props: any) {
-    super(props);
-  }
-
   componentDidMount() {
     this.props.fetchSavings()
   }
@@ -67,13 +59,13 @@ class Savings extends React.Component<any, any> {
       <h1>Savings</h1>
       {
         Object.keys(summary).map((bank: any, index: number) =>
-        <div key={`savings-bank-${bank}-${index}`}>
+         <div key={`savings-bank-${bank}`}>
           <h2>{bank}</h2>
           {
             summary[bank].map((account: any) =>
               <div key={`savings-account-${account.name}`}>
                 <h3>{account.name}</h3>
-                Total: {parseInt(account.total.toFixed(2)) === 0 ? '-' : account.total.toFixed(2)} €
+                Total: {Number.parseInt(account.total.toFixed(2), 10) === 0 ? '-' : account.total.toFixed(2)} €
                 {
                   Math.floor(account.total) <= 0 ? '' :
                   <Table>

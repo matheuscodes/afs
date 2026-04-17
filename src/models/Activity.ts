@@ -22,7 +22,7 @@ export interface Activity {
 export function parseActivity(data: string) {
   const parsed: Activity = JSON.parse(data);
   parsed.date = new Date(parsed.date);
-  parsed.value.amount = parseFloat(`${parsed.value.amount}`);
+  parsed.value.amount = Number.parseFloat(`${parsed.value.amount}`);
   return parsed;
 }
 

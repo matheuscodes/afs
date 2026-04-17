@@ -4,7 +4,6 @@ import InvestmentsService from '../../../services/InvestmentsService';
 import {
   Tab,
   Tablist,
-  Pane,
 } from 'evergreen-ui';
 import {
   Chart as ChartJS,
@@ -71,8 +70,12 @@ class PropertyInvestments extends React.Component<any, any> {
     this.state = {}
   }
 
-  async componentDidMount() {
+  async loadData() {
     await this.props.fetchProperties();
+  }
+
+  componentDidMount() {
+    void this.loadData();
   }
 
   getReport() {
@@ -85,7 +88,7 @@ class PropertyInvestments extends React.Component<any, any> {
             valuations: [],
           };
         }
-        grouped[valuation.date].valuations.push(parseInt(valuation.valuation.amount));
+        grouped[valuation.date].valuations.push(Number.parseInt(`${valuation.valuation.amount}`, 10));
         return grouped;
       }, {});
     Object.keys(grouped).forEach(date => {
@@ -128,10 +131,10 @@ class PropertyInvestments extends React.Component<any, any> {
             onSelect={
               () => {
                 this.props.fetchProperty(property.id);
-                this.setState({...this.state, selectedProperty: property})
+                this.setState({ selectedProperty: property })
               }
             }
-            isSelected={this.state.selectedProperty && property.id === this.state.selectedProperty.id} >
+            isSelected={property.id === this.state.selectedProperty?.id} >
             {property.name}
           </Tab>
         ))}

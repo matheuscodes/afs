@@ -1,5 +1,5 @@
 import React from 'react';
-import { HashRouter,Link,Route,Routes } from "react-router-dom";
+import { HashRouter,Route,Routes } from "react-router-dom";
 import Bookkeeping from "./components/Bookkeeping"
 import CarFuel from "./components/consumption/CarFuel"
 import WaterAndHeating from "./components/consumption/WaterAndHeating"
@@ -11,10 +11,6 @@ import PropertyInvestments from "./components/finances/investments/PropertyInves
 import BookkeepingReports from "./components/finances/bookkeeping/BookkeepingReports"
 
 class Application extends React.Component<any, any> {
-  constructor(props: any) {
-    super(props);
-  }
-
   render() {
     return <HashRouter>
       <Routes>

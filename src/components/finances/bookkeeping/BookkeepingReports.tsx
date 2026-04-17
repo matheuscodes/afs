@@ -5,8 +5,6 @@ import {
   Tab,
   Tablist,
   Pane,
-  Table,
-  Heading,
 } from 'evergreen-ui'
 import {
   Chart as ChartJS,
@@ -16,7 +14,6 @@ import {
   Title,
   Tooltip,
   Legend,
-  ChartDatasetProperties,
   ChartDataset,
   ChartData
 } from 'chart.js';
@@ -145,8 +142,8 @@ class BookkeepingReports extends React.Component<any, any> {
           {Object.keys(overviews).map((year: string) => (
             <Tab
               key={year}
-              onSelect={() => this.setState({...this.state, year})}
-              isSelected={year === this.state.year} >
+               onSelect={() => this.setState({ year })}
+               isSelected={year === this.state.year} >
               {year}
             </Tab>
           ))}
