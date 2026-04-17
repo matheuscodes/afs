@@ -15,9 +15,9 @@ class Savings extends React.Component<any, any> {
   calculateSummary(savings: any) {
     const summary: any = {};
 
-    if(savings && savings.length) {
+    if(savings?.length) {
       savings.forEach((activity: any) => {
-        if(activity.source && activity.source.type === 'Saving') {
+        if(activity.source?.type === 'Saving') {
           if(!summary[activity.source.id]) {
             summary[activity.source.id] = JSON.parse(JSON.stringify(activity.source));
             summary[activity.source.id].funds = {};
@@ -30,7 +30,7 @@ class Savings extends React.Component<any, any> {
             (summary[activity.source.id].funds[activity.description] || 0) - activity.value.amount
         }
 
-        if(activity.account && activity.account.type === 'Saving') {
+        if(activity.account?.type === 'Saving') {
           if(!summary[activity.account.id]) {
             summary[activity.account.id] = JSON.parse(JSON.stringify(activity.account));
             summary[activity.account.id].funds = {};
@@ -60,7 +60,7 @@ class Savings extends React.Component<any, any> {
     return <div>
       <h1>Savings</h1>
       {
-        Object.keys(summary).map((bank: any, index: number) =>
+        Object.keys(summary).map((bank: any) =>
          <div key={`savings-bank-${bank}`}>
           <h2>{bank}</h2>
           {

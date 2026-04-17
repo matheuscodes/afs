@@ -1,6 +1,6 @@
 import { app, BrowserWindow, ipcMain, Menu } from 'electron'
-import path from 'path'
-import fs from 'fs'
+import path from 'node:path'
+import fs from 'node:fs'
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: any;
 
@@ -22,7 +22,7 @@ const createWindow = (): void => {
     }
   });
 
-  var menu = Menu.buildFromTemplate([
+  const menu = Menu.buildFromTemplate([
       {
         label: 'Finances',
         submenu: [

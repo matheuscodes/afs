@@ -1,5 +1,3 @@
-import { Account } from './Account'
-
 export enum Currency {
   EUR = "€",
 }
@@ -27,11 +25,11 @@ export function parseActivity(data: string) {
 }
 
 export function parseActivities(data: string) {
-  if(typeof data !== 'undefined') {
+  if(data !== undefined) {
     return data
       .split('\n')
       .map(i => i.length > 0 ? parseActivity(i) : undefined)
-      .filter(i => typeof i !== 'undefined')
+      .filter((i): i is Activity => i !== undefined)
       .sort((a, b) => b.date.getTime() - a.date.getTime());
   }
   return [];

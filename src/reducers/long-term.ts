@@ -1,6 +1,6 @@
 import { LONG_TERM, LOAD_UPKEEPS, LOAD_SAVINGS } from '../actions/long-term'
 
-export default (state: any = {}, action: any) => {
+function longTermReducer(state: any = {}, action: any) {
   if(action.type === LONG_TERM) {
     switch (action.operation) {
       case LOAD_UPKEEPS:
@@ -12,4 +12,6 @@ export default (state: any = {}, action: any) => {
     }
   }
   return state;
-};
+}
+
+export default longTermReducer;

@@ -1,6 +1,5 @@
-import { createStore, applyMiddleware } from "redux";
+import { legacy_createStore as createStore, applyMiddleware } from "redux";
 import reducer from "./reducers";
-import { Currency } from './models/Activity'
 import { thunk } from 'redux-thunk'
 import { composeWithDevTools } from '@redux-devtools/extension'
 

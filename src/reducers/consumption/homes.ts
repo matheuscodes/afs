@@ -1,16 +1,17 @@
-import { Home, MeterPrice, Heater } from '../../models/Home'
+import { Home, MeterPrice } from '../../models/Home'
 import { HOME_CONSUMPTION, UPDATE_HOMES, UPDATE_ELECTRICITY, UPDATE_GAS, UPDATE_WATER, UPDATE_HEATING } from '../../actions/consumption/home'
 
-export default (state: Record<string, Home> = {}, action: any) => {
+function homesReducer(state: Record<string, Home> = {}, action: any) {
   const sortByDateAsc = (a: any, b: any) => new Date(a.date).getTime() - new Date(b.date).getTime()
   const sortByDateDesc = (a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime()
   if(action.type === HOME_CONSUMPTION) {
     switch (action.operation) {
-      case UPDATE_HOMES:
+      case UPDATE_HOMES: {
         const homes: Record<string, Home> = {};
         action.payload.forEach((i: Home) => homes[i.id] = {...i});
         return {...state, ...homes};
-      case UPDATE_ELECTRICITY:
+      }
+      case UPDATE_ELECTRICITY: {
         const { homeId, payments, measurements, prices } = action.payload
         const home = state[homeId]
         if(!home) return state;
@@ -29,7 +30,8 @@ export default (state: Record<string, Home> = {}, action: any) => {
           electricity[price.meter].measurements = measurements.filter(thisMeter).sort(sortByDateAsc)
         })
         return {...state}
-      case UPDATE_GAS:
+      }
+      case UPDATE_GAS: {
         const gasHome = state[action.payload.homeId]
 
         if(!gasHome || !gasHome.gas) return state;
@@ -50,15 +52,16 @@ export default (state: Record<string, Home> = {}, action: any) => {
           })
 
         return {...state}
-      case UPDATE_WATER:
+      }
+      case UPDATE_WATER: {
         const waterHome = state[action.payload.homeId]
 
-        if(!waterHome.water) return state;
+        if(!waterHome?.water) return state;
 
         action.payload.prices
           .filter((i: MeterPrice) =>
-          (waterHome.water.cold && waterHome.water.cold.id === i.meter) ||
-          (waterHome.water.warm && waterHome.water.warm.id === i.meter) )
+          waterHome.water.cold?.id === i.meter ||
+          waterHome.water.warm?.id === i.meter )
           .sort(sortByDateDesc)
           .forEach( (price: MeterPrice) => {
             const thisMeter = (i: any) =>  i.meter === price.meter
@@ -90,7 +93,8 @@ export default (state: Record<string, Home> = {}, action: any) => {
           })
 
         return {...state}
-      case UPDATE_HEATING:
+      }
+      case UPDATE_HEATING: {
         const heatingHome = state[action.payload.homeId]
 
         if(!heatingHome || !heatingHome.heaters) return state;
@@ -111,9 +115,12 @@ export default (state: Record<string, Home> = {}, action: any) => {
           })
 
         return {...state}
+      }
       default:
         return state;
     }
   }
   return state;
-};
+}
+
+export default homesReducer;

@@ -15,14 +15,13 @@ interface SmallActivity {
 }
 
 
-type Categories = string;
 type Data = {
   label: string;
   data: number[];
   backgroundColor: string;
 }
 type CategorizedData = {
-  [key in Categories]: Data;
+  [key: string]: Data;
 }
 
 const categoryColor: {[key in string]: string} = {}

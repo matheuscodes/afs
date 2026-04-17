@@ -1,11 +1,6 @@
 import React from 'react';
-import { connect } from "react-redux";
 import {
-  Tab,
-  Tablist,
-  Pane,
   Table,
-  Heading,
 } from 'evergreen-ui';
 import {
   Chart as ChartJS,
@@ -13,7 +8,6 @@ import {
   LinearScale,
   PointElement,
   LineElement,
-  Title,
   Tooltip,
   Legend
 } from 'chart.js'
@@ -97,8 +91,9 @@ const options: any = {
 const monthCalories = 30 * 2000;
 
 class DetailsTable extends React.Component<any, any> {
-  constructor(props: any) {
-    super(props);
+  inflationCell(inflation: any, year: number, metric: string) {
+    const metricValue = inflation[year]?.[metric];
+    return metricValue ? `${metricValue.toFixed(2)}%` : '-';
   }
 
   convertReport(converted: any) {
@@ -111,7 +106,7 @@ class DetailsTable extends React.Component<any, any> {
       car: 0,
       savings: 0,
     }
-    if(typeof converted.report !== 'undefined') {
+    if(converted.report !== undefined) {
       Object.keys(converted.report).forEach(year => {
         Object.keys(converted.report[year]).forEach(period => {
           const amortization = new Date().getFullYear() - Number.parseInt(year, 10) + 1
@@ -172,32 +167,32 @@ class DetailsTable extends React.Component<any, any> {
 
               <Table.Head accountForScrollbar={false}>
                 <Table.TextHeaderCell>Metric</Table.TextHeaderCell>
-                { years.map((i) => (<Table.TextHeaderCell>{i}</Table.TextHeaderCell>)) }
+                 { years.map((i) => (<Table.TextHeaderCell key={`upkeep-history-header-${i}`}>{i}</Table.TextHeaderCell>)) }
               </Table.Head>
-                <Table.Row height={'auto'}>
-                    <Table.TextCell>Income</Table.TextCell>
-                    { years.map((i) => (<Table.TextCell>{converted.inflation[i]?.income ? converted.inflation[i].income.toFixed(2) + '%' : '-'}</Table.TextCell>)) }
-                </Table.Row>
-                <Table.Row height={'auto'}>
-                    <Table.TextCell>Housing</Table.TextCell>
-                    { years.map((i) => (<Table.TextCell>{converted.inflation[i]?.housing ? converted.inflation[i].housing.toFixed(2) + '%' : '-'}</Table.TextCell>)) }
-                </Table.Row>
-                <Table.Row height={'auto'}>
-                    <Table.TextCell>Groceries</Table.TextCell>
-                    { years.map((i) => (<Table.TextCell>{converted.inflation[i]?.groceries ? converted.inflation[i].groceries.toFixed(2) + '%' : '-'}</Table.TextCell>)) }
-                </Table.Row>
-                <Table.Row height={'auto'}>
-                    <Table.TextCell>Pet</Table.TextCell>
-                    { years.map((i) => (<Table.TextCell>{converted.inflation[i]?.pet ? converted.inflation[i].pet.toFixed(2) + '%' : '-'}</Table.TextCell>)) }
-                </Table.Row>
-                <Table.Row height={'auto'}>
-                    <Table.TextCell>Car</Table.TextCell>
-                    { years.map((i) => (<Table.TextCell>{converted.inflation[i]?.car ? converted.inflation[i].car.toFixed(2) + '%' : '-'}</Table.TextCell>)) }
-                </Table.Row>
-                <Table.Head accountForScrollbar={false}>
-                    <Table.TextHeaderCell><strong>Total Inflation</strong></Table.TextHeaderCell>
-                    { years.map((i) => (<Table.TextHeaderCell><strong>{converted.inflation[i]?.costs ? converted.inflation[i].costs.toFixed(2) + '%' : '-'}</strong></Table.TextHeaderCell>)) }
-                </Table.Head>
+                 <Table.Row height={'auto'}>
+                     <Table.TextCell>Income</Table.TextCell>
+                     { years.map((i) => (<Table.TextCell key={`upkeep-history-income-${i}`}>{this.inflationCell(converted.inflation, i, 'income')}</Table.TextCell>)) }
+                 </Table.Row>
+                 <Table.Row height={'auto'}>
+                     <Table.TextCell>Housing</Table.TextCell>
+                     { years.map((i) => (<Table.TextCell key={`upkeep-history-housing-${i}`}>{this.inflationCell(converted.inflation, i, 'housing')}</Table.TextCell>)) }
+                 </Table.Row>
+                 <Table.Row height={'auto'}>
+                     <Table.TextCell>Groceries</Table.TextCell>
+                     { years.map((i) => (<Table.TextCell key={`upkeep-history-groceries-${i}`}>{this.inflationCell(converted.inflation, i, 'groceries')}</Table.TextCell>)) }
+                 </Table.Row>
+                 <Table.Row height={'auto'}>
+                     <Table.TextCell>Pet</Table.TextCell>
+                     { years.map((i) => (<Table.TextCell key={`upkeep-history-pet-${i}`}>{this.inflationCell(converted.inflation, i, 'pet')}</Table.TextCell>)) }
+                 </Table.Row>
+                 <Table.Row height={'auto'}>
+                     <Table.TextCell>Car</Table.TextCell>
+                     { years.map((i) => (<Table.TextCell key={`upkeep-history-car-${i}`}>{this.inflationCell(converted.inflation, i, 'car')}</Table.TextCell>)) }
+                 </Table.Row>
+                 <Table.Head accountForScrollbar={false}>
+                     <Table.TextHeaderCell><strong>Total Inflation</strong></Table.TextHeaderCell>
+                     { years.map((i) => (<Table.TextHeaderCell key={`upkeep-history-total-${i}`}><strong>{this.inflationCell(converted.inflation, i, 'costs')}</strong></Table.TextHeaderCell>)) }
+                 </Table.Head>
               </Table.Body>
             </Table>
             : ""

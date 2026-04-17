@@ -18,11 +18,11 @@ export function parseAccount(data: string): Account {
 }
 
 export function parseAccounts(data: string): Account[] {
-  if(typeof data !== 'undefined') {
+  if(data !== undefined) {
     return data
       .split('\n')
       .map(i => i.length > 0 ? parseAccount(i) : undefined)
-      .filter(i => typeof i !== 'undefined');
+      .filter((i): i is Account => i !== undefined);
   }
   return [];
 }

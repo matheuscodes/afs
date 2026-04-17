@@ -1,6 +1,6 @@
 import { BOOKKEEPING, ADD_ACTIVITY, LOAD_ACTIVITIES } from '../actions/bookkeeping'
 
-export default (state: any[] = [], action: any) => {
+function bookkeepingReducer(state: any[] = [], action: any) {
   if(action.type === BOOKKEEPING) {
     switch (action.operation) {
       case ADD_ACTIVITY:
@@ -12,4 +12,6 @@ export default (state: any[] = [], action: any) => {
     }
   }
   return state;
-};
+}
+
+export default bookkeepingReducer;
