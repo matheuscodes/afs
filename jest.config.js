@@ -3,9 +3,9 @@ module.exports = {
   testMatch: ['<rootDir>/tests/**/*.test.ts', '<rootDir>/tests/**/*.test.tsx'],
   testEnvironment: 'jsdom',
   setupFilesAfterEnv: ['<rootDir>/tests/setupTests.ts'],
-  // TypeScript 6 surfaces stricter diagnostics in legacy code paths; keep tests passing while still logging type issues.
+  // Keep runtime-focused test output clean in CI.
   transform: {
-    '^.+\\.tsx?$': ['ts-jest', { diagnostics: { warnOnly: true } }],
+    '^.+\\.tsx?$': ['ts-jest', { diagnostics: false }],
   },
   collectCoverage: true,
   collectCoverageFrom: [
