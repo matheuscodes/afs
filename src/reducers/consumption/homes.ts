@@ -34,7 +34,8 @@ function homesReducer(state: Record<string, Home> = {}, action: any) {
       case UPDATE_GAS: {
         const gasHome = state[action.payload.homeId]
 
-        if(!(gasHome?.gas?.length)) return state;
+        if(!(gasHome?.gas)) return state;
+        const gasMeters = gasHome.gas;
 
         action.payload.prices
           .filter((i: MeterPrice) => gasMeters[i.meter])
@@ -96,7 +97,7 @@ function homesReducer(state: Record<string, Home> = {}, action: any) {
       case UPDATE_HEATING: {
         const heatingHome = state[action.payload.homeId]
 
-        if(!(heatingHome?.heaters?.length)) return state;
+        if(!(heatingHome?.heaters)) return state;
         const heaters = heatingHome.heaters;
 
         action.payload.prices
