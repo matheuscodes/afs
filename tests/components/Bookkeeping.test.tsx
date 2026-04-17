@@ -4,10 +4,11 @@ import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import configureStore from 'redux-mock-store';
 import { thunk } from 'redux-thunk';
+import type { Middleware } from 'redux';
 import Bookkeeping from '../../src/components/Bookkeeping';
 import { Activity, Currency } from '../../src/models/Activity';
 
-const mockStore = configureStore([thunk]);
+const mockStore = configureStore([thunk as unknown as Middleware]);
 
 describe('Bookkeeping', () => {
   const mockActivities: Activity[] = [

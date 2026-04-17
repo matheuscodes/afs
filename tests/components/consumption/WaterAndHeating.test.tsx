@@ -4,6 +4,7 @@ import { render, waitFor, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import configureStore from 'redux-mock-store';
 import { thunk } from 'redux-thunk';
+import type { Middleware } from 'redux';
 import WaterAndHeating, { UnconnectedWaterAndHeating } from '../../../src/components/consumption/WaterAndHeating';
 import { Currency } from '../../../src/models/Activity';
 
@@ -38,7 +39,7 @@ jest.mock('../../../src/services/HomeService', () => ({
   updateHomes: jest.fn()
 }));
 
-const mockStore = configureStore([thunk]);
+const mockStore = configureStore([thunk as unknown as Middleware]);
 
 describe('WaterAndHeating', () => {
   const mockHomes = {

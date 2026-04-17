@@ -4,6 +4,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import configureStore from 'redux-mock-store';
 import { thunk } from 'redux-thunk';
+import type { Middleware } from 'redux';
 import ConnectedElectricity, { 
   Electricity,
   dateDifference, 
@@ -22,7 +23,7 @@ jest.mock('../../../src/services/HomeService', () => ({
     fetchHeating: jest.fn(() => updateHeating("1",[],[],[])),
 }));
 
-const mockStore = configureStore([thunk]);
+const mockStore = configureStore([thunk as unknown as Middleware]);
 
 describe('Electricity Utility Functions', () => {
   describe('dateDifference', () => {

@@ -4,6 +4,7 @@ import { render, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import configureStore from 'redux-mock-store';
 import { thunk } from 'redux-thunk';
+import type { Middleware } from 'redux';
 import Upkeep from '../../../src/components/upkeep/index';
 import { Currency } from '../../../src/models/Activity';
 
@@ -20,7 +21,7 @@ jest.mock('../../../src/services/LongTermService', () => ({
   loadUpkeeps: jest.fn(() => (dispatch: any) => Promise.resolve())
 }));
 
-const mockStore = configureStore([thunk]);
+const mockStore = configureStore([thunk as unknown as Middleware]);
 
 describe('Upkeep', () => {
   const mockUpkeepData = [

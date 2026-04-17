@@ -4,6 +4,7 @@ import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import configureStore from 'redux-mock-store';
 import { thunk } from 'redux-thunk';
+import type { Middleware } from 'redux';
 import PropertyInvestments from '../../../../src/components/finances/investments/PropertyInvestments';
 import { Currency } from '../../../../src/models/Activity';
 import { updateProperties, updateProperty } from '../../../../src/actions/investments/property';
@@ -14,7 +15,7 @@ jest.mock('../../../../src/services/InvestmentsService', () => ({
   fetchProperty: jest.fn(() => updateProperty("123", []))
 }));
 
-const mockStore = configureStore([thunk]);
+const mockStore = configureStore([thunk as unknown as Middleware]);
 
 describe('PropertyInvestments', () => {
   const mockProperties = {

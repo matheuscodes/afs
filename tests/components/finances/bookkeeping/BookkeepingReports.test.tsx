@@ -4,6 +4,7 @@ import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import configureStore from 'redux-mock-store';
 import { thunk } from 'redux-thunk';
+import type { Middleware } from 'redux';
 import BookkeepingReports from '../../../../src/components/finances/bookkeeping/BookkeepingReports';
 import { Currency } from '../../../../src/models/Activity';
 import { loadActivities } from '../../../../src/actions/bookkeeping';
@@ -22,7 +23,7 @@ jest.mock('../../../../src/services/BookkeepingService', () => ({
   categoryDescriptions: jest.fn(() => ({})),
 }));
 
-const mockStore = configureStore([thunk]);
+const mockStore = configureStore([thunk as unknown as Middleware]);
 
 describe('BookkeepingReports', () => {
   const mockActivities = [

@@ -99,5 +99,76 @@ describe('NewActivitiesSheet', () => {
     expect(component.state.isShown).toBe(false);
   });
 
+  test('toggleSideSheet toggles visibility state', () => {
+    const component = new NewActivitiesSheet({ accounts: mockAccounts, submitActivity: mockSubmitActivity });
+    const initial = component.state.isShown;
+    component.setState = jest.fn((update: any) => {
+      const patch = typeof update === 'function' ? update(component.state) : update;
+      component.state = { ...component.state, ...(patch as any) };
+    });
+
+    component.toggleSideSheet();
+    expect(component.state.isShown).toBe(!initial);
+  });
+
+  test('addEmptyActivity appends a new activity with unique id', () => {
+    const component = new NewActivitiesSheet({ accounts: mockAccounts, submitActivity: mockSubmitActivity });
+    const previousLength = component.state.activities.length;
+    const previousIds = component.state.activities.map((activity: any) => activity._id);
+    component.setState = jest.fn((update: any) => {
+      const patch = typeof update === 'function' ? update(component.state) : update;
+      component.state = { ...component.state, ...(patch as any) };
+    });
+
+    component.addEmptyActivity();
+
+    expect(component.state.activities).toHaveLength(previousLength + 1);
+    const nextIds = component.state.activities.map((activity: any) => activity._id);
+    expect(new Set(nextIds).size).toBe(nextIds.length);
+    expect(nextIds.some((id) => !previousIds.includes(id))).toBe(true);
+  });
+
+  test('defaultAccount returns undefined when accounts are missing', () => {
+    const component = new NewActivitiesSheet({ submitActivity: mockSubmitActivity });
+    expect(component.defaultAccount()).toBeUndefined();
+  });
+
+  test('updateActivity updates only the selected index', () => {
+    const component = new NewActivitiesSheet({ accounts: mockAccounts, submitActivity: mockSubmitActivity });
+    component.state = {
+      ...component.state,
+      activities: [
+        {
+          _id: 1,
+          date: new Date('2024-01-15'),
+          source: 'Original Source',
+          description: 'Original Description',
+          value: { amount: 100, currency: Currency.EUR },
+          account: 'acc1',
+        } as any,
+        {
+          _id: 2,
+          date: new Date('2024-01-16'),
+          source: 'Keep Source',
+          description: 'Keep Description',
+          value: { amount: 200, currency: Currency.EUR },
+          account: 'acc2',
+        } as any,
+      ],
+    };
+    component.setState = jest.fn((update: any) => {
+      const patch = typeof update === 'function' ? update(component.state) : update;
+      component.state = { ...component.state, ...(patch as any) };
+    });
+
+    component.updateActivity(0, (activity) => ({
+      ...activity,
+      source: 'Updated Source',
+    }));
+
+    expect(component.state.activities[0].source).toBe('Updated Source');
+    expect(component.state.activities[1].source).toBe('Keep Source');
+  });
+
 
 });

@@ -4,6 +4,7 @@ import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import configureStore from 'redux-mock-store';
 import { thunk } from 'redux-thunk';
+import type { Middleware } from 'redux';
 import CarFuel from '../../../src/components/consumption/CarFuel';
 import { Fuel, FuelUnit } from '../../../src/models/Car';
 import { Currency } from '../../../src/models/Activity';
@@ -16,7 +17,7 @@ jest.mock('../../../src/services/CarFuelService', () => ({
 }));
 
 
-const mockStore = configureStore([thunk]);
+const mockStore = configureStore([thunk as unknown as Middleware]);
 
 describe('CarFuel', () => {
   const mockCars = {

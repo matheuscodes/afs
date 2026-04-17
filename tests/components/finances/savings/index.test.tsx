@@ -4,6 +4,7 @@ import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import configureStore from 'redux-mock-store';
 import { thunk } from 'redux-thunk';
+import type { Middleware } from 'redux';
 import Savings from '../../../../src/components/finances/savings/index';
 import { Currency } from '../../../../src/models/Activity';
 import { loadUpkeeps, loadSavings } from '../../../../src/actions/long-term';
@@ -19,7 +20,7 @@ jest.mock('../../../../src/services/LongTermService', () => ({
   loadUpkeeps: jest.fn(() => loadUpkeeps([])),
 }));
 
-const mockStore = configureStore([thunk]);
+const mockStore = configureStore([thunk as unknown as Middleware]);
 
 describe('Savings', () => {
   const mockSavings = [

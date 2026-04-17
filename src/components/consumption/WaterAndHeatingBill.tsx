@@ -10,6 +10,16 @@ const ColumnFlex = {
 }
 
 class WaterAndHeatingBill extends React.Component<any, any> {
+  heaterKey(heater: any, index: number) {
+    if (heater?.id) {
+      return heater.id;
+    }
+    if (heater?.location) {
+      return `${heater.location}-${index}`;
+    }
+    return `${index}`;
+  }
+
   render() {
     const { bill } = this.props;
 
@@ -66,18 +76,18 @@ class WaterAndHeatingBill extends React.Component<any, any> {
             <Table.Row height={'auto'}>
               <Table.TextCell flex={ColumnFlex.name}>
                 <strong>Heaters</strong><br/>
-                {bill.heaters.map((heater: any) =>
+                {bill.heaters.map((heater: any, index: number) =>
                   <div
                     style={{textAlign:'right', width:'100%'}}
-                    key={`heater-list-${heater.id}`}>
+                    key={`heater-list-${this.heaterKey(heater, index)}`}>
                     {heater.location}
                   </div>
                 )}
               </Table.TextCell>
               <Table.TextCell flex={ColumnFlex.data}>
                 <br/>
-                {bill.heaters.map((heater: any) =>
-                  <div key={`heater-cost-${heater.id}`}>
+                {bill.heaters.map((heater: any, index: number) =>
+                  <div key={`heater-cost-${this.heaterKey(heater, index)}`}>
                     {heater.base ? `${heater.base}m² + ` : ''}
                     {heater.consumption} = {heater.cost.total.amount.toFixed(2) + heater.cost.total.currency}
                   </div>
