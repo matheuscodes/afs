@@ -124,7 +124,10 @@ describe('WaterAndHeatingBill', () => {
   });
 
   test('does not log duplicate key warnings when heaters do not have ids', () => {
-    const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    const originalConsoleError = console.error;
+    const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation((...args) => {
+      originalConsoleError(...args);
+    });
     const billWithoutHeaterIds = {
       ...mockBill,
       heaters: [
@@ -149,11 +152,14 @@ describe('WaterAndHeatingBill', () => {
 
     render(<WaterAndHeatingBill bill={billWithoutHeaterIds} year={2024} />);
 
-    const duplicateKeyWarning = consoleErrorSpy.mock.calls.some((call) =>
-      String(call[0]).includes('Encountered two children with the same key')
-    );
-    expect(duplicateKeyWarning).toBe(false);
-    consoleErrorSpy.mockRestore();
+    try {
+      const duplicateKeyWarning = consoleErrorSpy.mock.calls.some((call) =>
+        call.some((part) => String(part).includes('Encountered two children with the same key'))
+      );
+      expect(duplicateKeyWarning).toBe(false);
+    } finally {
+      consoleErrorSpy.mockRestore();
+    }
   });
 
 
