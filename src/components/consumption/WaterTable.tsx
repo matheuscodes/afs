@@ -17,8 +17,8 @@ class WaterTable extends React.Component<any, any> {
       <Table.TextCell flex={ColumnFlex.days}>{day.cold?.days || day.warm?.days} days</Table.TextCell>
       <Table.TextCell flex={ColumnFlex.measurement}>{day.warm ? `${day.warm.measurement.toFixed(3)}m³` : ''}</Table.TextCell>
       <Table.TextCell flex={ColumnFlex.measurement}>{day.cold ? `${day.cold.measurement.toFixed(3)}m³` : ''}</Table.TextCell>
-      <Table.TextCell flex={ColumnFlex.consumption}>{day.warm && day.warm.days ? `${(day.warm.consumption * 1000  / day.warm.days).toFixed(1)}l` : ''}</Table.TextCell>
-      <Table.TextCell flex={ColumnFlex.consumption}>{day.cold && day.cold.days ? `${(day.cold.consumption * 1000 / day.cold.days).toFixed(1)}l` : ''}</Table.TextCell>
+      <Table.TextCell flex={ColumnFlex.consumption}>{day.warm?.days? ? `${(day.warm.consumption * 1000  / day.warm.days).toFixed(1)}l` : ''}</Table.TextCell>
+      <Table.TextCell flex={ColumnFlex.consumption}>{day.cold?.days? ? `${(day.cold.consumption * 1000 / day.cold.days).toFixed(1)}l` : ''}</Table.TextCell>
     </Table.Row>
   }
 

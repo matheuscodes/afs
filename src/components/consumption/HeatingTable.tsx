@@ -14,7 +14,7 @@ class HeatingTable extends React.Component<any, any> {
     return <Table.Row key={`heating-table-${index}`} height={'auto'}>
       <Table.TextCell flex={ColumnFlex.date}>{day.date}</Table.TextCell>
       {keyOrder.map((key: any, index: number) =>
-        <Table.TextCell key={`heating-table-cell-${index}`} flex={ColumnFlex.measurement}>{day[key]}</Table.TextCell>
+        <Table.TextCell key={`heating-table-cell-${key}`} flex={ColumnFlex.measurement}>{day[key]}</Table.TextCell>
       )}
     </Table.Row>
   }
