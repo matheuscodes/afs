@@ -5,6 +5,8 @@ import {
   Table,
 } from 'evergreen-ui'
 
+const ZERO_BALANCE_THRESHOLD = 0.005;
+
 class Savings extends React.Component<any, any> {
   componentDidMount() {
     this.props.fetchSavings()
@@ -65,7 +67,7 @@ class Savings extends React.Component<any, any> {
             summary[bank].map((account: any) =>
               <div key={`savings-account-${account.name}`}>
                 <h3>{account.name}</h3>
-                Total: {Number.parseInt(account.total.toFixed(2), 10) === 0 ? '-' : account.total.toFixed(2)} €
+                Total: {Math.abs(Math.round(account.total * 100) / 100) < ZERO_BALANCE_THRESHOLD ? '-' : account.total.toFixed(2)} €
                 {
                   Math.floor(account.total) <= 0 ? '' :
                   <Table>

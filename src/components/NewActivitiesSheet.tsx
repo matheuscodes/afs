@@ -23,7 +23,11 @@ const emptyActivity: any = {
 
 interface NewActivitiesSheetState {
   isShown: boolean,
-  activities: any[],
+  activities: NewActivity[],
+}
+
+interface NewActivity extends Activity {
+  _id: number;
 }
 
 export default class NewActivitiesSheet extends React.Component<any, NewActivitiesSheetState> {
@@ -39,7 +43,7 @@ export default class NewActivitiesSheet extends React.Component<any, NewActiviti
     return {
       ...clone(emptyActivity),
       _id: this.nextActivityId++,
-    };
+    } as NewActivity;
   }
 
   initialState() {
@@ -69,9 +73,8 @@ export default class NewActivitiesSheet extends React.Component<any, NewActiviti
       activity.date = new Date(activity.date);
       this.props.submitActivity(activity);
     });
-    const isShown = this.state.isShown;
     this.setState({
-      isShown: !isShown,
+      isShown: !this.state.isShown,
       activities: [],
     });
   }
@@ -100,7 +103,7 @@ export default class NewActivitiesSheet extends React.Component<any, NewActiviti
     )
   }
 
-  updateActivity(index: number, updater: (activity: any) => any) {
+  updateActivity(index: number, updater: (activity: NewActivity) => NewActivity) {
     this.setState((previousState) => ({
       ...previousState,
       activities: previousState.activities.map((activity, currentIndex) => {
@@ -172,7 +175,7 @@ export default class NewActivitiesSheet extends React.Component<any, NewActiviti
                   }} />
                 <TextInputField
                   padding={5}
-                  isInvalid={Number.isNaN(Number.parseFloat(`${activity.value.amount}`))}
+                  isInvalid={Number.isNaN(Number.parseFloat(String(activity.value.amount)))}
                   flex={1}
                   label="Amount"
                   value={activity.value.amount}

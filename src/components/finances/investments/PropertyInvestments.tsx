@@ -88,7 +88,7 @@ class PropertyInvestments extends React.Component<any, any> {
             valuations: [],
           };
         }
-        grouped[valuation.date].valuations.push(Number.parseInt(`${valuation.valuation.amount}`, 10));
+        grouped[valuation.date].valuations.push(Number.parseInt(String(valuation.valuation.amount), 10));
         return grouped;
       }, {});
     Object.keys(grouped).forEach(date => {

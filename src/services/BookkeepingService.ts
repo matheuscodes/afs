@@ -31,8 +31,8 @@ function getRandomColor(category: string): any {
     if(categoryColor[category]) return categoryColor[category];
     // Simple hash function (djb2)
     let hash = 5381;
-    for (let i = 0; i < category.length; i++) {
-        hash = (hash * 33) ^ (category.codePointAt(i) || 0);
+    for (const codePoint of Array.from(category)) {
+        hash = (hash * 33) ^ (codePoint.codePointAt(0) || 0);
     }
 
     // Convert hash to 6-digit hex
