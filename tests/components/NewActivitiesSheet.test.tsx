@@ -74,22 +74,26 @@ describe('NewActivitiesSheet', () => {
           source: 'Test Source',
           description: 'Test Description',
           value: { amount: 100, currency: Currency.EUR },
-          account: 'acc1'
-        } as any
-      ]
+          account: 'acc1',
+        } as any,
+      ],
     };
-    component.setState = jest.fn((state) => {
-      component.state = state as any;
+    component.setState = jest.fn((update: any) => {
+      const patch = typeof update === 'function' ? update(component.state) : update;
+      component.state = { ...component.state, ...(patch as any) };
     });
     component.submitActivities();
-    expect(component.state.activities.length).toBe(0);
+
+    expect(component.state.activities).toHaveLength(0);
   });
 
   test('submitActivities closes the side sheet', () => {
     const component = new NewActivitiesSheet({ accounts: mockAccounts, submitActivity: mockSubmitActivity });
     (component.state as any).isShown = true;
-    component.setState = jest.fn((state) => {
-      component.state = state as any;
+    component.setState = jest.fn((update: any) => {
+      const nextState =
+        typeof update === 'function' ? update(component.state) : update;
+      component.state = nextState as any; // or merge, see below
     });
     component.submitActivities();
     expect(component.state.isShown).toBe(false);

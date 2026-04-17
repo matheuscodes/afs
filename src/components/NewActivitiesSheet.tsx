@@ -73,10 +73,10 @@ export default class NewActivitiesSheet extends React.Component<any, NewActiviti
       activity.date = new Date(activity.date);
       this.props.submitActivity(activity);
     });
-    this.setState({
-      isShown: !this.state.isShown,
+    this.setState(previousState => ({
+      isShown: !previousState.isShown,
       activities: [],
-    });
+    }));
   }
 
   defaultAccount() {

@@ -39,7 +39,7 @@ class WaterAndHeating extends React.Component<any, any> {
         date: measurement.date,
         measurement: measurement.measurement,
         price: getCurrentPrice(measurement, waterMeter.prices) || fallbackPrice,
-        consumption: lastMeasurement !== undefined ? measurement.measurement - lastMeasurement : 0,
+        consumption: lastMeasurement === undefined ? 0 : measurement.measurement - lastMeasurement,
         days: lastDate ? dateDifference(measurement.date, lastDate) : 0,
         billable: measurement.billable
       }

@@ -83,7 +83,7 @@ class Bookkeeping extends React.Component<any, any> {
         ))}
       </Tablist>
       {
-        this.state.month !== undefined ?
+        this.state.month === undefined ? '' :
         <Pane padding={16} flex={1}>
           <MonthlyActivityOverview
             data={BookkeepingService.monthlyOverview(
@@ -98,8 +98,7 @@ class Bookkeeping extends React.Component<any, any> {
               return i.date.getMonth() === this.state.month &&
                 i.date.getFullYear() === this.state.year
             })} />
-        </Pane> :
-        ''
+        </Pane>
       }
     </div>
   }
