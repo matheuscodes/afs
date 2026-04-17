@@ -1,0 +1,2869 @@
+{
+    "total": 52,
+    "p": 1,
+    "ps": 100,
+    "paging": {
+        "pageIndex": 1,
+        "pageSize": 100,
+        "total": 52
+    },
+    "effortTotal": 224,
+    "debtTotal": 224,
+    "issues": [
+        {
+            "key": "AZv8WdHA3JsCIL-3RHvT",
+            "rule": "typescript:S6746",
+            "severity": "MAJOR",
+            "component": "matheuscodes_afs:src/components/ActivitiesTable.tsx",
+            "project": "matheuscodes_afs",
+            "line": 107,
+            "hash": "f86260ae5a94d6d6bb57b960401974a0",
+            "textRange": {
+                "startLine": 107,
+                "endLine": 107,
+                "startOffset": 4,
+                "endOffset": 26
+            },
+            "flows": [],
+            "status": "OPEN",
+            "message": "Do not mutate state directly. Use setState().",
+            "effort": "5min",
+            "debt": "5min",
+            "assignee": "matheuscodes@github",
+            "tags": [
+                "react"
+            ],
+            "transitions": [],
+            "actions": [],
+            "comments": [],
+            "creationDate": "2021-03-07T11:19:13+0000",
+            "updateDate": "2026-01-26T22:07:53+0000",
+            "type": "CODE_SMELL",
+            "organization": "matheuscodes-analysed",
+            "cleanCodeAttribute": "LOGICAL",
+            "cleanCodeAttributeCategory": "INTENTIONAL",
+            "impacts": [
+                {
+                    "softwareQuality": "RELIABILITY",
+                    "severity": "MEDIUM"
+                },
+                {
+                    "softwareQuality": "MAINTAINABILITY",
+                    "severity": "MEDIUM"
+                }
+            ],
+            "issueStatus": "OPEN",
+            "projectName": "afs",
+            "internalTags": []
+        },
+        {
+            "key": "AZv8WdHA3JsCIL-3RHvU",
+            "rule": "typescript:S6756",
+            "severity": "MAJOR",
+            "component": "matheuscodes_afs:src/components/ActivitiesTable.tsx",
+            "project": "matheuscodes_afs",
+            "line": 108,
+            "hash": "577ebe5dd88a1cb19705e5512c1c1b8f",
+            "textRange": {
+                "startLine": 108,
+                "endLine": 108,
+                "startOffset": 18,
+                "endOffset": 28
+            },
+            "flows": [],
+            "status": "OPEN",
+            "message": "Use callback in setState when referencing the previous state.",
+            "effort": "5min",
+            "debt": "5min",
+            "assignee": "matheuscodes@github",
+            "tags": [
+                "react"
+            ],
+            "transitions": [],
+            "actions": [],
+            "comments": [],
+            "creationDate": "2021-03-07T11:19:13+0000",
+            "updateDate": "2026-01-26T22:07:53+0000",
+            "type": "BUG",
+            "organization": "matheuscodes-analysed",
+            "cleanCodeAttribute": "LOGICAL",
+            "cleanCodeAttributeCategory": "INTENTIONAL",
+            "impacts": [
+                {
+                    "softwareQuality": "RELIABILITY",
+                    "severity": "MEDIUM"
+                },
+                {
+                    "softwareQuality": "MAINTAINABILITY",
+                    "severity": "MEDIUM"
+                }
+            ],
+            "issueStatus": "OPEN",
+            "projectName": "afs",
+            "internalTags": []
+        },
+        {
+            "key": "AZv8WdHK3JsCIL-3RHvZ",
+            "rule": "typescript:S7773",
+            "severity": "MINOR",
+            "component": "matheuscodes_afs:src/components/Bookkeeping.tsx",
+            "project": "matheuscodes_afs",
+            "line": 47,
+            "hash": "eab6d7483942bccd3575122d8b3b789b",
+            "textRange": {
+                "startLine": 47,
+                "endLine": 47,
+                "startOffset": 23,
+                "endOffset": 31
+            },
+            "flows": [],
+            "status": "OPEN",
+            "message": "Prefer `Number.parseInt` over `parseInt`.",
+            "effort": "2min",
+            "debt": "2min",
+            "assignee": "matheuscodes@github",
+            "tags": [
+                "convention",
+                "es2015"
+            ],
+            "transitions": [],
+            "actions": [],
+            "comments": [],
+            "creationDate": "2021-11-28T21:03:56+0000",
+            "updateDate": "2026-01-26T22:07:53+0000",
+            "type": "CODE_SMELL",
+            "organization": "matheuscodes-analysed",
+            "cleanCodeAttribute": "CONVENTIONAL",
+            "cleanCodeAttributeCategory": "CONSISTENT",
+            "impacts": [
+                {
+                    "softwareQuality": "MAINTAINABILITY",
+                    "severity": "LOW"
+                },
+                {
+                    "softwareQuality": "RELIABILITY",
+                    "severity": "MEDIUM"
+                }
+            ],
+            "issueStatus": "OPEN",
+            "projectName": "afs",
+            "internalTags": []
+        },
+        {
+            "key": "AZv8WdHK3JsCIL-3RHva",
+            "rule": "typescript:S6756",
+            "severity": "MAJOR",
+            "component": "matheuscodes_afs:src/components/Bookkeeping.tsx",
+            "project": "matheuscodes_afs",
+            "line": 68,
+            "hash": "e8ba3bfd04969fc8330cdf5236b35f33",
+            "textRange": {
+                "startLine": 68,
+                "endLine": 68,
+                "startOffset": 46,
+                "endOffset": 56
+            },
+            "flows": [],
+            "status": "OPEN",
+            "message": "Use callback in setState when referencing the previous state.",
+            "effort": "5min",
+            "debt": "5min",
+            "assignee": "matheuscodes@github",
+            "tags": [
+                "react"
+            ],
+            "transitions": [],
+            "actions": [],
+            "comments": [],
+            "creationDate": "2021-04-20T20:31:43+0000",
+            "updateDate": "2026-01-26T22:07:53+0000",
+            "type": "BUG",
+            "organization": "matheuscodes-analysed",
+            "cleanCodeAttribute": "LOGICAL",
+            "cleanCodeAttributeCategory": "INTENTIONAL",
+            "impacts": [
+                {
+                    "softwareQuality": "RELIABILITY",
+                    "severity": "MEDIUM"
+                },
+                {
+                    "softwareQuality": "MAINTAINABILITY",
+                    "severity": "MEDIUM"
+                }
+            ],
+            "issueStatus": "OPEN",
+            "projectName": "afs",
+            "internalTags": []
+        },
+        {
+            "key": "AZv8WdHK3JsCIL-3RHvb",
+            "rule": "typescript:S6756",
+            "severity": "MAJOR",
+            "component": "matheuscodes_afs:src/components/Bookkeeping.tsx",
+            "project": "matheuscodes_afs",
+            "line": 78,
+            "hash": "6ea8fe2558bf9d8f2192150c6f7fe158",
+            "textRange": {
+                "startLine": 78,
+                "endLine": 78,
+                "startOffset": 46,
+                "endOffset": 56
+            },
+            "flows": [],
+            "status": "OPEN",
+            "message": "Use callback in setState when referencing the previous state.",
+            "effort": "5min",
+            "debt": "5min",
+            "assignee": "matheuscodes@github",
+            "tags": [
+                "react"
+            ],
+            "transitions": [],
+            "actions": [],
+            "comments": [],
+            "creationDate": "2021-04-20T20:31:43+0000",
+            "updateDate": "2026-01-26T22:07:53+0000",
+            "type": "BUG",
+            "organization": "matheuscodes-analysed",
+            "cleanCodeAttribute": "LOGICAL",
+            "cleanCodeAttributeCategory": "INTENTIONAL",
+            "impacts": [
+                {
+                    "softwareQuality": "RELIABILITY",
+                    "severity": "MEDIUM"
+                },
+                {
+                    "softwareQuality": "MAINTAINABILITY",
+                    "severity": "MEDIUM"
+                }
+            ],
+            "issueStatus": "OPEN",
+            "projectName": "afs",
+            "internalTags": []
+        },
+        {
+            "key": "AZv8WdFP3JsCIL-3RHtW",
+            "rule": "typescript:S6756",
+            "severity": "MAJOR",
+            "component": "matheuscodes_afs:src/components/NewActivitiesSheet.tsx",
+            "project": "matheuscodes_afs",
+            "line": 45,
+            "hash": "1248c5116e98f10e81e7830bc2130fcb",
+            "textRange": {
+                "startLine": 45,
+                "endLine": 45,
+                "startOffset": 16,
+                "endOffset": 26
+            },
+            "flows": [],
+            "status": "OPEN",
+            "message": "Use callback in setState when referencing the previous state.",
+            "effort": "5min",
+            "debt": "5min",
+            "tags": [
+                "react"
+            ],
+            "transitions": [],
+            "actions": [],
+            "comments": [],
+            "creationDate": "2021-03-08T00:01:36+0000",
+            "updateDate": "2026-01-26T22:07:53+0000",
+            "type": "BUG",
+            "organization": "matheuscodes-analysed",
+            "cleanCodeAttribute": "LOGICAL",
+            "cleanCodeAttributeCategory": "INTENTIONAL",
+            "impacts": [
+                {
+                    "softwareQuality": "RELIABILITY",
+                    "severity": "MEDIUM"
+                },
+                {
+                    "softwareQuality": "MAINTAINABILITY",
+                    "severity": "MEDIUM"
+                }
+            ],
+            "issueStatus": "OPEN",
+            "projectName": "afs",
+            "internalTags": []
+        },
+        {
+            "key": "AZv8WdFP3JsCIL-3RHtX",
+            "rule": "typescript:S6756",
+            "severity": "MAJOR",
+            "component": "matheuscodes_afs:src/components/NewActivitiesSheet.tsx",
+            "project": "matheuscodes_afs",
+            "line": 46,
+            "hash": "ebaba273ebfc2b3b3f29aae74b8cf5d1",
+            "textRange": {
+                "startLine": 46,
+                "endLine": 46,
+                "startOffset": 18,
+                "endOffset": 28
+            },
+            "flows": [],
+            "status": "OPEN",
+            "message": "Use callback in setState when referencing the previous state.",
+            "effort": "5min",
+            "debt": "5min",
+            "tags": [
+                "react"
+            ],
+            "transitions": [],
+            "actions": [],
+            "comments": [],
+            "creationDate": "2021-03-08T10:58:02+0000",
+            "updateDate": "2026-01-26T22:07:53+0000",
+            "type": "BUG",
+            "organization": "matheuscodes-analysed",
+            "cleanCodeAttribute": "LOGICAL",
+            "cleanCodeAttributeCategory": "INTENTIONAL",
+            "impacts": [
+                {
+                    "softwareQuality": "RELIABILITY",
+                    "severity": "MEDIUM"
+                },
+                {
+                    "softwareQuality": "MAINTAINABILITY",
+                    "severity": "MEDIUM"
+                }
+            ],
+            "issueStatus": "OPEN",
+            "projectName": "afs",
+            "internalTags": []
+        },
+        {
+            "key": "AZv8WdFP3JsCIL-3RHtY",
+            "rule": "typescript:S6756",
+            "severity": "MAJOR",
+            "component": "matheuscodes_afs:src/components/NewActivitiesSheet.tsx",
+            "project": "matheuscodes_afs",
+            "line": 52,
+            "hash": "577ebe5dd88a1cb19705e5512c1c1b8f",
+            "textRange": {
+                "startLine": 52,
+                "endLine": 52,
+                "startOffset": 18,
+                "endOffset": 28
+            },
+            "flows": [],
+            "status": "OPEN",
+            "message": "Use callback in setState when referencing the previous state.",
+            "effort": "5min",
+            "debt": "5min",
+            "tags": [
+                "react"
+            ],
+            "transitions": [],
+            "actions": [],
+            "comments": [],
+            "creationDate": "2021-03-07T23:40:40+0000",
+            "updateDate": "2026-01-26T22:07:53+0000",
+            "type": "BUG",
+            "organization": "matheuscodes-analysed",
+            "cleanCodeAttribute": "LOGICAL",
+            "cleanCodeAttributeCategory": "INTENTIONAL",
+            "impacts": [
+                {
+                    "softwareQuality": "RELIABILITY",
+                    "severity": "MEDIUM"
+                },
+                {
+                    "softwareQuality": "MAINTAINABILITY",
+                    "severity": "MEDIUM"
+                }
+            ],
+            "issueStatus": "OPEN",
+            "projectName": "afs",
+            "internalTags": []
+        },
+        {
+            "key": "AZv8WdFP3JsCIL-3RHtZ",
+            "rule": "typescript:S6756",
+            "severity": "MAJOR",
+            "component": "matheuscodes_afs:src/components/NewActivitiesSheet.tsx",
+            "project": "matheuscodes_afs",
+            "line": 62,
+            "hash": "1248c5116e98f10e81e7830bc2130fcb",
+            "textRange": {
+                "startLine": 62,
+                "endLine": 62,
+                "startOffset": 16,
+                "endOffset": 26
+            },
+            "flows": [],
+            "status": "OPEN",
+            "message": "Use callback in setState when referencing the previous state.",
+            "effort": "5min",
+            "debt": "5min",
+            "tags": [
+                "react"
+            ],
+            "transitions": [],
+            "actions": [],
+            "comments": [],
+            "creationDate": "2021-03-08T00:01:36+0000",
+            "updateDate": "2026-01-26T22:07:53+0000",
+            "type": "BUG",
+            "organization": "matheuscodes-analysed",
+            "cleanCodeAttribute": "LOGICAL",
+            "cleanCodeAttributeCategory": "INTENTIONAL",
+            "impacts": [
+                {
+                    "softwareQuality": "RELIABILITY",
+                    "severity": "MEDIUM"
+                },
+                {
+                    "softwareQuality": "MAINTAINABILITY",
+                    "severity": "MEDIUM"
+                }
+            ],
+            "issueStatus": "OPEN",
+            "projectName": "afs",
+            "internalTags": []
+        },
+        {
+            "key": "AZv8WdFP3JsCIL-3RHtb",
+            "rule": "typescript:S7773",
+            "severity": "MINOR",
+            "component": "matheuscodes_afs:src/components/NewActivitiesSheet.tsx",
+            "project": "matheuscodes_afs",
+            "line": 106,
+            "hash": "83fb516e38bc6672a261dc237d3bf259",
+            "textRange": {
+                "startLine": 106,
+                "endLine": 106,
+                "startOffset": 29,
+                "endOffset": 34
+            },
+            "flows": [],
+            "status": "OPEN",
+            "message": "Prefer `Number.isNaN` over `isNaN`.",
+            "effort": "2min",
+            "debt": "2min",
+            "tags": [
+                "convention",
+                "es2015"
+            ],
+            "transitions": [],
+            "actions": [],
+            "comments": [],
+            "creationDate": "2021-03-08T10:58:02+0000",
+            "updateDate": "2026-01-26T22:07:53+0000",
+            "type": "CODE_SMELL",
+            "organization": "matheuscodes-analysed",
+            "cleanCodeAttribute": "CONVENTIONAL",
+            "cleanCodeAttributeCategory": "CONSISTENT",
+            "impacts": [
+                {
+                    "softwareQuality": "MAINTAINABILITY",
+                    "severity": "LOW"
+                },
+                {
+                    "softwareQuality": "RELIABILITY",
+                    "severity": "MEDIUM"
+                }
+            ],
+            "issueStatus": "OPEN",
+            "projectName": "afs",
+            "internalTags": []
+        },
+        {
+            "key": "AZv8WdFP3JsCIL-3RHtc",
+            "rule": "typescript:S6756",
+            "severity": "MAJOR",
+            "component": "matheuscodes_afs:src/components/NewActivitiesSheet.tsx",
+            "project": "matheuscodes_afs",
+            "line": 112,
+            "hash": "577ebe5dd88a1cb19705e5512c1c1b8f",
+            "textRange": {
+                "startLine": 112,
+                "endLine": 112,
+                "startOffset": 34,
+                "endOffset": 44
+            },
+            "flows": [],
+            "status": "OPEN",
+            "message": "Use callback in setState when referencing the previous state.",
+            "effort": "5min",
+            "debt": "5min",
+            "tags": [
+                "react"
+            ],
+            "transitions": [],
+            "actions": [],
+            "comments": [],
+            "creationDate": "2021-03-07T23:40:40+0000",
+            "updateDate": "2026-01-26T22:07:53+0000",
+            "type": "BUG",
+            "organization": "matheuscodes-analysed",
+            "cleanCodeAttribute": "LOGICAL",
+            "cleanCodeAttributeCategory": "INTENTIONAL",
+            "impacts": [
+                {
+                    "softwareQuality": "RELIABILITY",
+                    "severity": "MEDIUM"
+                },
+                {
+                    "softwareQuality": "MAINTAINABILITY",
+                    "severity": "MEDIUM"
+                }
+            ],
+            "issueStatus": "OPEN",
+            "projectName": "afs",
+            "internalTags": []
+        },
+        {
+            "key": "AZv8WdFP3JsCIL-3RHtd",
+            "rule": "typescript:S6756",
+            "severity": "MAJOR",
+            "component": "matheuscodes_afs:src/components/NewActivitiesSheet.tsx",
+            "project": "matheuscodes_afs",
+            "line": 118,
+            "hash": "577ebe5dd88a1cb19705e5512c1c1b8f",
+            "textRange": {
+                "startLine": 118,
+                "endLine": 118,
+                "startOffset": 34,
+                "endOffset": 44
+            },
+            "flows": [],
+            "status": "OPEN",
+            "message": "Use callback in setState when referencing the previous state.",
+            "effort": "5min",
+            "debt": "5min",
+            "tags": [
+                "react"
+            ],
+            "transitions": [],
+            "actions": [],
+            "comments": [],
+            "creationDate": "2021-03-08T20:17:05+0000",
+            "updateDate": "2026-01-26T22:07:53+0000",
+            "type": "BUG",
+            "organization": "matheuscodes-analysed",
+            "cleanCodeAttribute": "LOGICAL",
+            "cleanCodeAttributeCategory": "INTENTIONAL",
+            "impacts": [
+                {
+                    "softwareQuality": "RELIABILITY",
+                    "severity": "MEDIUM"
+                },
+                {
+                    "softwareQuality": "MAINTAINABILITY",
+                    "severity": "MEDIUM"
+                }
+            ],
+            "issueStatus": "OPEN",
+            "projectName": "afs",
+            "internalTags": []
+        },
+        {
+            "key": "AZv8WdFP3JsCIL-3RHte",
+            "rule": "typescript:S6756",
+            "severity": "MAJOR",
+            "component": "matheuscodes_afs:src/components/NewActivitiesSheet.tsx",
+            "project": "matheuscodes_afs",
+            "line": 128,
+            "hash": "577ebe5dd88a1cb19705e5512c1c1b8f",
+            "textRange": {
+                "startLine": 128,
+                "endLine": 128,
+                "startOffset": 36,
+                "endOffset": 46
+            },
+            "flows": [],
+            "status": "OPEN",
+            "message": "Use callback in setState when referencing the previous state.",
+            "effort": "5min",
+            "debt": "5min",
+            "tags": [
+                "react"
+            ],
+            "transitions": [],
+            "actions": [],
+            "comments": [],
+            "creationDate": "2021-03-07T23:40:40+0000",
+            "updateDate": "2026-01-26T22:07:53+0000",
+            "type": "BUG",
+            "organization": "matheuscodes-analysed",
+            "cleanCodeAttribute": "LOGICAL",
+            "cleanCodeAttributeCategory": "INTENTIONAL",
+            "impacts": [
+                {
+                    "softwareQuality": "RELIABILITY",
+                    "severity": "MEDIUM"
+                },
+                {
+                    "softwareQuality": "MAINTAINABILITY",
+                    "severity": "MEDIUM"
+                }
+            ],
+            "issueStatus": "OPEN",
+            "projectName": "afs",
+            "internalTags": []
+        },
+        {
+            "key": "AZv8WdFP3JsCIL-3RHtf",
+            "rule": "typescript:S6756",
+            "severity": "MAJOR",
+            "component": "matheuscodes_afs:src/components/NewActivitiesSheet.tsx",
+            "project": "matheuscodes_afs",
+            "line": 139,
+            "hash": "577ebe5dd88a1cb19705e5512c1c1b8f",
+            "textRange": {
+                "startLine": 139,
+                "endLine": 139,
+                "startOffset": 34,
+                "endOffset": 44
+            },
+            "flows": [],
+            "status": "OPEN",
+            "message": "Use callback in setState when referencing the previous state.",
+            "effort": "5min",
+            "debt": "5min",
+            "tags": [
+                "react"
+            ],
+            "transitions": [],
+            "actions": [],
+            "comments": [],
+            "creationDate": "2021-03-07T23:40:40+0000",
+            "updateDate": "2026-01-26T22:07:53+0000",
+            "type": "BUG",
+            "organization": "matheuscodes-analysed",
+            "cleanCodeAttribute": "LOGICAL",
+            "cleanCodeAttributeCategory": "INTENTIONAL",
+            "impacts": [
+                {
+                    "softwareQuality": "RELIABILITY",
+                    "severity": "MEDIUM"
+                },
+                {
+                    "softwareQuality": "MAINTAINABILITY",
+                    "severity": "MEDIUM"
+                }
+            ],
+            "issueStatus": "OPEN",
+            "projectName": "afs",
+            "internalTags": []
+        },
+        {
+            "key": "AZv8WdFP3JsCIL-3RHtg",
+            "rule": "typescript:S7773",
+            "severity": "MINOR",
+            "component": "matheuscodes_afs:src/components/NewActivitiesSheet.tsx",
+            "project": "matheuscodes_afs",
+            "line": 143,
+            "hash": "a01e7ca799f2c6a84c076bd67c535f44",
+            "textRange": {
+                "startLine": 143,
+                "endLine": 143,
+                "startOffset": 29,
+                "endOffset": 34
+            },
+            "flows": [],
+            "status": "OPEN",
+            "message": "Prefer `Number.isNaN` over `isNaN`.",
+            "effort": "2min",
+            "debt": "2min",
+            "tags": [
+                "convention",
+                "es2015"
+            ],
+            "transitions": [],
+            "actions": [],
+            "comments": [],
+            "creationDate": "2021-03-08T10:58:02+0000",
+            "updateDate": "2026-01-26T22:07:53+0000",
+            "type": "CODE_SMELL",
+            "organization": "matheuscodes-analysed",
+            "cleanCodeAttribute": "CONVENTIONAL",
+            "cleanCodeAttributeCategory": "CONSISTENT",
+            "impacts": [
+                {
+                    "softwareQuality": "MAINTAINABILITY",
+                    "severity": "LOW"
+                },
+                {
+                    "softwareQuality": "RELIABILITY",
+                    "severity": "MEDIUM"
+                }
+            ],
+            "issueStatus": "OPEN",
+            "projectName": "afs",
+            "internalTags": []
+        },
+        {
+            "key": "AZv8WdFP3JsCIL-3RHth",
+            "rule": "typescript:S7773",
+            "severity": "MINOR",
+            "component": "matheuscodes_afs:src/components/NewActivitiesSheet.tsx",
+            "project": "matheuscodes_afs",
+            "line": 143,
+            "hash": "a01e7ca799f2c6a84c076bd67c535f44",
+            "textRange": {
+                "startLine": 143,
+                "endLine": 143,
+                "startOffset": 35,
+                "endOffset": 45
+            },
+            "flows": [],
+            "status": "OPEN",
+            "message": "Prefer `Number.parseFloat` over `parseFloat`.",
+            "effort": "2min",
+            "debt": "2min",
+            "tags": [
+                "convention",
+                "es2015"
+            ],
+            "transitions": [],
+            "actions": [],
+            "comments": [],
+            "creationDate": "2021-03-08T10:58:02+0000",
+            "updateDate": "2026-01-26T22:07:53+0000",
+            "type": "CODE_SMELL",
+            "organization": "matheuscodes-analysed",
+            "cleanCodeAttribute": "CONVENTIONAL",
+            "cleanCodeAttributeCategory": "CONSISTENT",
+            "impacts": [
+                {
+                    "softwareQuality": "MAINTAINABILITY",
+                    "severity": "LOW"
+                },
+                {
+                    "softwareQuality": "RELIABILITY",
+                    "severity": "MEDIUM"
+                }
+            ],
+            "issueStatus": "OPEN",
+            "projectName": "afs",
+            "internalTags": []
+        },
+        {
+            "key": "AZv8WdFP3JsCIL-3RHti",
+            "rule": "typescript:S6756",
+            "severity": "MAJOR",
+            "component": "matheuscodes_afs:src/components/NewActivitiesSheet.tsx",
+            "project": "matheuscodes_afs",
+            "line": 149,
+            "hash": "577ebe5dd88a1cb19705e5512c1c1b8f",
+            "textRange": {
+                "startLine": 149,
+                "endLine": 149,
+                "startOffset": 34,
+                "endOffset": 44
+            },
+            "flows": [],
+            "status": "OPEN",
+            "message": "Use callback in setState when referencing the previous state.",
+            "effort": "5min",
+            "debt": "5min",
+            "tags": [
+                "react"
+            ],
+            "transitions": [],
+            "actions": [],
+            "comments": [],
+            "creationDate": "2021-03-07T23:40:40+0000",
+            "updateDate": "2026-01-26T22:07:53+0000",
+            "type": "BUG",
+            "organization": "matheuscodes-analysed",
+            "cleanCodeAttribute": "LOGICAL",
+            "cleanCodeAttributeCategory": "INTENTIONAL",
+            "impacts": [
+                {
+                    "softwareQuality": "RELIABILITY",
+                    "severity": "MEDIUM"
+                },
+                {
+                    "softwareQuality": "MAINTAINABILITY",
+                    "severity": "MEDIUM"
+                }
+            ],
+            "issueStatus": "OPEN",
+            "projectName": "afs",
+            "internalTags": []
+        },
+        {
+            "key": "AZv8WdFP3JsCIL-3RHtj",
+            "rule": "typescript:S6756",
+            "severity": "MAJOR",
+            "component": "matheuscodes_afs:src/components/NewActivitiesSheet.tsx",
+            "project": "matheuscodes_afs",
+            "line": 158,
+            "hash": "577ebe5dd88a1cb19705e5512c1c1b8f",
+            "textRange": {
+                "startLine": 158,
+                "endLine": 158,
+                "startOffset": 34,
+                "endOffset": 44
+            },
+            "flows": [],
+            "status": "OPEN",
+            "message": "Use callback in setState when referencing the previous state.",
+            "effort": "5min",
+            "debt": "5min",
+            "tags": [
+                "react"
+            ],
+            "transitions": [],
+            "actions": [],
+            "comments": [],
+            "creationDate": "2021-03-07T23:40:40+0000",
+            "updateDate": "2026-01-26T22:07:53+0000",
+            "type": "BUG",
+            "organization": "matheuscodes-analysed",
+            "cleanCodeAttribute": "LOGICAL",
+            "cleanCodeAttributeCategory": "INTENTIONAL",
+            "impacts": [
+                {
+                    "softwareQuality": "RELIABILITY",
+                    "severity": "MEDIUM"
+                },
+                {
+                    "softwareQuality": "MAINTAINABILITY",
+                    "severity": "MEDIUM"
+                }
+            ],
+            "issueStatus": "OPEN",
+            "projectName": "afs",
+            "internalTags": []
+        },
+        {
+            "key": "AZv8WdFP3JsCIL-3RHtk",
+            "rule": "typescript:S6756",
+            "severity": "MAJOR",
+            "component": "matheuscodes_afs:src/components/NewActivitiesSheet.tsx",
+            "project": "matheuscodes_afs",
+            "line": 164,
+            "hash": "577ebe5dd88a1cb19705e5512c1c1b8f",
+            "textRange": {
+                "startLine": 164,
+                "endLine": 164,
+                "startOffset": 32,
+                "endOffset": 42
+            },
+            "flows": [],
+            "status": "OPEN",
+            "message": "Use callback in setState when referencing the previous state.",
+            "effort": "5min",
+            "debt": "5min",
+            "tags": [
+                "react"
+            ],
+            "transitions": [],
+            "actions": [],
+            "comments": [],
+            "creationDate": "2021-03-08T14:48:51+0000",
+            "updateDate": "2026-01-26T22:07:53+0000",
+            "type": "BUG",
+            "organization": "matheuscodes-analysed",
+            "cleanCodeAttribute": "LOGICAL",
+            "cleanCodeAttributeCategory": "INTENTIONAL",
+            "impacts": [
+                {
+                    "softwareQuality": "RELIABILITY",
+                    "severity": "MEDIUM"
+                },
+                {
+                    "softwareQuality": "MAINTAINABILITY",
+                    "severity": "MEDIUM"
+                }
+            ],
+            "issueStatus": "OPEN",
+            "projectName": "afs",
+            "internalTags": []
+        },
+        {
+            "key": "AZv8WdFP3JsCIL-3RHtl",
+            "rule": "typescript:S6756",
+            "severity": "MAJOR",
+            "component": "matheuscodes_afs:src/components/NewActivitiesSheet.tsx",
+            "project": "matheuscodes_afs",
+            "line": 177,
+            "hash": "577ebe5dd88a1cb19705e5512c1c1b8f",
+            "textRange": {
+                "startLine": 177,
+                "endLine": 177,
+                "startOffset": 34,
+                "endOffset": 44
+            },
+            "flows": [],
+            "status": "OPEN",
+            "message": "Use callback in setState when referencing the previous state.",
+            "effort": "5min",
+            "debt": "5min",
+            "tags": [
+                "react"
+            ],
+            "transitions": [],
+            "actions": [],
+            "comments": [],
+            "creationDate": "2021-03-08T20:17:05+0000",
+            "updateDate": "2026-01-26T22:07:53+0000",
+            "type": "BUG",
+            "organization": "matheuscodes-analysed",
+            "cleanCodeAttribute": "LOGICAL",
+            "cleanCodeAttributeCategory": "INTENTIONAL",
+            "impacts": [
+                {
+                    "softwareQuality": "RELIABILITY",
+                    "severity": "MEDIUM"
+                },
+                {
+                    "softwareQuality": "MAINTAINABILITY",
+                    "severity": "MEDIUM"
+                }
+            ],
+            "issueStatus": "OPEN",
+            "projectName": "afs",
+            "internalTags": []
+        },
+        {
+            "key": "AZwV2miutYDXugYt6j64",
+            "rule": "typescript:S6544",
+            "severity": "MAJOR",
+            "component": "matheuscodes_afs:src/components/consumption/CarFuel.tsx",
+            "project": "matheuscodes_afs",
+            "line": 23,
+            "hash": "f0ef6a94e19dab1548dc4d002f3144e2",
+            "textRange": {
+                "startLine": 23,
+                "endLine": 26,
+                "startOffset": 2,
+                "endOffset": 3
+            },
+            "flows": [],
+            "status": "OPEN",
+            "message": "Promise-returning method provided where a void return was expected by extended/implemented type \u0027Component\u003cany, any, any\u003e\u0027.",
+            "effort": "5min",
+            "debt": "5min",
+            "tags": [
+                "async",
+                "promise",
+                "type-dependent"
+            ],
+            "transitions": [],
+            "actions": [],
+            "comments": [],
+            "creationDate": "2026-01-31T20:58:39+0000",
+            "updateDate": "2026-01-31T20:58:39+0000",
+            "type": "BUG",
+            "organization": "matheuscodes-analysed",
+            "cleanCodeAttribute": "LOGICAL",
+            "cleanCodeAttributeCategory": "INTENTIONAL",
+            "impacts": [
+                {
+                    "softwareQuality": "RELIABILITY",
+                    "severity": "MEDIUM"
+                }
+            ],
+            "issueStatus": "OPEN",
+            "projectName": "afs",
+            "internalTags": []
+        },
+        {
+            "key": "AZwV2mi9tYDXugYt6j65",
+            "rule": "typescript:S6544",
+            "severity": "MAJOR",
+            "component": "matheuscodes_afs:src/components/consumption/Electricity.tsx",
+            "project": "matheuscodes_afs",
+            "line": 67,
+            "hash": "f0ef6a94e19dab1548dc4d002f3144e2",
+            "textRange": {
+                "startLine": 67,
+                "endLine": 69,
+                "startOffset": 2,
+                "endOffset": 3
+            },
+            "flows": [],
+            "status": "OPEN",
+            "message": "Promise-returning method provided where a void return was expected by extended/implemented type \u0027Component\u003cany, any, any\u003e\u0027.",
+            "effort": "5min",
+            "debt": "5min",
+            "tags": [
+                "async",
+                "promise",
+                "type-dependent"
+            ],
+            "transitions": [],
+            "actions": [],
+            "comments": [],
+            "creationDate": "2026-01-31T20:58:39+0000",
+            "updateDate": "2026-01-31T20:58:39+0000",
+            "type": "BUG",
+            "organization": "matheuscodes-analysed",
+            "cleanCodeAttribute": "LOGICAL",
+            "cleanCodeAttributeCategory": "INTENTIONAL",
+            "impacts": [
+                {
+                    "softwareQuality": "RELIABILITY",
+                    "severity": "MEDIUM"
+                }
+            ],
+            "issueStatus": "OPEN",
+            "projectName": "afs",
+            "internalTags": []
+        },
+        {
+            "key": "AZv8WdGk3JsCIL-3RHu0",
+            "rule": "typescript:S6756",
+            "severity": "MAJOR",
+            "component": "matheuscodes_afs:src/components/consumption/Electricity.tsx",
+            "project": "matheuscodes_afs",
+            "line": 172,
+            "hash": "6c08ce09ffabdc2c823e9032c5ac6eb3",
+            "textRange": {
+                "startLine": 172,
+                "endLine": 172,
+                "startOffset": 34,
+                "endOffset": 44
+            },
+            "flows": [],
+            "status": "OPEN",
+            "message": "Use callback in setState when referencing the previous state.",
+            "effort": "5min",
+            "debt": "5min",
+            "assignee": "matheuscodes@github",
+            "tags": [
+                "react"
+            ],
+            "transitions": [],
+            "actions": [],
+            "comments": [],
+            "creationDate": "2021-04-30T22:08:31+0000",
+            "updateDate": "2026-01-26T22:07:53+0000",
+            "type": "BUG",
+            "organization": "matheuscodes-analysed",
+            "cleanCodeAttribute": "LOGICAL",
+            "cleanCodeAttributeCategory": "INTENTIONAL",
+            "impacts": [
+                {
+                    "softwareQuality": "RELIABILITY",
+                    "severity": "MEDIUM"
+                },
+                {
+                    "softwareQuality": "MAINTAINABILITY",
+                    "severity": "MEDIUM"
+                }
+            ],
+            "issueStatus": "OPEN",
+            "projectName": "afs",
+            "internalTags": []
+        },
+        {
+            "key": "AZv8WdGk3JsCIL-3RHu4",
+            "rule": "typescript:S7727",
+            "severity": "MAJOR",
+            "component": "matheuscodes_afs:src/components/consumption/Electricity.tsx",
+            "project": "matheuscodes_afs",
+            "line": 269,
+            "hash": "585616c032dfe65a4b45a070838d95ca",
+            "textRange": {
+                "startLine": 269,
+                "endLine": 269,
+                "startOffset": 85,
+                "endOffset": 99
+            },
+            "flows": [],
+            "status": "OPEN",
+            "message": "Do not pass function directly to `.map(…)`.",
+            "effort": "5min",
+            "debt": "5min",
+            "assignee": "matheuscodes@github",
+            "tags": [
+                "array",
+                "callback",
+                "iterator",
+                "javascript"
+            ],
+            "transitions": [],
+            "actions": [],
+            "comments": [],
+            "creationDate": "2021-04-30T22:08:31+0000",
+            "updateDate": "2026-01-26T22:07:53+0000",
+            "type": "BUG",
+            "organization": "matheuscodes-analysed",
+            "cleanCodeAttribute": "CLEAR",
+            "cleanCodeAttributeCategory": "INTENTIONAL",
+            "impacts": [
+                {
+                    "softwareQuality": "RELIABILITY",
+                    "severity": "HIGH"
+                },
+                {
+                    "softwareQuality": "MAINTAINABILITY",
+                    "severity": "HIGH"
+                }
+            ],
+            "issueStatus": "OPEN",
+            "projectName": "afs",
+            "internalTags": []
+        },
+        {
+            "key": "AZwV2miEtYDXugYt6j62",
+            "rule": "typescript:S6544",
+            "severity": "MAJOR",
+            "component": "matheuscodes_afs:src/components/consumption/Gas.tsx",
+            "project": "matheuscodes_afs",
+            "line": 37,
+            "hash": "f0ef6a94e19dab1548dc4d002f3144e2",
+            "textRange": {
+                "startLine": 37,
+                "endLine": 39,
+                "startOffset": 2,
+                "endOffset": 3
+            },
+            "flows": [],
+            "status": "OPEN",
+            "message": "Promise-returning method provided where a void return was expected by extended/implemented type \u0027Component\u003cany, any, any\u003e\u0027.",
+            "effort": "5min",
+            "debt": "5min",
+            "tags": [
+                "async",
+                "promise",
+                "type-dependent"
+            ],
+            "transitions": [],
+            "actions": [],
+            "comments": [],
+            "creationDate": "2026-01-31T20:58:39+0000",
+            "updateDate": "2026-01-31T20:58:39+0000",
+            "type": "BUG",
+            "organization": "matheuscodes-analysed",
+            "cleanCodeAttribute": "LOGICAL",
+            "cleanCodeAttributeCategory": "INTENTIONAL",
+            "impacts": [
+                {
+                    "softwareQuality": "RELIABILITY",
+                    "severity": "MEDIUM"
+                }
+            ],
+            "issueStatus": "OPEN",
+            "projectName": "afs",
+            "internalTags": []
+        },
+        {
+            "key": "AZv8WdGO3JsCIL-3RHut",
+            "rule": "typescript:S6756",
+            "severity": "MAJOR",
+            "component": "matheuscodes_afs:src/components/consumption/Gas.tsx",
+            "project": "matheuscodes_afs",
+            "line": 148,
+            "hash": "6c08ce09ffabdc2c823e9032c5ac6eb3",
+            "textRange": {
+                "startLine": 148,
+                "endLine": 148,
+                "startOffset": 34,
+                "endOffset": 44
+            },
+            "flows": [],
+            "status": "OPEN",
+            "message": "Use callback in setState when referencing the previous state.",
+            "effort": "5min",
+            "debt": "5min",
+            "assignee": "matheuscodes@github",
+            "tags": [
+                "react"
+            ],
+            "transitions": [],
+            "actions": [],
+            "comments": [],
+            "creationDate": "2021-05-01T22:46:42+0000",
+            "updateDate": "2026-01-26T22:07:53+0000",
+            "type": "BUG",
+            "organization": "matheuscodes-analysed",
+            "cleanCodeAttribute": "LOGICAL",
+            "cleanCodeAttributeCategory": "INTENTIONAL",
+            "impacts": [
+                {
+                    "softwareQuality": "RELIABILITY",
+                    "severity": "MEDIUM"
+                },
+                {
+                    "softwareQuality": "MAINTAINABILITY",
+                    "severity": "MEDIUM"
+                }
+            ],
+            "issueStatus": "OPEN",
+            "projectName": "afs",
+            "internalTags": []
+        },
+        {
+            "key": "AZv8WdGO3JsCIL-3RHux",
+            "rule": "typescript:S7727",
+            "severity": "MAJOR",
+            "component": "matheuscodes_afs:src/components/consumption/Gas.tsx",
+            "project": "matheuscodes_afs",
+            "line": 249,
+            "hash": "b60e84e1163e6d6d04913c53d86724ab",
+            "textRange": {
+                "startLine": 249,
+                "endLine": 249,
+                "startOffset": 75,
+                "endOffset": 89
+            },
+            "flows": [],
+            "status": "OPEN",
+            "message": "Do not pass function directly to `.map(…)`.",
+            "effort": "5min",
+            "debt": "5min",
+            "assignee": "matheuscodes@github",
+            "tags": [
+                "array",
+                "callback",
+                "iterator",
+                "javascript"
+            ],
+            "transitions": [],
+            "actions": [],
+            "comments": [],
+            "creationDate": "2021-05-01T22:46:42+0000",
+            "updateDate": "2026-01-26T22:07:53+0000",
+            "type": "BUG",
+            "organization": "matheuscodes-analysed",
+            "cleanCodeAttribute": "CLEAR",
+            "cleanCodeAttributeCategory": "INTENTIONAL",
+            "impacts": [
+                {
+                    "softwareQuality": "RELIABILITY",
+                    "severity": "HIGH"
+                },
+                {
+                    "softwareQuality": "MAINTAINABILITY",
+                    "severity": "HIGH"
+                }
+            ],
+            "issueStatus": "OPEN",
+            "projectName": "afs",
+            "internalTags": []
+        },
+        {
+            "key": "AZwV2miYtYDXugYt6j63",
+            "rule": "typescript:S6544",
+            "severity": "MAJOR",
+            "component": "matheuscodes_afs:src/components/consumption/WaterAndHeating.tsx",
+            "project": "matheuscodes_afs",
+            "line": 21,
+            "hash": "f0ef6a94e19dab1548dc4d002f3144e2",
+            "textRange": {
+                "startLine": 21,
+                "endLine": 23,
+                "startOffset": 2,
+                "endOffset": 3
+            },
+            "flows": [],
+            "status": "OPEN",
+            "message": "Promise-returning method provided where a void return was expected by extended/implemented type \u0027Component\u003cany, any, any\u003e\u0027.",
+            "effort": "5min",
+            "debt": "5min",
+            "tags": [
+                "async",
+                "promise",
+                "type-dependent"
+            ],
+            "transitions": [],
+            "actions": [],
+            "comments": [],
+            "creationDate": "2026-01-31T20:58:39+0000",
+            "updateDate": "2026-01-31T20:58:39+0000",
+            "type": "BUG",
+            "organization": "matheuscodes-analysed",
+            "cleanCodeAttribute": "LOGICAL",
+            "cleanCodeAttributeCategory": "INTENTIONAL",
+            "impacts": [
+                {
+                    "softwareQuality": "RELIABILITY",
+                    "severity": "MEDIUM"
+                }
+            ],
+            "issueStatus": "OPEN",
+            "projectName": "afs",
+            "internalTags": []
+        },
+        {
+            "key": "AZv8WdG33JsCIL-3RHvO",
+            "rule": "typescript:S6756",
+            "severity": "MAJOR",
+            "component": "matheuscodes_afs:src/components/consumption/WaterAndHeating.tsx",
+            "project": "matheuscodes_afs",
+            "line": 311,
+            "hash": "6c08ce09ffabdc2c823e9032c5ac6eb3",
+            "textRange": {
+                "startLine": 311,
+                "endLine": 311,
+                "startOffset": 34,
+                "endOffset": 44
+            },
+            "flows": [],
+            "status": "OPEN",
+            "message": "Use callback in setState when referencing the previous state.",
+            "effort": "5min",
+            "debt": "5min",
+            "tags": [
+                "react"
+            ],
+            "transitions": [],
+            "actions": [],
+            "comments": [],
+            "creationDate": "2021-05-06T21:56:46+0000",
+            "updateDate": "2026-01-26T22:07:53+0000",
+            "type": "BUG",
+            "organization": "matheuscodes-analysed",
+            "cleanCodeAttribute": "LOGICAL",
+            "cleanCodeAttributeCategory": "INTENTIONAL",
+            "impacts": [
+                {
+                    "softwareQuality": "RELIABILITY",
+                    "severity": "MEDIUM"
+                },
+                {
+                    "softwareQuality": "MAINTAINABILITY",
+                    "severity": "MEDIUM"
+                }
+            ],
+            "issueStatus": "OPEN",
+            "projectName": "afs",
+            "internalTags": []
+        },
+        {
+            "key": "AZv8WdHn3JsCIL-3RHv2",
+            "rule": "typescript:S6756",
+            "severity": "MAJOR",
+            "component": "matheuscodes_afs:src/components/finances/bookkeeping/BookkeepingReports.tsx",
+            "project": "matheuscodes_afs",
+            "line": 148,
+            "hash": "3a473ac9c2a276c0367fd4e9df4470f7",
+            "textRange": {
+                "startLine": 148,
+                "endLine": 148,
+                "startOffset": 48,
+                "endOffset": 58
+            },
+            "flows": [],
+            "status": "OPEN",
+            "message": "Use callback in setState when referencing the previous state.",
+            "effort": "5min",
+            "debt": "5min",
+            "assignee": "matheuscodes@github",
+            "tags": [
+                "react"
+            ],
+            "transitions": [],
+            "actions": [],
+            "comments": [],
+            "creationDate": "2025-02-10T15:45:40+0000",
+            "updateDate": "2026-01-26T22:07:53+0000",
+            "type": "BUG",
+            "organization": "matheuscodes-analysed",
+            "cleanCodeAttribute": "LOGICAL",
+            "cleanCodeAttributeCategory": "INTENTIONAL",
+            "impacts": [
+                {
+                    "softwareQuality": "RELIABILITY",
+                    "severity": "MEDIUM"
+                },
+                {
+                    "softwareQuality": "MAINTAINABILITY",
+                    "severity": "MEDIUM"
+                }
+            ],
+            "issueStatus": "OPEN",
+            "projectName": "afs",
+            "internalTags": []
+        },
+        {
+            "key": "AZwV2mjjtYDXugYt6j66",
+            "rule": "typescript:S6544",
+            "severity": "MAJOR",
+            "component": "matheuscodes_afs:src/components/finances/investments/PropertyInvestments.tsx",
+            "project": "matheuscodes_afs",
+            "line": 74,
+            "hash": "f0ef6a94e19dab1548dc4d002f3144e2",
+            "textRange": {
+                "startLine": 74,
+                "endLine": 76,
+                "startOffset": 2,
+                "endOffset": 3
+            },
+            "flows": [],
+            "status": "OPEN",
+            "message": "Promise-returning method provided where a void return was expected by extended/implemented type \u0027Component\u003cany, any, any\u003e\u0027.",
+            "effort": "5min",
+            "debt": "5min",
+            "tags": [
+                "async",
+                "promise",
+                "type-dependent"
+            ],
+            "transitions": [],
+            "actions": [],
+            "comments": [],
+            "creationDate": "2026-01-31T20:58:39+0000",
+            "updateDate": "2026-01-31T20:58:39+0000",
+            "type": "BUG",
+            "organization": "matheuscodes-analysed",
+            "cleanCodeAttribute": "LOGICAL",
+            "cleanCodeAttributeCategory": "INTENTIONAL",
+            "impacts": [
+                {
+                    "softwareQuality": "RELIABILITY",
+                    "severity": "MEDIUM"
+                }
+            ],
+            "issueStatus": "OPEN",
+            "projectName": "afs",
+            "internalTags": []
+        },
+        {
+            "key": "AZv8WdHf3JsCIL-3RHvr",
+            "rule": "typescript:S7773",
+            "severity": "MINOR",
+            "component": "matheuscodes_afs:src/components/finances/investments/PropertyInvestments.tsx",
+            "project": "matheuscodes_afs",
+            "line": 88,
+            "hash": "f460e143f694c8ad6d2bda55269c8000",
+            "textRange": {
+                "startLine": 88,
+                "endLine": 88,
+                "startOffset": 48,
+                "endOffset": 56
+            },
+            "flows": [],
+            "status": "OPEN",
+            "message": "Prefer `Number.parseInt` over `parseInt`.",
+            "effort": "2min",
+            "debt": "2min",
+            "assignee": "matheuscodes@github",
+            "tags": [
+                "convention",
+                "es2015"
+            ],
+            "transitions": [],
+            "actions": [],
+            "comments": [],
+            "creationDate": "2021-12-11T21:39:04+0000",
+            "updateDate": "2026-01-26T22:07:53+0000",
+            "type": "CODE_SMELL",
+            "organization": "matheuscodes-analysed",
+            "cleanCodeAttribute": "CONVENTIONAL",
+            "cleanCodeAttributeCategory": "CONSISTENT",
+            "impacts": [
+                {
+                    "softwareQuality": "MAINTAINABILITY",
+                    "severity": "LOW"
+                },
+                {
+                    "softwareQuality": "RELIABILITY",
+                    "severity": "MEDIUM"
+                }
+            ],
+            "issueStatus": "OPEN",
+            "projectName": "afs",
+            "internalTags": []
+        },
+        {
+            "key": "AZv8WdHf3JsCIL-3RHvs",
+            "rule": "typescript:S6756",
+            "severity": "MAJOR",
+            "component": "matheuscodes_afs:src/components/finances/investments/PropertyInvestments.tsx",
+            "project": "matheuscodes_afs",
+            "line": 131,
+            "hash": "712ab1726fb9f198da412be6935764e3",
+            "textRange": {
+                "startLine": 131,
+                "endLine": 131,
+                "startOffset": 34,
+                "endOffset": 44
+            },
+            "flows": [],
+            "status": "OPEN",
+            "message": "Use callback in setState when referencing the previous state.",
+            "effort": "5min",
+            "debt": "5min",
+            "assignee": "matheuscodes@github",
+            "tags": [
+                "react"
+            ],
+            "transitions": [],
+            "actions": [],
+            "comments": [],
+            "creationDate": "2021-12-11T21:39:04+0000",
+            "updateDate": "2026-01-26T22:07:53+0000",
+            "type": "BUG",
+            "organization": "matheuscodes-analysed",
+            "cleanCodeAttribute": "LOGICAL",
+            "cleanCodeAttributeCategory": "INTENTIONAL",
+            "impacts": [
+                {
+                    "softwareQuality": "RELIABILITY",
+                    "severity": "MEDIUM"
+                },
+                {
+                    "softwareQuality": "MAINTAINABILITY",
+                    "severity": "MEDIUM"
+                }
+            ],
+            "issueStatus": "OPEN",
+            "projectName": "afs",
+            "internalTags": []
+        },
+        {
+            "key": "AZv8WdHT3JsCIL-3RHvo",
+            "rule": "typescript:S7773",
+            "severity": "MINOR",
+            "component": "matheuscodes_afs:src/components/finances/savings/index.tsx",
+            "project": "matheuscodes_afs",
+            "line": 76,
+            "hash": "3153c03e5f02fa4516bcf8df86aefc0e",
+            "textRange": {
+                "startLine": 76,
+                "endLine": 76,
+                "startOffset": 24,
+                "endOffset": 32
+            },
+            "flows": [],
+            "status": "OPEN",
+            "message": "Prefer `Number.parseInt` over `parseInt`.",
+            "effort": "2min",
+            "debt": "2min",
+            "assignee": "matheuscodes@github",
+            "tags": [
+                "convention",
+                "es2015"
+            ],
+            "transitions": [],
+            "actions": [],
+            "comments": [],
+            "creationDate": "2025-09-03T18:25:48+0000",
+            "updateDate": "2026-01-26T22:07:53+0000",
+            "type": "CODE_SMELL",
+            "organization": "matheuscodes-analysed",
+            "cleanCodeAttribute": "CONVENTIONAL",
+            "cleanCodeAttributeCategory": "CONSISTENT",
+            "impacts": [
+                {
+                    "softwareQuality": "MAINTAINABILITY",
+                    "severity": "LOW"
+                },
+                {
+                    "softwareQuality": "RELIABILITY",
+                    "severity": "MEDIUM"
+                }
+            ],
+            "issueStatus": "OPEN",
+            "projectName": "afs",
+            "internalTags": []
+        },
+        {
+            "key": "AZwU5rtzrSTVAs2bhGYw",
+            "rule": "typescript:S7773",
+            "severity": "MINOR",
+            "component": "matheuscodes_afs:src/components/upkeep/UpkeepHistoryGraph.tsx",
+            "project": "matheuscodes_afs",
+            "line": 117,
+            "hash": "23f1dc86e47104aedd12118f933ff9df",
+            "textRange": {
+                "startLine": 117,
+                "endLine": 117,
+                "startOffset": 58,
+                "endOffset": 66
+            },
+            "flows": [],
+            "status": "OPEN",
+            "message": "Prefer `Number.parseInt` over `parseInt`.",
+            "effort": "2min",
+            "debt": "2min",
+            "assignee": "matheuscodes@github",
+            "tags": [
+                "convention",
+                "es2015"
+            ],
+            "transitions": [],
+            "actions": [],
+            "comments": [],
+            "creationDate": "2026-01-31T16:32:50+0000",
+            "updateDate": "2026-01-31T16:32:50+0000",
+            "type": "CODE_SMELL",
+            "organization": "matheuscodes-analysed",
+            "cleanCodeAttribute": "CONVENTIONAL",
+            "cleanCodeAttributeCategory": "CONSISTENT",
+            "impacts": [
+                {
+                    "softwareQuality": "MAINTAINABILITY",
+                    "severity": "LOW"
+                },
+                {
+                    "softwareQuality": "RELIABILITY",
+                    "severity": "MEDIUM"
+                }
+            ],
+            "issueStatus": "OPEN",
+            "projectName": "afs",
+            "internalTags": []
+        },
+        {
+            "key": "AZv8WdI-3JsCIL-3RHw5",
+            "rule": "Web:S5254",
+            "severity": "MAJOR",
+            "component": "matheuscodes_afs:src/index.html",
+            "project": "matheuscodes_afs",
+            "line": 2,
+            "hash": "166248a6129a1e4370d20adc2d4c23f3",
+            "textRange": {
+                "startLine": 2,
+                "endLine": 2,
+                "startOffset": 0,
+                "endOffset": 6
+            },
+            "flows": [],
+            "status": "OPEN",
+            "message": "Add \"lang\" and/or \"xml:lang\" attributes to this \"\u003chtml\u003e\" element",
+            "effort": "2min",
+            "debt": "2min",
+            "assignee": "matheuscodes@github",
+            "tags": [
+                "accessibility",
+                "wcag2-a"
+            ],
+            "transitions": [],
+            "actions": [],
+            "comments": [],
+            "creationDate": "2021-03-06T13:34:58+0000",
+            "updateDate": "2026-01-26T22:07:53+0000",
+            "type": "BUG",
+            "organization": "matheuscodes-analysed",
+            "cleanCodeAttribute": "COMPLETE",
+            "cleanCodeAttributeCategory": "INTENTIONAL",
+            "impacts": [
+                {
+                    "softwareQuality": "RELIABILITY",
+                    "severity": "MEDIUM"
+                }
+            ],
+            "issueStatus": "OPEN",
+            "projectName": "afs",
+            "internalTags": []
+        },
+        {
+            "key": "AZv8WdH83JsCIL-3RHwD",
+            "rule": "typescript:S7773",
+            "severity": "MINOR",
+            "component": "matheuscodes_afs:src/models/Activity.ts",
+            "project": "matheuscodes_afs",
+            "line": 25,
+            "hash": "36eded648a404675fffa6603cb9ea36e",
+            "textRange": {
+                "startLine": 25,
+                "endLine": 25,
+                "startOffset": 24,
+                "endOffset": 34
+            },
+            "flows": [],
+            "status": "OPEN",
+            "message": "Prefer `Number.parseFloat` over `parseFloat`.",
+            "effort": "2min",
+            "debt": "2min",
+            "assignee": "matheuscodes@github",
+            "tags": [
+                "convention",
+                "es2015"
+            ],
+            "transitions": [],
+            "actions": [],
+            "comments": [],
+            "creationDate": "2021-03-08T00:01:36+0000",
+            "updateDate": "2026-01-26T22:07:53+0000",
+            "type": "CODE_SMELL",
+            "organization": "matheuscodes-analysed",
+            "cleanCodeAttribute": "CONVENTIONAL",
+            "cleanCodeAttributeCategory": "CONSISTENT",
+            "impacts": [
+                {
+                    "softwareQuality": "MAINTAINABILITY",
+                    "severity": "LOW"
+                },
+                {
+                    "softwareQuality": "RELIABILITY",
+                    "severity": "MEDIUM"
+                }
+            ],
+            "issueStatus": "OPEN",
+            "projectName": "afs",
+            "internalTags": []
+        },
+        {
+            "key": "AZwU5rzRrSTVAs2bhGY-",
+            "rule": "typescript:S7758",
+            "severity": "MINOR",
+            "component": "matheuscodes_afs:src/services/BookkeepingService.ts",
+            "project": "matheuscodes_afs",
+            "line": 35,
+            "hash": "b7b8d477c845ecede93fb7e5a2cdd5d6",
+            "textRange": {
+                "startLine": 35,
+                "endLine": 35,
+                "startOffset": 38,
+                "endOffset": 48
+            },
+            "flows": [],
+            "status": "OPEN",
+            "message": "Prefer `String#codePointAt()` over `String#charCodeAt()`.",
+            "effort": "5min",
+            "debt": "5min",
+            "assignee": "matheuscodes@github",
+            "tags": [
+                "internationalization",
+                "unicode"
+            ],
+            "transitions": [],
+            "actions": [],
+            "comments": [],
+            "creationDate": "2026-01-31T16:32:50+0000",
+            "updateDate": "2026-01-31T16:32:50+0000",
+            "type": "CODE_SMELL",
+            "organization": "matheuscodes-analysed",
+            "cleanCodeAttribute": "CONVENTIONAL",
+            "cleanCodeAttributeCategory": "CONSISTENT",
+            "impacts": [
+                {
+                    "softwareQuality": "MAINTAINABILITY",
+                    "severity": "LOW"
+                },
+                {
+                    "softwareQuality": "RELIABILITY",
+                    "severity": "LOW"
+                }
+            ],
+            "issueStatus": "OPEN",
+            "projectName": "afs",
+            "internalTags": []
+        },
+        {
+            "key": "AZv8WdIS3JsCIL-3RHwQ",
+            "rule": "typescript:S7727",
+            "severity": "MAJOR",
+            "component": "matheuscodes_afs:src/services/BookkeepingService.ts",
+            "project": "matheuscodes_afs",
+            "line": 208,
+            "hash": "68be926861566e76dbf0a72487b4e8b5",
+            "textRange": {
+                "startLine": 208,
+                "endLine": 208,
+                "startOffset": 62,
+                "endOffset": 69
+            },
+            "flows": [],
+            "status": "OPEN",
+            "message": "Do not pass function `reducer` directly to `.reduce(…)`.",
+            "effort": "5min",
+            "debt": "5min",
+            "assignee": "matheuscodes@github",
+            "tags": [
+                "array",
+                "callback",
+                "iterator",
+                "javascript"
+            ],
+            "transitions": [],
+            "actions": [],
+            "comments": [],
+            "creationDate": "2021-03-09T01:07:40+0000",
+            "updateDate": "2026-01-26T22:07:53+0000",
+            "type": "BUG",
+            "organization": "matheuscodes-analysed",
+            "cleanCodeAttribute": "CLEAR",
+            "cleanCodeAttributeCategory": "INTENTIONAL",
+            "impacts": [
+                {
+                    "softwareQuality": "RELIABILITY",
+                    "severity": "HIGH"
+                },
+                {
+                    "softwareQuality": "MAINTAINABILITY",
+                    "severity": "HIGH"
+                }
+            ],
+            "issueStatus": "OPEN",
+            "projectName": "afs",
+            "internalTags": []
+        },
+        {
+            "key": "AZv8WdIS3JsCIL-3RHwR",
+            "rule": "typescript:S7727",
+            "severity": "MAJOR",
+            "component": "matheuscodes_afs:src/services/BookkeepingService.ts",
+            "project": "matheuscodes_afs",
+            "line": 209,
+            "hash": "cd8fb4e3341904aeba5155c9e148a5a8",
+            "textRange": {
+                "startLine": 209,
+                "endLine": 209,
+                "startOffset": 66,
+                "endOffset": 73
+            },
+            "flows": [],
+            "status": "OPEN",
+            "message": "Do not pass function `reducer` directly to `.reduce(…)`.",
+            "effort": "5min",
+            "debt": "5min",
+            "assignee": "matheuscodes@github",
+            "tags": [
+                "array",
+                "callback",
+                "iterator",
+                "javascript"
+            ],
+            "transitions": [],
+            "actions": [],
+            "comments": [],
+            "creationDate": "2021-03-09T01:07:40+0000",
+            "updateDate": "2026-01-26T22:07:53+0000",
+            "type": "BUG",
+            "organization": "matheuscodes-analysed",
+            "cleanCodeAttribute": "CLEAR",
+            "cleanCodeAttributeCategory": "INTENTIONAL",
+            "impacts": [
+                {
+                    "softwareQuality": "RELIABILITY",
+                    "severity": "HIGH"
+                },
+                {
+                    "softwareQuality": "MAINTAINABILITY",
+                    "severity": "HIGH"
+                }
+            ],
+            "issueStatus": "OPEN",
+            "projectName": "afs",
+            "internalTags": []
+        },
+        {
+            "key": "AZv8WdIS3JsCIL-3RHwS",
+            "rule": "typescript:S7727",
+            "severity": "MAJOR",
+            "component": "matheuscodes_afs:src/services/BookkeepingService.ts",
+            "project": "matheuscodes_afs",
+            "line": 210,
+            "hash": "2db9a152f02181e09e2b7aed5ba75789",
+            "textRange": {
+                "startLine": 210,
+                "endLine": 210,
+                "startOffset": 58,
+                "endOffset": 65
+            },
+            "flows": [],
+            "status": "OPEN",
+            "message": "Do not pass function `reducer` directly to `.reduce(…)`.",
+            "effort": "5min",
+            "debt": "5min",
+            "assignee": "matheuscodes@github",
+            "tags": [
+                "array",
+                "callback",
+                "iterator",
+                "javascript"
+            ],
+            "transitions": [],
+            "actions": [],
+            "comments": [],
+            "creationDate": "2021-03-09T01:07:40+0000",
+            "updateDate": "2026-01-26T22:07:53+0000",
+            "type": "BUG",
+            "organization": "matheuscodes-analysed",
+            "cleanCodeAttribute": "CLEAR",
+            "cleanCodeAttributeCategory": "INTENTIONAL",
+            "impacts": [
+                {
+                    "softwareQuality": "RELIABILITY",
+                    "severity": "HIGH"
+                },
+                {
+                    "softwareQuality": "MAINTAINABILITY",
+                    "severity": "HIGH"
+                }
+            ],
+            "issueStatus": "OPEN",
+            "projectName": "afs",
+            "internalTags": []
+        },
+        {
+            "key": "AZv8WdIS3JsCIL-3RHwT",
+            "rule": "typescript:S7727",
+            "severity": "MAJOR",
+            "component": "matheuscodes_afs:src/services/BookkeepingService.ts",
+            "project": "matheuscodes_afs",
+            "line": 213,
+            "hash": "115092b89e1dd61919eb5649ffbd6ffb",
+            "textRange": {
+                "startLine": 213,
+                "endLine": 213,
+                "startOffset": 62,
+                "endOffset": 69
+            },
+            "flows": [],
+            "status": "OPEN",
+            "message": "Do not pass function `reducer` directly to `.reduce(…)`.",
+            "effort": "5min",
+            "debt": "5min",
+            "assignee": "matheuscodes@github",
+            "tags": [
+                "array",
+                "callback",
+                "iterator",
+                "javascript"
+            ],
+            "transitions": [],
+            "actions": [],
+            "comments": [],
+            "creationDate": "2021-03-09T01:07:40+0000",
+            "updateDate": "2026-01-26T22:07:53+0000",
+            "type": "BUG",
+            "organization": "matheuscodes-analysed",
+            "cleanCodeAttribute": "CLEAR",
+            "cleanCodeAttributeCategory": "INTENTIONAL",
+            "impacts": [
+                {
+                    "softwareQuality": "RELIABILITY",
+                    "severity": "HIGH"
+                },
+                {
+                    "softwareQuality": "MAINTAINABILITY",
+                    "severity": "HIGH"
+                }
+            ],
+            "issueStatus": "OPEN",
+            "projectName": "afs",
+            "internalTags": []
+        },
+        {
+            "key": "AZv8WdIS3JsCIL-3RHwU",
+            "rule": "typescript:S7727",
+            "severity": "MAJOR",
+            "component": "matheuscodes_afs:src/services/BookkeepingService.ts",
+            "project": "matheuscodes_afs",
+            "line": 214,
+            "hash": "d5e6930b553d2a1e8c3f8ffa843ae909",
+            "textRange": {
+                "startLine": 214,
+                "endLine": 214,
+                "startOffset": 66,
+                "endOffset": 73
+            },
+            "flows": [],
+            "status": "OPEN",
+            "message": "Do not pass function `reducer` directly to `.reduce(…)`.",
+            "effort": "5min",
+            "debt": "5min",
+            "assignee": "matheuscodes@github",
+            "tags": [
+                "array",
+                "callback",
+                "iterator",
+                "javascript"
+            ],
+            "transitions": [],
+            "actions": [],
+            "comments": [],
+            "creationDate": "2021-03-09T01:07:40+0000",
+            "updateDate": "2026-01-26T22:07:53+0000",
+            "type": "BUG",
+            "organization": "matheuscodes-analysed",
+            "cleanCodeAttribute": "CLEAR",
+            "cleanCodeAttributeCategory": "INTENTIONAL",
+            "impacts": [
+                {
+                    "softwareQuality": "RELIABILITY",
+                    "severity": "HIGH"
+                },
+                {
+                    "softwareQuality": "MAINTAINABILITY",
+                    "severity": "HIGH"
+                }
+            ],
+            "issueStatus": "OPEN",
+            "projectName": "afs",
+            "internalTags": []
+        },
+        {
+            "key": "AZv8WdIS3JsCIL-3RHwV",
+            "rule": "typescript:S7727",
+            "severity": "MAJOR",
+            "component": "matheuscodes_afs:src/services/BookkeepingService.ts",
+            "project": "matheuscodes_afs",
+            "line": 215,
+            "hash": "e797051ba095bff33f786cd028c2ef43",
+            "textRange": {
+                "startLine": 215,
+                "endLine": 215,
+                "startOffset": 58,
+                "endOffset": 65
+            },
+            "flows": [],
+            "status": "OPEN",
+            "message": "Do not pass function `reducer` directly to `.reduce(…)`.",
+            "effort": "5min",
+            "debt": "5min",
+            "assignee": "matheuscodes@github",
+            "tags": [
+                "array",
+                "callback",
+                "iterator",
+                "javascript"
+            ],
+            "transitions": [],
+            "actions": [],
+            "comments": [],
+            "creationDate": "2021-03-09T01:07:40+0000",
+            "updateDate": "2026-01-26T22:07:53+0000",
+            "type": "BUG",
+            "organization": "matheuscodes-analysed",
+            "cleanCodeAttribute": "CLEAR",
+            "cleanCodeAttributeCategory": "INTENTIONAL",
+            "impacts": [
+                {
+                    "softwareQuality": "RELIABILITY",
+                    "severity": "HIGH"
+                },
+                {
+                    "softwareQuality": "MAINTAINABILITY",
+                    "severity": "HIGH"
+                }
+            ],
+            "issueStatus": "OPEN",
+            "projectName": "afs",
+            "internalTags": []
+        },
+        {
+            "key": "AZv8WdIS3JsCIL-3RHwW",
+            "rule": "typescript:S7727",
+            "severity": "MAJOR",
+            "component": "matheuscodes_afs:src/services/BookkeepingService.ts",
+            "project": "matheuscodes_afs",
+            "line": 246,
+            "hash": "bce3127bc3cdbb4ed02190d0ed0d7406",
+            "textRange": {
+                "startLine": 246,
+                "endLine": 246,
+                "startOffset": 22,
+                "endOffset": 29
+            },
+            "flows": [],
+            "status": "OPEN",
+            "message": "Do not pass function `reducer` directly to `.reduce(…)`.",
+            "effort": "5min",
+            "debt": "5min",
+            "assignee": "matheuscodes@github",
+            "tags": [
+                "array",
+                "callback",
+                "iterator",
+                "javascript"
+            ],
+            "transitions": [],
+            "actions": [],
+            "comments": [],
+            "creationDate": "2021-08-24T18:42:26+0000",
+            "updateDate": "2026-01-26T22:07:53+0000",
+            "type": "BUG",
+            "organization": "matheuscodes-analysed",
+            "cleanCodeAttribute": "CLEAR",
+            "cleanCodeAttributeCategory": "INTENTIONAL",
+            "impacts": [
+                {
+                    "softwareQuality": "RELIABILITY",
+                    "severity": "HIGH"
+                },
+                {
+                    "softwareQuality": "MAINTAINABILITY",
+                    "severity": "HIGH"
+                }
+            ],
+            "issueStatus": "OPEN",
+            "projectName": "afs",
+            "internalTags": []
+        },
+        {
+            "key": "AZv8WdIS3JsCIL-3RHwX",
+            "rule": "typescript:S7727",
+            "severity": "MAJOR",
+            "component": "matheuscodes_afs:src/services/BookkeepingService.ts",
+            "project": "matheuscodes_afs",
+            "line": 270,
+            "hash": "f6f36bb8c66bd0bbe74a03224a2dbeb9",
+            "textRange": {
+                "startLine": 270,
+                "endLine": 270,
+                "startOffset": 55,
+                "endOffset": 62
+            },
+            "flows": [],
+            "status": "OPEN",
+            "message": "Do not pass function `reducer` directly to `.reduce(…)`.",
+            "effort": "5min",
+            "debt": "5min",
+            "assignee": "matheuscodes@github",
+            "tags": [
+                "array",
+                "callback",
+                "iterator",
+                "javascript"
+            ],
+            "transitions": [],
+            "actions": [],
+            "comments": [],
+            "creationDate": "2021-03-09T23:05:45+0000",
+            "updateDate": "2026-01-26T22:07:53+0000",
+            "type": "BUG",
+            "organization": "matheuscodes-analysed",
+            "cleanCodeAttribute": "CLEAR",
+            "cleanCodeAttributeCategory": "INTENTIONAL",
+            "impacts": [
+                {
+                    "softwareQuality": "RELIABILITY",
+                    "severity": "HIGH"
+                },
+                {
+                    "softwareQuality": "MAINTAINABILITY",
+                    "severity": "HIGH"
+                }
+            ],
+            "issueStatus": "OPEN",
+            "projectName": "afs",
+            "internalTags": []
+        },
+        {
+            "key": "AZv8WdIS3JsCIL-3RHwY",
+            "rule": "typescript:S7727",
+            "severity": "MAJOR",
+            "component": "matheuscodes_afs:src/services/BookkeepingService.ts",
+            "project": "matheuscodes_afs",
+            "line": 271,
+            "hash": "e918f7af730f5745ef3969a165940d8f",
+            "textRange": {
+                "startLine": 271,
+                "endLine": 271,
+                "startOffset": 52,
+                "endOffset": 59
+            },
+            "flows": [],
+            "status": "OPEN",
+            "message": "Do not pass function `reducer` directly to `.reduce(…)`.",
+            "effort": "5min",
+            "debt": "5min",
+            "assignee": "matheuscodes@github",
+            "tags": [
+                "array",
+                "callback",
+                "iterator",
+                "javascript"
+            ],
+            "transitions": [],
+            "actions": [],
+            "comments": [],
+            "creationDate": "2022-01-25T21:17:37+0000",
+            "updateDate": "2026-01-26T22:07:53+0000",
+            "type": "BUG",
+            "organization": "matheuscodes-analysed",
+            "cleanCodeAttribute": "CLEAR",
+            "cleanCodeAttributeCategory": "INTENTIONAL",
+            "impacts": [
+                {
+                    "softwareQuality": "RELIABILITY",
+                    "severity": "HIGH"
+                },
+                {
+                    "softwareQuality": "MAINTAINABILITY",
+                    "severity": "HIGH"
+                }
+            ],
+            "issueStatus": "OPEN",
+            "projectName": "afs",
+            "internalTags": []
+        },
+        {
+            "key": "AZv8WdIS3JsCIL-3RHwZ",
+            "rule": "typescript:S7727",
+            "severity": "MAJOR",
+            "component": "matheuscodes_afs:src/services/BookkeepingService.ts",
+            "project": "matheuscodes_afs",
+            "line": 273,
+            "hash": "e16e2d23cc8848aae0f077b69e70a955",
+            "textRange": {
+                "startLine": 273,
+                "endLine": 273,
+                "startOffset": 56,
+                "endOffset": 72
+            },
+            "flows": [],
+            "status": "OPEN",
+            "message": "Do not pass function `reduceByCategory` directly to `.reduce(…)`.",
+            "effort": "5min",
+            "debt": "5min",
+            "assignee": "matheuscodes@github",
+            "tags": [
+                "array",
+                "callback",
+                "iterator",
+                "javascript"
+            ],
+            "transitions": [],
+            "actions": [],
+            "comments": [],
+            "creationDate": "2022-01-25T21:17:37+0000",
+            "updateDate": "2026-01-26T22:07:53+0000",
+            "type": "BUG",
+            "organization": "matheuscodes-analysed",
+            "cleanCodeAttribute": "CLEAR",
+            "cleanCodeAttributeCategory": "INTENTIONAL",
+            "impacts": [
+                {
+                    "softwareQuality": "RELIABILITY",
+                    "severity": "HIGH"
+                },
+                {
+                    "softwareQuality": "MAINTAINABILITY",
+                    "severity": "HIGH"
+                }
+            ],
+            "issueStatus": "OPEN",
+            "projectName": "afs",
+            "internalTags": []
+        },
+        {
+            "key": "AZv8WdIS3JsCIL-3RHwa",
+            "rule": "typescript:S2201",
+            "severity": "MAJOR",
+            "component": "matheuscodes_afs:src/services/BookkeepingService.ts",
+            "project": "matheuscodes_afs",
+            "line": 280,
+            "hash": "b43e491630c037cba9a429047997c95b",
+            "textRange": {
+                "startLine": 280,
+                "endLine": 301,
+                "startOffset": 4,
+                "endOffset": 13
+            },
+            "flows": [],
+            "status": "OPEN",
+            "message": "The return value of \"reduce\" must be used.",
+            "effort": "5min",
+            "debt": "5min",
+            "assignee": "matheuscodes@github",
+            "tags": [
+                "type-dependent"
+            ],
+            "transitions": [],
+            "actions": [],
+            "comments": [],
+            "creationDate": "2025-02-10T15:45:40+0000",
+            "updateDate": "2026-01-26T22:07:53+0000",
+            "type": "BUG",
+            "organization": "matheuscodes-analysed",
+            "cleanCodeAttribute": "LOGICAL",
+            "cleanCodeAttributeCategory": "INTENTIONAL",
+            "impacts": [
+                {
+                    "softwareQuality": "RELIABILITY",
+                    "severity": "MEDIUM"
+                }
+            ],
+            "issueStatus": "OPEN",
+            "projectName": "afs",
+            "internalTags": []
+        },
+        {
+            "key": "AZv8WdIS3JsCIL-3RHwb",
+            "rule": "typescript:S7773",
+            "severity": "MINOR",
+            "component": "matheuscodes_afs:src/services/BookkeepingService.ts",
+            "project": "matheuscodes_afs",
+            "line": 282,
+            "hash": "470b05e5d067fac4dc393906b2311601",
+            "textRange": {
+                "startLine": 282,
+                "endLine": 282,
+                "startOffset": 22,
+                "endOffset": 30
+            },
+            "flows": [],
+            "status": "OPEN",
+            "message": "Prefer `Number.parseInt` over `parseInt`.",
+            "effort": "2min",
+            "debt": "2min",
+            "assignee": "matheuscodes@github",
+            "tags": [
+                "convention",
+                "es2015"
+            ],
+            "transitions": [],
+            "actions": [],
+            "comments": [],
+            "creationDate": "2025-02-10T15:45:40+0000",
+            "updateDate": "2026-01-26T22:07:53+0000",
+            "type": "CODE_SMELL",
+            "organization": "matheuscodes-analysed",
+            "cleanCodeAttribute": "CONVENTIONAL",
+            "cleanCodeAttributeCategory": "CONSISTENT",
+            "impacts": [
+                {
+                    "softwareQuality": "MAINTAINABILITY",
+                    "severity": "LOW"
+                },
+                {
+                    "softwareQuality": "RELIABILITY",
+                    "severity": "MEDIUM"
+                }
+            ],
+            "issueStatus": "OPEN",
+            "projectName": "afs",
+            "internalTags": []
+        },
+        {
+            "key": "AZv8WdIS3JsCIL-3RHwc",
+            "rule": "typescript:S7773",
+            "severity": "MINOR",
+            "component": "matheuscodes_afs:src/services/BookkeepingService.ts",
+            "project": "matheuscodes_afs",
+            "line": 317,
+            "hash": "50b6162ef2760b767ec1df96cd8621be",
+            "textRange": {
+                "startLine": 317,
+                "endLine": 317,
+                "startOffset": 22,
+                "endOffset": 30
+            },
+            "flows": [],
+            "status": "OPEN",
+            "message": "Prefer `Number.parseInt` over `parseInt`.",
+            "effort": "2min",
+            "debt": "2min",
+            "assignee": "matheuscodes@github",
+            "tags": [
+                "convention",
+                "es2015"
+            ],
+            "transitions": [],
+            "actions": [],
+            "comments": [],
+            "creationDate": "2025-02-10T15:45:40+0000",
+            "updateDate": "2026-01-26T22:07:53+0000",
+            "type": "CODE_SMELL",
+            "organization": "matheuscodes-analysed",
+            "cleanCodeAttribute": "CONVENTIONAL",
+            "cleanCodeAttributeCategory": "CONSISTENT",
+            "impacts": [
+                {
+                    "softwareQuality": "MAINTAINABILITY",
+                    "severity": "LOW"
+                },
+                {
+                    "softwareQuality": "RELIABILITY",
+                    "severity": "MEDIUM"
+                }
+            ],
+            "issueStatus": "OPEN",
+            "projectName": "afs",
+            "internalTags": []
+        },
+        {
+            "key": "AZwU5rzRrSTVAs2bhGY_",
+            "rule": "typescript:S7773",
+            "severity": "MINOR",
+            "component": "matheuscodes_afs:src/services/BookkeepingService.ts",
+            "project": "matheuscodes_afs",
+            "line": 343,
+            "hash": "50b6162ef2760b767ec1df96cd8621be",
+            "textRange": {
+                "startLine": 343,
+                "endLine": 343,
+                "startOffset": 24,
+                "endOffset": 32
+            },
+            "flows": [],
+            "status": "OPEN",
+            "message": "Prefer `Number.parseInt` over `parseInt`.",
+            "effort": "2min",
+            "debt": "2min",
+            "assignee": "matheuscodes@github",
+            "tags": [
+                "convention",
+                "es2015"
+            ],
+            "transitions": [],
+            "actions": [],
+            "comments": [],
+            "creationDate": "2026-01-31T16:32:50+0000",
+            "updateDate": "2026-01-31T16:32:50+0000",
+            "type": "CODE_SMELL",
+            "organization": "matheuscodes-analysed",
+            "cleanCodeAttribute": "CONVENTIONAL",
+            "cleanCodeAttributeCategory": "CONSISTENT",
+            "impacts": [
+                {
+                    "softwareQuality": "MAINTAINABILITY",
+                    "severity": "LOW"
+                },
+                {
+                    "softwareQuality": "RELIABILITY",
+                    "severity": "MEDIUM"
+                }
+            ],
+            "issueStatus": "OPEN",
+            "projectName": "afs",
+            "internalTags": []
+        }
+    ],
+    "components": [
+        {
+            "organization": "matheuscodes-analysed",
+            "key": "matheuscodes_afs:src/components/Bookkeeping.tsx",
+            "uuid": "AZv8WctG3JsCIL-3RHsO",
+            "enabled": true,
+            "qualifier": "FIL",
+            "name": "Bookkeeping.tsx",
+            "longName": "src/components/Bookkeeping.tsx",
+            "path": "src/components/Bookkeeping.tsx"
+        },
+        {
+            "organization": "matheuscodes-analysed",
+            "key": "matheuscodes_afs:src/components/finances/savings/index.tsx",
+            "uuid": "AZv8WctG3JsCIL-3RHsP",
+            "enabled": true,
+            "qualifier": "FIL",
+            "name": "index.tsx",
+            "longName": "src/components/finances/savings/index.tsx",
+            "path": "src/components/finances/savings/index.tsx"
+        },
+        {
+            "organization": "matheuscodes-analysed",
+            "key": "matheuscodes_afs:src/components/finances/investments/PropertyInvestments.tsx",
+            "uuid": "AZv8WctG3JsCIL-3RHsR",
+            "enabled": true,
+            "qualifier": "FIL",
+            "name": "PropertyInvestments.tsx",
+            "longName": "src/components/finances/investments/PropertyInvestments.tsx",
+            "path": "src/components/finances/investments/PropertyInvestments.tsx"
+        },
+        {
+            "organization": "matheuscodes-analysed",
+            "key": "matheuscodes_afs:src/components/consumption/WaterAndHeating.tsx",
+            "uuid": "AZv8WctG3JsCIL-3RHsL",
+            "enabled": true,
+            "qualifier": "FIL",
+            "name": "WaterAndHeating.tsx",
+            "longName": "src/components/consumption/WaterAndHeating.tsx",
+            "path": "src/components/consumption/WaterAndHeating.tsx"
+        },
+        {
+            "organization": "matheuscodes-analysed",
+            "key": "matheuscodes_afs:src/services/BookkeepingService.ts",
+            "uuid": "AZv8WctG3JsCIL-3RHsn",
+            "enabled": true,
+            "qualifier": "FIL",
+            "name": "BookkeepingService.ts",
+            "longName": "src/services/BookkeepingService.ts",
+            "path": "src/services/BookkeepingService.ts"
+        },
+        {
+            "organization": "matheuscodes-analysed",
+            "key": "matheuscodes_afs:src/components/ActivitiesTable.tsx",
+            "uuid": "AZv8WctG3JsCIL-3RHsN",
+            "enabled": true,
+            "qualifier": "FIL",
+            "name": "ActivitiesTable.tsx",
+            "longName": "src/components/ActivitiesTable.tsx",
+            "path": "src/components/ActivitiesTable.tsx"
+        },
+        {
+            "organization": "matheuscodes-analysed",
+            "key": "matheuscodes_afs:src/components/consumption/Gas.tsx",
+            "uuid": "AZv8WctG3JsCIL-3RHsH",
+            "enabled": true,
+            "qualifier": "FIL",
+            "name": "Gas.tsx",
+            "longName": "src/components/consumption/Gas.tsx",
+            "path": "src/components/consumption/Gas.tsx"
+        },
+        {
+            "organization": "matheuscodes-analysed",
+            "key": "matheuscodes_afs:src/components/consumption/CarFuel.tsx",
+            "uuid": "AZv8WctG3JsCIL-3RHsI",
+            "enabled": true,
+            "qualifier": "FIL",
+            "name": "CarFuel.tsx",
+            "longName": "src/components/consumption/CarFuel.tsx",
+            "path": "src/components/consumption/CarFuel.tsx"
+        },
+        {
+            "organization": "matheuscodes-analysed",
+            "key": "matheuscodes_afs:src/components/consumption/Electricity.tsx",
+            "uuid": "AZv8WctG3JsCIL-3RHsJ",
+            "enabled": true,
+            "qualifier": "FIL",
+            "name": "Electricity.tsx",
+            "longName": "src/components/consumption/Electricity.tsx",
+            "path": "src/components/consumption/Electricity.tsx"
+        },
+        {
+            "organization": "matheuscodes-analysed",
+            "key": "matheuscodes_afs",
+            "uuid": "AZv8WRDMB4hjK6MXevo3",
+            "enabled": true,
+            "qualifier": "TRK",
+            "name": "afs",
+            "longName": "afs"
+        },
+        {
+            "organization": "matheuscodes-analysed",
+            "key": "matheuscodes_afs:src/models/Activity.ts",
+            "uuid": "AZv8WctG3JsCIL-3RHsa",
+            "enabled": true,
+            "qualifier": "FIL",
+            "name": "Activity.ts",
+            "longName": "src/models/Activity.ts",
+            "path": "src/models/Activity.ts"
+        },
+        {
+            "organization": "matheuscodes-analysed",
+            "key": "matheuscodes_afs:src/components/NewActivitiesSheet.tsx",
+            "uuid": "AZv8WctG3JsCIL-3RHsA",
+            "enabled": true,
+            "qualifier": "FIL",
+            "name": "NewActivitiesSheet.tsx",
+            "longName": "src/components/NewActivitiesSheet.tsx",
+            "path": "src/components/NewActivitiesSheet.tsx"
+        },
+        {
+            "organization": "matheuscodes-analysed",
+            "key": "matheuscodes_afs:src/components/upkeep/UpkeepHistoryGraph.tsx",
+            "uuid": "AZv8WctG3JsCIL-3RHsB",
+            "enabled": true,
+            "qualifier": "FIL",
+            "name": "UpkeepHistoryGraph.tsx",
+            "longName": "src/components/upkeep/UpkeepHistoryGraph.tsx",
+            "path": "src/components/upkeep/UpkeepHistoryGraph.tsx"
+        },
+        {
+            "organization": "matheuscodes-analysed",
+            "key": "matheuscodes_afs:src/index.html",
+            "uuid": "AZv8WctG3JsCIL-3RHst",
+            "enabled": true,
+            "qualifier": "FIL",
+            "name": "index.html",
+            "longName": "src/index.html",
+            "path": "src/index.html"
+        },
+        {
+            "organization": "matheuscodes-analysed",
+            "key": "matheuscodes_afs:src/components/finances/bookkeeping/BookkeepingReports.tsx",
+            "uuid": "AZv8WctG3JsCIL-3RHsT",
+            "enabled": true,
+            "qualifier": "FIL",
+            "name": "BookkeepingReports.tsx",
+            "longName": "src/components/finances/bookkeeping/BookkeepingReports.tsx",
+            "path": "src/components/finances/bookkeeping/BookkeepingReports.tsx"
+        }
+    ],
+    "organizations": [
+        {
+            "key": "matheuscodes-analysed",
+            "name": "Matheus Borges Teixeira"
+        }
+    ],
+    "rules": [
+        {
+            "key": "typescript:S7758",
+            "name": "Unicode-aware string methods should be used for proper character handling",
+            "lang": "ts",
+            "status": "READY",
+            "langName": "TypeScript"
+        },
+        {
+            "key": "typescript:S7773",
+            "name": "Number static methods and properties should be preferred over global equivalents",
+            "lang": "ts",
+            "status": "READY",
+            "langName": "TypeScript"
+        },
+        {
+            "key": "typescript:S6756",
+            "name": "\"setState\" should use a callback when referencing the previous state",
+            "lang": "ts",
+            "status": "READY",
+            "langName": "TypeScript"
+        },
+        {
+            "key": "typescript:S7727",
+            "name": "Function references should not be passed directly to iterator methods",
+            "lang": "ts",
+            "status": "READY",
+            "langName": "TypeScript"
+        },
+        {
+            "key": "typescript:S6544",
+            "name": "Promises should not be misused",
+            "lang": "ts",
+            "status": "READY",
+            "langName": "TypeScript"
+        },
+        {
+            "key": "Web:S5254",
+            "name": "\"\u003chtml\u003e\" element should have a language attribute",
+            "lang": "web",
+            "status": "READY",
+            "langName": "HTML"
+        },
+        {
+            "key": "typescript:S6746",
+            "name": "In React \"this.state\" should not be mutated directly",
+            "lang": "ts",
+            "status": "READY",
+            "langName": "TypeScript"
+        },
+        {
+            "key": "typescript:S2201",
+            "name": "Return values from functions without side effects should not be ignored",
+            "lang": "ts",
+            "status": "READY",
+            "langName": "TypeScript"
+        }
+    ],
+    "users": [
+        {
+            "login": "matheuscodes@github",
+            "name": "Matheus Borges Teixeira",
+            "avatar": "2597fb4ed78a311e279b6ab5721eb30a",
+            "active": true
+        }
+    ],
+    "languages": [
+        {
+            "key": "cs",
+            "name": "C#"
+        },
+        {
+            "key": "plsql",
+            "name": "PL/SQL"
+        },
+        {
+            "key": "java",
+            "name": "Java"
+        },
+        {
+            "key": "groovy",
+            "name": "Groovy"
+        },
+        {
+            "key": "xml",
+            "name": "XML"
+        },
+        {
+            "key": "swift",
+            "name": "Swift"
+        },
+        {
+            "key": "c",
+            "name": "C"
+        },
+        {
+            "key": "cpp",
+            "name": "C++"
+        },
+        {
+            "key": "objc",
+            "name": "Objective-C"
+        },
+        {
+            "key": "py",
+            "name": "Python"
+        },
+        {
+            "key": "ipynb",
+            "name": "IPython Notebooks"
+        },
+        {
+            "key": "vbnet",
+            "name": "VB.NET"
+        },
+        {
+            "key": "vb",
+            "name": "Vb"
+        },
+        {
+            "key": "apex",
+            "name": "Apex"
+        },
+        {
+            "key": "js",
+            "name": "JavaScript"
+        },
+        {
+            "key": "ts",
+            "name": "TypeScript"
+        },
+        {
+            "key": "css",
+            "name": "CSS"
+        },
+        {
+            "key": "abap",
+            "name": "ABAP"
+        },
+        {
+            "key": "terraform",
+            "name": "Terraform"
+        },
+        {
+            "key": "cloudformation",
+            "name": "CloudFormation"
+        },
+        {
+            "key": "kubernetes",
+            "name": "Kubernetes"
+        },
+        {
+            "key": "docker",
+            "name": "Docker"
+        },
+        {
+            "key": "azureresourcemanager",
+            "name": "Azure Resource Manager"
+        },
+        {
+            "key": "yaml",
+            "name": "YAML"
+        },
+        {
+            "key": "json",
+            "name": "JSON"
+        },
+        {
+            "key": "ansible",
+            "name": "Ansible"
+        },
+        {
+            "key": "githubactions",
+            "name": "GitHub Actions"
+        },
+        {
+            "key": "azurepipelines",
+            "name": "Azure Pipelines"
+        },
+        {
+            "key": "shell",
+            "name": "Shell"
+        },
+        {
+            "key": "scala",
+            "name": "Scala"
+        },
+        {
+            "key": "dart",
+            "name": "Dart"
+        },
+        {
+            "key": "rust",
+            "name": "Rust"
+        },
+        {
+            "key": "jcl",
+            "name": "JCL"
+        },
+        {
+            "key": "web",
+            "name": "HTML"
+        },
+        {
+            "key": "jsp",
+            "name": "JSP"
+        },
+        {
+            "key": "flex",
+            "name": "Flex"
+        },
+        {
+            "key": "rpg",
+            "name": "RPG"
+        },
+        {
+            "key": "go",
+            "name": "Go"
+        },
+        {
+            "key": "kotlin",
+            "name": "Kotlin"
+        },
+        {
+            "key": "pli",
+            "name": "PL/I"
+        },
+        {
+            "key": "tsql",
+            "name": "T-SQL"
+        },
+        {
+            "key": "ruby",
+            "name": "Ruby"
+        },
+        {
+            "key": "secrets",
+            "name": "Secrets"
+        },
+        {
+            "key": "text",
+            "name": "Text"
+        },
+        {
+            "key": "cobol",
+            "name": "COBOL"
+        },
+        {
+            "key": "php",
+            "name": "PHP"
+        }
+    ],
+    "facets": [
+        {
+            "property": "impactSeverities",
+            "values": [
+                {
+                    "val": "BLOCKER",
+                    "count": 0
+                },
+                {
+                    "val": "HIGH",
+                    "count": 12
+                },
+                {
+                    "val": "INFO",
+                    "count": 0
+                },
+                {
+                    "val": "LOW",
+                    "count": 1
+                },
+                {
+                    "val": "MEDIUM",
+                    "count": 39
+                }
+            ]
+        },
+        {
+            "property": "impactSoftwareQualities",
+            "values": [
+                {
+                    "val": "MAINTAINABILITY",
+                    "count": 237
+                },
+                {
+                    "val": "RELIABILITY",
+                    "count": 52
+                },
+                {
+                    "val": "SECURITY",
+                    "count": 0
+                }
+            ]
+        }
+    ]
+}
