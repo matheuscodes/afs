@@ -95,7 +95,7 @@
     "style-loader": "4.0.0",
     "ts-jest": "29.4.9",
     "ts-loader": "9.5.7",
-    "typescript": "6.0.2"
+    "typescript": "6.0.3"
   },
   "dependencies": {
     "@redux-devtools/extension": "4.0.0",
