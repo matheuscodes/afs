@@ -1,18 +1,9 @@
 import React from 'react';
-import { connect } from "react-redux";
 import {
-  Tab,
-  Tablist,
-  Pane,
   Table,
-  Heading,
 } from 'evergreen-ui'
 
 class DetailsTable extends React.Component<any, any> {
-  constructor(props: any) {
-    super(props);
-  }
-
   renderRow(half: any, index: number) {
     const period = `${half.year}${half.period}`;
     return <Table.Row key={`upkeep-detail-table-${index}`} height={'auto'}>

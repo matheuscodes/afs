@@ -1,14 +1,13 @@
 import React from 'react';
 import { connect } from "react-redux";
 import HomeService from '../../services/HomeService';
-import { Home, PowerMeter, MeterPayment, MeterPrice, MeterMeasurement } from '../../models/Home';
+import { Home, PowerMeter, MeterPayment } from '../../models/Home';
 import { getCurrentPrice } from '../../models/Bills';
 import {
   Tab,
   Tablist,
   Pane,
   Table,
-  Heading,
 } from 'evergreen-ui'
 
 export function dateDifference(a: string | Date, b: string | Date) {
@@ -64,18 +63,27 @@ export class Electricity extends React.Component<any, any> {
     this.state = {}
   }
 
-  async componentDidMount() {
+  async loadData() {
     await this.props.fetchHomes()
   }
 
+  componentDidMount() {
+    void this.loadData();
+  }
+
   getPowerMeters(powerMeter: PowerMeter): any[] {
+    const measurements = powerMeter.measurements || [];
+    const fallbackPrice = {
+      unit: { amount: 0, currency: '' },
+      base: { amount: 0, currency: '' },
+    };
     let lastDate: Date;
     let lastMeasurement: number;
-    return powerMeter.measurements.map(measurement => {
+    return measurements.map(measurement => {
       const item = {
         date: measurement.date,
         measurement: measurement.measurement,
-        price: getCurrentPrice(measurement, powerMeter.prices),
+        price: getCurrentPrice(measurement, powerMeter.prices) || fallbackPrice,
         consumption: lastMeasurement ? measurement.measurement - lastMeasurement : 0,
         days: lastDate ? dateDifference(measurement.date, lastDate) : 0,
         billable: measurement.billable
@@ -92,17 +100,22 @@ export class Electricity extends React.Component<any, any> {
   }
 
   getBills(powerMeter: PowerMeter): any[] {
-    const groups = groupedPayments(powerMeter.payments);
+    const groups = groupedPayments(powerMeter.payments || []);
+    const measurements = powerMeter.measurements || [];
+    const fallbackPrice = {
+      unit: { amount: 0, currency: '' },
+      base: { amount: 0, currency: '' },
+    };
     const all = [] as any[];
     let lastDate: string;
     let lastMeasurement: number;
     let sumUnitCosts = 0;
     let sumBaseCosts = 0;
     this.getPowerMeters(powerMeter).forEach((measurement,index) => {
-      const price = getCurrentPrice(measurement, powerMeter.prices);
+      const price = getCurrentPrice(measurement, powerMeter.prices) || fallbackPrice;
       sumUnitCosts += measurement.consumption * price.unit.amount;
       sumBaseCosts += measurement.days * price.base.amount;
-      if(measurement.billable || index === (powerMeter.measurements.length - 1)) {
+      if(measurement.billable || index === (measurements.length - 1)) {
         if(!lastMeasurement || !lastDate) {
           lastMeasurement = measurement.measurement;
           lastDate = measurement.date;
@@ -169,22 +182,22 @@ export class Electricity extends React.Component<any, any> {
             onSelect={
               () => {
                 this.props.fetchElectricity(home.id)
-                this.setState({...this.state, selectedHome: home})
+                this.setState({ selectedHome: home })
               }
             }
-            isSelected={this.state.selectedHome && home.id === this.state.selectedHome.id} >
+            isSelected={home.id === this.state.selectedHome?.id} >
             {home.name}
           </Tab>
         ))}
       </Tablist>
       {
-        this.state.selectedHome && this.state.selectedHome.electricity ?
+        this.state.selectedHome?.electricity ?
         Object.keys(this.state.selectedHome.electricity).map(meter =>
           <div key={meter} >
             <div>
-              {this.getBills(this.state.selectedHome.electricity[meter]).map((bill,index) =>
+              {this.getBills(this.state.selectedHome.electricity[meter]).map((bill) =>
                 <Pane
-                  key={`bill-${index}`}
+                  key={`bill-${bill.from}-${bill.to}`}
                   elevation={2}
                   width={'46%'}
                   display={'inline-block'}
@@ -266,7 +279,7 @@ export class Electricity extends React.Component<any, any> {
                 </Table.TextHeaderCell>
               </Table.Head>
               <Table.Body>
-                {this.getPowerMeters(this.state.selectedHome.electricity[meter]).map(this.renderRow)}
+                {this.getPowerMeters(this.state.selectedHome.electricity[meter]).map((measurementEntry: any, index: number) => this.renderRow(measurementEntry, index))}
               </Table.Body>
             </Table>
           </div>

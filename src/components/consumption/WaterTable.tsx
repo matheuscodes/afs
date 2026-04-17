@@ -1,13 +1,6 @@
 import React from 'react';
-import { connect } from "react-redux";
-import HomeService from '../../services/HomeService';
-import { Home } from '../../models/Home'
 import {
-  Tab,
-  Tablist,
-  Pane,
   Table,
-  Heading,
 } from 'evergreen-ui'
 
 const ColumnFlex = {
@@ -18,14 +11,10 @@ const ColumnFlex = {
 }
 
 class WaterTable extends React.Component<any, any> {
-  constructor(props: any) {
-    super(props);
-  }
-
   renderRow(day: any, index: number) {
     return <Table.Row key={`water-table-${index}`} height={'auto'}>
-      <Table.TextCell flex={ColumnFlex.date}>{day.cold ? day.cold.date : day.warm.date}</Table.TextCell>
-      <Table.TextCell flex={ColumnFlex.days}>{day.cold ? day.cold.days : day.warm.days} days</Table.TextCell>
+      <Table.TextCell flex={ColumnFlex.date}>{day.cold?.date || day.warm?.date}</Table.TextCell>
+      <Table.TextCell flex={ColumnFlex.days}>{day.cold?.days || day.warm?.days} days</Table.TextCell>
       <Table.TextCell flex={ColumnFlex.measurement}>{day.warm ? `${day.warm.measurement.toFixed(3)}m³` : ''}</Table.TextCell>
       <Table.TextCell flex={ColumnFlex.measurement}>{day.cold ? `${day.cold.measurement.toFixed(3)}m³` : ''}</Table.TextCell>
       <Table.TextCell flex={ColumnFlex.consumption}>{day.warm && day.warm.days ? `${(day.warm.consumption * 1000  / day.warm.days).toFixed(1)}l` : ''}</Table.TextCell>
@@ -36,14 +25,14 @@ class WaterTable extends React.Component<any, any> {
   render() {
     const {cold, warm} = this.props.data;
     const report: any = {};
-    if(cold && cold.readings) {
+    if(cold?.readings) {
       cold.readings.forEach((reading: any) => {
         report[reading.date] = {
           cold: reading,
         }
       });
     }
-    if(warm && warm.readings) {
+    if(warm?.readings) {
       warm.readings.forEach((reading: any) => {
         if(!report[reading.date]) report[reading.date] = {}
         report[reading.date].warm = reading;

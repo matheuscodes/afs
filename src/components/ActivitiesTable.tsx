@@ -4,8 +4,6 @@ import {
   Popover,
   Position,
   Menu,
-  Avatar,
-  Text,
   IconButton,
   ArrowUpIcon,
   ArrowDownIcon,
@@ -104,37 +102,43 @@ export default class ActivitiesTable extends React.Component<any, any> {
   }
 
   handleFilterChange = (value: string, parameter: string) => {
-    this.state.searchQuery[parameter] = value;
-    this.setState(this.state);
+    this.setState((previousState: any) => ({
+      ...previousState,
+      searchQuery: {
+        ...previousState.searchQuery,
+        [parameter]: value,
+      },
+    }));
   }
+
+  renderOrderMenu = (close: () => void, columnName: string) => (
+    <Menu>
+      <Menu.OptionsGroup
+        title="Order"
+        options={[
+          { label: 'Ascending', value: Order.ASC },
+          { label: 'Descending', value: Order.DESC }
+        ]}
+        selected={
+          this.state.orderedColumn === columnName ? this.state.ordering : null
+        }
+        onChange={value => {
+          this.setState({
+            orderedColumn: columnName,
+            ordering: value
+          })
+          close()
+        }}
+      />
+    </Menu>
+  )
 
   renderSortableTableHeaderCell = (columnName: string, prettyName: string) => {
     return (
       <Table.TextHeaderCell flex={ColumnFlex[columnName]}>
         <Popover
           position={Position.BOTTOM_LEFT}
-          content={({ close }) => (
-            <Menu>
-              <Menu.OptionsGroup
-                title="Order"
-                options={[
-                  { label: 'Ascending', value: Order.ASC },
-                  { label: 'Descending', value: Order.DESC }
-                ]}
-                selected={
-                  this.state.orderedColumn === columnName ? this.state.ordering : null
-                }
-                onChange={value => {
-                  this.setState({
-                    orderedColumn: columnName,
-                    ordering: value
-                  })
-                  // Close the popover when you select a value.
-                  close()
-                }}
-              />
-            </Menu>
-          )}
+          content={({ close }) => this.renderOrderMenu(close, columnName)}
         >
           <TextDropdownButton
             icon={
@@ -166,13 +170,15 @@ export default class ActivitiesTable extends React.Component<any, any> {
   }
 
   renderRow = ({ activity, index }: { activity: any, index: number }) => {
+    const account = this.props.accounts?.[activity.account];
+    const description = activity.category ? `${activity.description} (${activity.category})` : activity.description;
     return (
       <Table.Row key={index} height="auto">
         <Table.TextCell flex={ColumnFlex.date}>{`${activity.date.toJSON().slice(0,10)}`}</Table.TextCell>
         <Table.TextCell flex={ColumnFlex.source}>{activity.transfer && this.props.accounts ? `${this.props.accounts[activity.source].name} (${this.props.accounts[activity.source].type})` : activity.source }</Table.TextCell>
-        <Table.TextCell flex={ColumnFlex.description}>{`${activity.description} ${activity.category ? `(${activity.category})` : ''}`}</Table.TextCell>
+        <Table.TextCell flex={ColumnFlex.description}>{description}</Table.TextCell>
         <Table.TextCell flex={ColumnFlex.value}>{`${activity.value.amount} ${activity.value.currency}`}</Table.TextCell>
-        <Table.TextCell flex={ColumnFlex.account}>{this.props.accounts && this.props.accounts[activity.account] ? `${this.props.accounts[activity.account].name} (${this.props.accounts[activity.account].type})` : 'N/A'}</Table.TextCell>
+        <Table.TextCell flex={ColumnFlex.account}>{account ? `${account.name} (${account.type})` : 'N/A'}</Table.TextCell>
         <Table.Cell flex="none" width={48}>
           <Popover
             content={this.renderRowMenu}

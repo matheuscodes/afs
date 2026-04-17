@@ -3,7 +3,7 @@ import { parseActivities } from '../models/Activity';
 import { parseAccounts } from '../models/Account';
 
 function isNotEmpty(str: string) {
-  return str && str.trim().length > 0;
+  return !!str && str.trim().length > 0;
 }
 
 function parse(str: string) {
@@ -15,6 +15,64 @@ const halfKm = 2500;
 
 type InflationYearMetrics = Record<string, number>;
 type InflationMap = Record<number | string, InflationYearMetrics>;
+
+function calculateCarCosts(car: any, halfKmValue: number) {
+  if (!car) {
+    return 0;
+  }
+  if (car.consumption) {
+    return car.maintenance.amount + (halfKmValue / 100) * car.consumption * car.fuel.amount + (car.loan ? car.loan.amount : 0);
+  }
+  if (car.km) {
+    return car.maintenance.amount + (car.km * car.kmPrice.amount) + (car.loan ? car.loan.amount : 0);
+  }
+  return 0;
+}
+
+function buildPeriodMetrics(half: any, firstSalaryAmount: number, firstArea: number, monthCaloriesValue: number, halfKmValue: number) {
+  const periodMetrics: Record<string, number> = {};
+
+  if(half.salary !== undefined){
+    periodMetrics.income = half.salary.amount / firstSalaryAmount;
+  }
+
+  if(half.savings !== undefined){
+    periodMetrics.savings = half.savings.amount / firstSalaryAmount;
+  }
+
+  let calories = 0;
+  let prices = 0;
+  half.groceries.forEach((item: any) => {
+    calories += item.calories;
+    prices += item.price ? item.price.amount : 0;
+  });
+  const groceries = ((monthCaloriesValue / calories) * prices) * 4;
+  periodMetrics.groceries = groceries / firstSalaryAmount;
+
+  const pet = (Object
+    .keys(half.pet)
+    .map((key: any) => half.pet[key].amount)
+    .reduce((a: any, b:any) => a + b, 0) / 6) / firstSalaryAmount;
+  if(pet > 0) {
+    periodMetrics.pet = pet;
+  }
+
+  periodMetrics.area = half.housing.area / firstArea;
+
+  const housing = Object
+    .keys(half.housing)
+    .filter((i: any) => i !== 'area')
+    .map((i: any) => half.housing[i].amount)
+    .reduce((a: any, b:any) => a + b, 0) / firstSalaryAmount;
+  periodMetrics.housing = housing;
+
+  const car = calculateCarCosts(half.car, halfKmValue);
+  if(car > 0) {
+    periodMetrics.car = (car / 6) / firstSalaryAmount;
+  }
+
+  return periodMetrics;
+}
 
 class LongTermService {
   loadUpkeeps() {
@@ -37,62 +95,13 @@ class LongTermService {
     const report: any = {}
     if(!halfs || halfs.length <= 0) return {};
 
-    let firstGroceries: any, firstPet: any, firstHousing: any;
-    let firstSalary = halfs[0].salary;
-    let firstArea = halfs[0].housing.area;
+    const firstSalary = halfs[0].salary;
+    const firstArea = halfs[0].housing.area;
     halfs.forEach((half: any) => {
       if(!report[`${half.year}`]) {
         report[`${half.year}`] = {}
       }
-      if(!report[`${half.year}`][`${half.period}`]) {
-        report[`${half.year}`][`${half.period}`] = {}
-      }
-
-      if(typeof half.salary !== 'undefined'){
-        report[`${half.year}`][`${half.period}`].income =  half.salary.amount / firstSalary.amount;
-      }
-
-      if(typeof half.savings !== 'undefined'){
-        report[`${half.year}`][`${half.period}`].savings =  half.savings.amount / firstSalary.amount;
-      }
-
-      let calories = 0, prices = 0;
-      half.groceries.forEach((i: any) => {
-        calories += i.calories;
-        prices += i.price ? i.price.amount : 0;
-      });
-      const groceries = ((monthCalories / calories) * prices) * 4 /*approximates my budget*/
-      report[`${half.year}`][`${half.period}`].groceries = groceries / firstSalary.amount;
-
-      const pet = (Object
-        .keys(half.pet)
-        .map((i: any) => half.pet[i].amount)
-        .reduce((a: any, b:any) => a + b, 0) / 6 /*months*/) / firstSalary.amount;
-      if(pet > 0) {
-        report[`${half.year}`][`${half.period}`].pet = pet;
-      }
-
-      report[`${half.year}`][`${half.period}`].area = half.housing.area / firstArea;
-
-      const housing = (Object
-        .keys(half.housing)
-        .filter((i: any) => i !== 'area')
-        .map((i: any) => half.housing[i].amount)
-        .reduce((a: any, b:any) => a + b, 0) ) / firstSalary.amount;
-      report[`${half.year}`][`${half.period}`].housing = housing;
-
-      if(typeof half.car !== 'undefined') {
-        let car = 0;
-        if(half.car.consumption) {
-          car = half.car.maintenance.amount + (halfKm / 100) * half.car.consumption * half.car.fuel.amount + (half.car.loan ? half.car.loan.amount : 0);
-        } else if(half.car.km) {
-          car = half.car.maintenance.amount + (half.car.km * half.car.kmPrice.amount) + (half.car.loan ? half.car.loan.amount : 0);
-        }
-        if(car > 0) {
-          report[`${half.year}`][`${half.period}`].car = (car / 6 /*months*/) / firstSalary.amount;
-        }
-      }
-
+      report[`${half.year}`][`${half.period}`] = buildPeriodMetrics(half, firstSalary.amount, firstArea, monthCalories, halfKm);
     });
     const inflation: InflationMap = {
     }
@@ -114,8 +123,8 @@ class LongTermService {
     const thisYear = new Date().getFullYear()
     for(let year = thisYear; year > 2009; year -= 1) {
         Object.keys(inflation[year]).forEach(metric => {
-            if(inflation[year-1][metric] > 0) {
-                inflation[year][metric] = (inflation[year][metric] || 0) / inflation[year-1][metric]
+            if((inflation[year-1]?.[metric] || 0) > 0) {
+                inflation[year][metric] = (inflation[year][metric] || 0) / (inflation[year-1]?.[metric] || 0)
             } else if (inflation[year][metric] > 0) {
                 inflation[year][metric] = 100000
             } else {
@@ -148,16 +157,13 @@ class LongTermService {
       const accounts: any = {}
       parseAccounts(accountList).forEach(account => accounts[account.id] = account);
 
-      const bookkeeping = files.filter(isNotEmpty).map(parseActivities).flatMap((x:any) => x);
+      const bookkeeping = files.filter(isNotEmpty).map(parseActivities).flat();
 
       const savings = bookkeeping.map((activity: any) => {
         activity.source = accounts[activity.source];
         activity.account = accounts[activity.account];
         return activity;
-      }).filter((activity: any) =>
-        (activity.account && activity.account.type === 'Saving')
-        || (activity.source && activity.source.type === 'Saving')
-      )
+      }).filter((activity: any) => activity.account?.type === 'Saving' || activity.source?.type === 'Saving')
 
       dispatch(loadSavings(savings))
     }

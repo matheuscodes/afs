@@ -5,11 +5,10 @@ import { Home, WaterMeter, Heater } from '../../models/Home';
 import WaterTable from './WaterTable'
 import HeatingTable from './HeatingTable'
 import WaterAndHeatingBill from './WaterAndHeatingBill'
-import { groupedPayments, dateDifference, getCurrentPrice } from '../../models/Bills';
+import { dateDifference, getCurrentPrice } from '../../models/Bills';
 import {
   Tab,
   Tablist,
-  Pane,
 } from 'evergreen-ui'
 
 class WaterAndHeating extends React.Component<any, any> {
@@ -18,12 +17,20 @@ class WaterAndHeating extends React.Component<any, any> {
     this.state = {}
   }
 
-  async componentDidMount() {
+  async loadData() {
     await this.props.fetchHomes()
+  }
+
+  componentDidMount() {
+    void this.loadData();
   }
 
   getWaterReadings(waterMeter: WaterMeter, area: number): any[] {
     if(!waterMeter.measurements) return [];
+    const fallbackPrice = {
+      unit: { amount: 0, currency: '' },
+      base: { amount: 0, currency: '' },
+    };
 
     let lastDate: Date;
     let lastMeasurement: number;
@@ -31,8 +38,8 @@ class WaterAndHeating extends React.Component<any, any> {
       const item = {
         date: measurement.date,
         measurement: measurement.measurement,
-        price: getCurrentPrice(measurement, waterMeter.prices),
-        consumption: typeof lastMeasurement !== 'undefined' ? measurement.measurement - lastMeasurement : 0,
+        price: getCurrentPrice(measurement, waterMeter.prices) || fallbackPrice,
+        consumption: lastMeasurement !== undefined ? measurement.measurement - lastMeasurement : 0,
         days: lastDate ? dateDifference(measurement.date, lastDate) : 0,
         billable: measurement.billable
       }
@@ -49,6 +56,10 @@ class WaterAndHeating extends React.Component<any, any> {
 
   getHeaterReadings(heater: Heater, area: number): any[] {
     if(!heater.measurements) return [];
+    const fallbackPrice = {
+      unit: { amount: 0, currency: '' },
+      base: { amount: 0, currency: '' },
+    };
 
     let lastDate: Date;
     let lastMeasurement: number = 0;
@@ -56,7 +67,7 @@ class WaterAndHeating extends React.Component<any, any> {
       const item = {
         date: measurement.date,
         measurement: measurement.measurement,
-        price: getCurrentPrice(measurement, heater.prices),
+        price: getCurrentPrice(measurement, heater.prices) || fallbackPrice,
         consumption: measurement.measurement - lastMeasurement,
         days: lastDate ? dateDifference(measurement.date, lastDate) : 0,
         billable: measurement.billable
@@ -115,6 +126,10 @@ class WaterAndHeating extends React.Component<any, any> {
 
   getBills(meter: any, area: number, readings: any): any {
     if(!meter.payments) return {readings};
+    const fallbackPrice = {
+      unit: { amount: 0, currency: '' },
+      base: { amount: 0, currency: '' },
+    };
     const firstYear = readings ? new Date(readings.map((i: any) => new Date(i.date)).sort((a: any, b: any) => a - b)[0]).getFullYear() : 0;
     const lastYear = readings ? new Date(readings.map((i: any) => new Date(i.date)).sort((a: any, b: any) => b - a)[0]).getFullYear() : 0;
 
@@ -123,7 +138,6 @@ class WaterAndHeating extends React.Component<any, any> {
       groups.push(i)
     }
 
-    const all = [] as any[];
     let lastDate: string;
     let lastMeasurement: number;
     const bills: Record<string, any> = {};
@@ -145,7 +159,7 @@ class WaterAndHeating extends React.Component<any, any> {
         });
 
       if(currentReading && previousReading) {
-        const price = getCurrentPrice(currentReading, meter.prices);
+        const price = getCurrentPrice(currentReading, meter.prices) || fallbackPrice;
 
         const item = {
           from: previousReading.date,
@@ -179,7 +193,7 @@ class WaterAndHeating extends React.Component<any, any> {
           }
         }
       } else if(currentReading) {
-        const price = getCurrentPrice(currentReading, meter.prices);
+        const price = getCurrentPrice(currentReading, meter.prices) || fallbackPrice;
 
         const item = {
           to: currentReading.date,
@@ -235,7 +249,7 @@ class WaterAndHeating extends React.Component<any, any> {
       }
     }
     const yearly: Record<string, any> = {}
-    if(allBills.cold && allBills.cold.bills) {
+    if(allBills.cold?.bills) {
       Object.keys(allBills.cold.bills).forEach((year: string) => {
         if(!yearly[year]) {
           yearly[year] = JSON.parse(JSON.stringify(base));
@@ -250,7 +264,7 @@ class WaterAndHeating extends React.Component<any, any> {
         yearly[year].cost.total.currency = allBills.cold.bills[year].cost.total.currency;
       });
     }
-    if(allBills.warm && allBills.warm.bills) {
+    if(allBills.warm?.bills) {
       Object.keys(allBills.warm.bills).forEach((year: string) => {
         if(!yearly[year]) {
           yearly[year] = JSON.parse(JSON.stringify(base));
@@ -265,7 +279,7 @@ class WaterAndHeating extends React.Component<any, any> {
         yearly[year].cost.total.currency = allBills.warm.bills[year].cost.total.currency;
       });
     }
-    if(allBills.heating && allBills.heating.heaters) {
+    if(allBills.heating?.heaters) {
       Object.keys(allBills.heating.heaters).forEach(heater => {
         if(allBills.heating.heaters[heater].bills) {
           Object.keys(allBills.heating.heaters[heater].bills).forEach((year: string) => {
@@ -308,10 +322,10 @@ class WaterAndHeating extends React.Component<any, any> {
               () => {
                 this.props.fetchWater(home.id)
                 this.props.fetchHeating(home.id)
-                this.setState({...this.state, selectedHome: home})
+                this.setState({ selectedHome: home })
               }
             }
-            isSelected={this.state.selectedHome && home.id === this.state.selectedHome.id} >
+            isSelected={home.id === this.state.selectedHome?.id} >
             {home.name}
           </Tab>
         ))}
@@ -319,8 +333,8 @@ class WaterAndHeating extends React.Component<any, any> {
       {allBills ?
         <div>
           { Object.keys(overviews).map(
-            (overview: any, index: number) => <WaterAndHeatingBill
-              key={`bill-overview-${index}`}
+            (overview: any) => <WaterAndHeatingBill
+              key={`bill-overview-${overview}`}
               bill={overviews[overview]}
               year={overview} />
           )}

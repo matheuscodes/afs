@@ -5,8 +5,6 @@ import {
   Tab,
   Tablist,
   Pane,
-  Table,
-  Heading,
 } from 'evergreen-ui'
 import {
   Chart as ChartJS,
@@ -16,7 +14,6 @@ import {
   Title,
   Tooltip,
   Legend,
-  ChartDatasetProperties,
   ChartDataset,
   ChartData
 } from 'chart.js';
@@ -58,49 +55,6 @@ class BookkeepingReports extends React.Component<any, any> {
     this.props.fetchActivities()
   }
 
-  calculateSummary(savings: any) {
-    const summary: any = {};
-
-    if(savings && savings.length) {
-      savings.forEach((activity: any) => {
-        if(activity.source && activity.source.type === 'Saving') {
-          if(!summary[activity.source.id]) {
-            summary[activity.source.id] = JSON.parse(JSON.stringify(activity.source));
-            summary[activity.source.id].funds = {};
-          }
-
-          summary[activity.source.id].total =
-            (summary[activity.source.id].total || 0) - activity.value.amount
-
-          summary[activity.source.id].funds[activity.description] =
-            (summary[activity.source.id].funds[activity.description] || 0) - activity.value.amount
-        }
-
-        if(activity.account && activity.account.type === 'Saving') {
-          if(!summary[activity.account.id]) {
-            summary[activity.account.id] = JSON.parse(JSON.stringify(activity.account));
-            summary[activity.account.id].funds = {};
-          }
-
-          summary[activity.account.id].total =
-            (summary[activity.account.id].total || 0) + activity.value.amount
-
-          summary[activity.account.id].funds[activity.description] =
-            (summary[activity.account.id].funds[activity.description] || 0) + activity.value.amount
-        }
-      });
-    }
-
-    const groupedByBank: any = {}
-    Object.keys(summary).map(key => summary[key]).forEach((account: any) => {
-      if(!groupedByBank[account.bank]) {
-        groupedByBank[account.bank] = []
-      }
-      groupedByBank[account.bank].push(account);
-    })
-    return groupedByBank;
-  }
-
   render() {
     const overviews = BookkeepingService.yearlyOverview(this.props.bookkeeping);
     const overviewDataset:ChartDataset<"bar", (number | [number, number])[]>[] = Object.values(overviews[this.state.year] || {});
@@ -118,13 +72,13 @@ class BookkeepingReports extends React.Component<any, any> {
     let details = BookkeepingService.categorySources(this.props.bookkeeping, this.state.year);
     const sum = (a: any,b: any) => (a + b);
     const sorting = (a: any,b: any) => (b.data.reduce(sum, 0) - a.data.reduce(sum, 0));
-    const other:ChartDataset<"bar", (number | [number, number])[]>[] = Object.values(details['Other'] || {});
+    const other:ChartDataset<"bar", (number | [number, number])[]>[] = Object.values(details?.Other || {});
     other.sort(sorting);
     const otherData:ChartData<"bar", (number | [number, number])[], unknown> = {
       labels,
       datasets: other,
     };
-    const disposable :ChartDataset<"bar", (number | [number, number])[]>[] = Object.values(details['Disposable'] || {});
+    const disposable :ChartDataset<"bar", (number | [number, number])[]>[] = Object.values(details?.Disposable || {});
     disposable.sort(sorting);
     const disposableData: ChartData<"bar", (number | [number, number])[], unknown> = {
       labels,
@@ -132,7 +86,7 @@ class BookkeepingReports extends React.Component<any, any> {
     };
 
     details = BookkeepingService.categoryDescriptions(this.props.bookkeeping, this.state.year);
-    const base:ChartDataset<"bar", (number | [number, number])[]>[] = Object.values(details['Base'] || {});
+    const base:ChartDataset<"bar", (number | [number, number])[]>[] = Object.values(details?.Base || {});
     base.sort(sorting);
     const baseData = {
       labels,
@@ -145,8 +99,8 @@ class BookkeepingReports extends React.Component<any, any> {
           {Object.keys(overviews).map((year: string) => (
             <Tab
               key={year}
-              onSelect={() => this.setState({...this.state, year})}
-              isSelected={year === this.state.year} >
+               onSelect={() => this.setState({ year })}
+               isSelected={year === this.state.year} >
               {year}
             </Tab>
           ))}

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, SideSheet, Heading, Paragraph, Pane, TextInputField, SelectField, Checkbox } from 'evergreen-ui'
+import { Button, SideSheet, Heading, Pane, TextInputField, SelectField, Checkbox } from 'evergreen-ui'
 import { Activity, Currency } from '../models/Activity'
 
 function isFloat(n: any){
@@ -23,38 +23,53 @@ const emptyActivity: any = {
 
 interface NewActivitiesSheetState {
   isShown: boolean,
-  activities: Activity[],
+  activities: NewActivity[],
+}
+
+interface NewActivity extends Activity {
+  _id: number;
 }
 
 export default class NewActivitiesSheet extends React.Component<any, NewActivitiesSheetState> {
+  private nextActivityId: number = 0;
+
   constructor(props: any) {
     super(props);
 
     this.state = this.initialState();
   }
 
+  createEmptyActivity() {
+    return {
+      ...clone(emptyActivity),
+      _id: this.nextActivityId++,
+    } as NewActivity;
+  }
+
   initialState() {
     return {
       isShown: false,
-      activities: [clone(emptyActivity)]
+      activities: [this.createEmptyActivity()]
     }
   }
 
   toggleSideSheet() {
-    this.setState({
-      isShown: !this.state.isShown,
-      activities: this.state.activities,
-    });
+    this.setState((previousState) => ({
+      ...previousState,
+      isShown: !previousState.isShown,
+    }));
   }
 
   addEmptyActivity() {
-    this.state.activities.push(clone(emptyActivity));
-    this.setState(this.state);
+    this.setState((previousState) => ({
+      ...previousState,
+      activities: [...previousState.activities, this.createEmptyActivity()],
+    }));
   }
 
   submitActivities() {
-    this.state.activities.forEach(activity => {
-      activity.account = (activity.account || this.defaultAccount());
+    this.state.activities.forEach((activity) => {
+      activity.account = activity.account || this.defaultAccount() || "";
       activity.date = new Date(activity.date);
       this.props.submitActivity(activity);
     });
@@ -88,6 +103,18 @@ export default class NewActivitiesSheet extends React.Component<any, NewActiviti
     )
   }
 
+  updateActivity(index: number, updater: (activity: NewActivity) => NewActivity) {
+    this.setState((previousState) => ({
+      ...previousState,
+      activities: previousState.activities.map((activity, currentIndex) => {
+        if (currentIndex !== index) {
+          return activity;
+        }
+        return updater({ ...activity });
+      }),
+    }));
+  }
+
   render() {
     return (
       <Button margin={10} onClick={() => this.setState({ isShown: true })}>
@@ -100,22 +127,26 @@ export default class NewActivitiesSheet extends React.Component<any, NewActiviti
             <Heading margin={5} size={700} marginTop="default">New Activities</Heading>
             <Button margin={5} onClick={() => this.addEmptyActivity()}>Add</Button>
             <Button margin={5} onClick={() => this.submitActivities()}>Submit</Button>
-            {this.state.activities.map((activity, index) => <Pane key={index} display="flex">
+            {this.state.activities.map((activity, index) => <Pane key={activity._id} display="flex">
                 <TextInputField
                   padding={5}
-                  isInvalid={isNaN(new Date(activity.date).getTime())}
+                  isInvalid={Number.isNaN(new Date(activity.date).getTime())}
                   flex={2}
                   label="Date"
                   value={`${activity.date}`}
                   onChange={(e: any) => {
-                    activity.date = e.target.value;
-                    this.setState(this.state);
+                    this.updateActivity(index, (nextActivity) => ({
+                      ...nextActivity,
+                      date: e.target.value,
+                    }));
                   }} />
                 {
                   activity.transfer ?
                   this.accountSelector(activity.source, (e: any) => {
-                    activity.source = e.target.value;
-                    this.setState(this.state);
+                    this.updateActivity(index, (nextActivity) => ({
+                      ...nextActivity,
+                      source: e.target.value,
+                    }));
                   }) :
                   <TextInputField
                     padding={5}
@@ -124,8 +155,10 @@ export default class NewActivitiesSheet extends React.Component<any, NewActiviti
                     label="Source"
                     value={activity.source}
                     onChange={(e: any) => {
-                      activity.source = e.target.value;
-                      this.setState(this.state);
+                      this.updateActivity(index, (nextActivity) => ({
+                        ...nextActivity,
+                        source: e.target.value,
+                      }));
                     }} />
                 }
                 <TextInputField
@@ -135,18 +168,25 @@ export default class NewActivitiesSheet extends React.Component<any, NewActiviti
                   label="Description"
                   value={activity.description}
                   onChange={(e: any) => {
-                    activity.description = e.target.value;
-                    this.setState(this.state);
+                    this.updateActivity(index, (nextActivity) => ({
+                      ...nextActivity,
+                      description: e.target.value,
+                    }));
                   }} />
                 <TextInputField
                   padding={5}
-                  isInvalid={isNaN(parseFloat(`${activity.value.amount}`))}
+                  isInvalid={Number.isNaN(Number.parseFloat(String(activity.value.amount)))}
                   flex={1}
                   label="Amount"
                   value={activity.value.amount}
                   onChange={(e: any) => {
-                    activity.value.amount = e.target.value;
-                    this.setState(this.state);
+                    this.updateActivity(index, (nextActivity) => ({
+                      ...nextActivity,
+                      value: {
+                        ...nextActivity.value,
+                        amount: e.target.value,
+                      },
+                    }));
                   }} />
                 <SelectField
                   padding={5}
@@ -154,27 +194,33 @@ export default class NewActivitiesSheet extends React.Component<any, NewActiviti
                   label="Currency"
                   value={activity.value.currency}
                   onChange={(e: any) => {
-                    activity.value.currency = e.target.value as Currency;
-                    this.setState(this.state);
+                    this.updateActivity(index, (nextActivity) => ({
+                      ...nextActivity,
+                      value: {
+                        ...nextActivity.value,
+                        currency: e.target.value as Currency,
+                      },
+                    }));
                   }} >
                   {Object.keys(Currency).map(currency => <option key={currency} value={currency}>{currency}</option>)}
                 </SelectField>
                 {this.accountSelector(activity.account, (e: any) => {
-                  activity.account = e.target.value;
-                  this.setState(this.state);
+                  this.updateActivity(index, (nextActivity) => ({
+                    ...nextActivity,
+                    account: e.target.value,
+                  }));
                 })}
                 <Checkbox
                   label="Transfer"
                   marginTop={36}
                   checked={activity.transfer}
                   onChange={(e: any) => {
-                    activity.transfer = e.target.checked;
-                    if(activity.transfer) {
-                      activity.source = this.defaultAccount();
-                    } else {
-                      activity.source = "";
-                    }
-                    this.setState(this.state);
+                    const transfer = e.target.checked;
+                    this.updateActivity(index, (nextActivity) => ({
+                      ...nextActivity,
+                      transfer,
+                      source: transfer ? this.defaultAccount() || "" : "",
+                    }));
                   }} />
               </Pane>)}
           </Pane>

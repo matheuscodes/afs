@@ -1,18 +1,16 @@
 import React from 'react';
 import { connect } from "react-redux";
 import HomeService from '../../services/HomeService';
-import { Home, GasMeter, MeterPayment, MeterPrice, MeterMeasurement } from '../../models/Home';
-import { groupedPayments as groupedPaymentsImport, dateDifference as dateDifferenceImport, getCurrentPrice as getCurrentPriceImport } from '../../models/Bills';
+import { Home, GasMeter } from '../../models/Home';
+import { groupedPayments, dateDifference, getCurrentPrice } from '../../models/Bills';
 import {
   Tab,
   Tablist,
   Pane,
   Table,
-  Heading,
 } from 'evergreen-ui'
 
-// Export utility functions for testing
-export { groupedPaymentsImport as groupedPayments, dateDifferenceImport as dateDifference, getCurrentPriceImport as getCurrentPrice };
+export { groupedPayments, dateDifference, getCurrentPrice } from '../../models/Bills';
 
 const ColumnFlex = {
   date: 1,
@@ -27,6 +25,13 @@ const ColumnFlex = {
   cost: 1,
 }
 
+const ensurePrice = (price: ReturnType<typeof getCurrentPrice>) => {
+  if (!price) {
+    throw new TypeError("Cannot read properties of undefined (reading 'unit')");
+  }
+  return price;
+};
+
 // Export unconnected component for testing
 export class Gas extends React.Component<any, any> {
   constructor(props: any) {
@@ -34,23 +39,27 @@ export class Gas extends React.Component<any, any> {
     this.state = {}
   }
 
-  async componentDidMount() {
+  async loadData() {
     await this.props.fetchHomes()
   }
 
+  componentDidMount() {
+    void this.loadData();
+  }
+
   getGasMeters(gasMeter: GasMeter): any[] {
-    if(!gasMeter.measurements) return [];
+    const measurements = gasMeter.measurements || [];
 
     let lastDate: Date;
     let lastMeasurement: number;
-    return gasMeter.measurements.map(measurement => {
+    return measurements.map(measurement => {
       const item = {
         date: measurement.date,
         measurement: measurement.measurement,
-        price: getCurrentPriceImport(measurement, gasMeter.prices),
+        price: ensurePrice(getCurrentPrice(measurement, gasMeter.prices)),
         consumption: lastMeasurement ? measurement.measurement - lastMeasurement : 0,
         energy: lastMeasurement ? (measurement.measurement - lastMeasurement) * gasMeter.combustion * gasMeter.condition : 0,
-        days: lastDate ? dateDifferenceImport(measurement.date, lastDate) : 0,
+        days: lastDate ? dateDifference(measurement.date, lastDate) : 0,
         billable: measurement.billable
       }
       const cost = {
@@ -66,18 +75,18 @@ export class Gas extends React.Component<any, any> {
 
   getBills(gasMeter: GasMeter): any[] {
     if(!gasMeter.payments) return [];
-
-    const groups = groupedPaymentsImport(gasMeter.payments);
+    const groups = groupedPayments(gasMeter.payments || []);
+    const measurements = gasMeter.measurements || [];
     const all = [] as any[];
     let lastDate: string;
     let lastMeasurement: number;
     let sumUnitCosts = 0;
     let sumBaseCosts = 0;
     this.getGasMeters(gasMeter).forEach((measurement,index) => {
-      const price = getCurrentPriceImport(measurement, gasMeter.prices);
+      const price = ensurePrice(getCurrentPrice(measurement, gasMeter.prices));
       sumUnitCosts += measurement.consumption * price.unit.amount * gasMeter.combustion * gasMeter.condition;
       sumBaseCosts += measurement.days * price.base.amount;
-      if(measurement.billable || index === (gasMeter.measurements.length - 1)) {
+      if(measurement.billable || index === (measurements.length - 1)) {
         if(!lastMeasurement || !lastDate) {
           lastMeasurement = measurement.measurement;
           lastDate = measurement.date;
@@ -89,7 +98,7 @@ export class Gas extends React.Component<any, any> {
           to: measurement.date,
           bill: measurement.bill,
           consumption: lastMeasurement ? (measurement.measurement - lastMeasurement) * gasMeter.combustion * gasMeter.condition : 0,
-          days: lastDate ? dateDifferenceImport(measurement.date, lastDate) : 0,
+          days: lastDate ? dateDifference(measurement.date, lastDate) : 0,
           payments: payments,
         }
         const unitCost = {
@@ -145,23 +154,23 @@ export class Gas extends React.Component<any, any> {
             onSelect={
               () => {
                 this.props.fetchGas(home.id)
-                this.setState({...this.state, selectedHome: home})
+                this.setState({ selectedHome: home })
               }
             }
-            isSelected={this.state.selectedHome && home.id === this.state.selectedHome.id} >
+            isSelected={home.id === this.state.selectedHome?.id} >
             {home.name}
           </Tab>
         ))}
       </Tablist>
       {
-        this.state.selectedHome && this.state.selectedHome.gas ?
+        this.state.selectedHome?.gas ?
         Object.keys(this.state.selectedHome.gas).map(meter =>
           <div key={meter} >
             <h2>{meter}</h2>
             <div>
-              {this.getBills(this.state.selectedHome.gas[meter]).map((bill,index) =>
+              {this.getBills(this.state.selectedHome.gas[meter]).map((bill) =>
                 <Pane
-                  key={`bill-${index}`}
+                  key={`bill-${bill.from}-${bill.to}`}
                   elevation={2}
                   width={'46%'}
                   display={'inline-block'}
@@ -246,7 +255,7 @@ export class Gas extends React.Component<any, any> {
                 </Table.TextHeaderCell>
               </Table.Head>
               <Table.Body>
-                {this.getGasMeters(this.state.selectedHome.gas[meter]).map(this.renderRow)}
+                {this.getGasMeters(this.state.selectedHome.gas[meter]).map((measurementEntry: any, index: number) => this.renderRow(measurementEntry, index))}
               </Table.Body>
             </Table>
           </div>

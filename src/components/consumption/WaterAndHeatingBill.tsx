@@ -1,13 +1,7 @@
 import React from 'react';
-import { connect } from "react-redux";
-import HomeService from '../../services/HomeService';
-import { Home, MeterMeasurement } from '../../models/Home'
 import {
-  Tab,
-  Tablist,
   Pane,
   Table,
-  Heading,
 } from 'evergreen-ui'
 
 const ColumnFlex = {
@@ -16,10 +10,6 @@ const ColumnFlex = {
 }
 
 class WaterAndHeatingBill extends React.Component<any, any> {
-  constructor(props: any) {
-    super(props);
-  }
-
   render() {
     const { bill } = this.props;
 
@@ -76,18 +66,18 @@ class WaterAndHeatingBill extends React.Component<any, any> {
             <Table.Row height={'auto'}>
               <Table.TextCell flex={ColumnFlex.name}>
                 <strong>Heaters</strong><br/>
-                {bill.heaters.map( (heater: any, index: number) =>
+                {bill.heaters.map((heater: any) =>
                   <div
                     style={{textAlign:'right', width:'100%'}}
-                    key={`heater-list-${index}`}>
+                    key={`heater-list-${heater.id}`}>
                     {heater.location}
                   </div>
                 )}
               </Table.TextCell>
               <Table.TextCell flex={ColumnFlex.data}>
                 <br/>
-                {bill.heaters.map( (heater: any, index: number) =>
-                  <div key={`heater-cost-${index}`}>
+                {bill.heaters.map((heater: any) =>
+                  <div key={`heater-cost-${heater.id}`}>
                     {heater.base ? `${heater.base}m² + ` : ''}
                     {heater.consumption} = {heater.cost.total.amount.toFixed(2) + heater.cost.total.currency}
                   </div>
