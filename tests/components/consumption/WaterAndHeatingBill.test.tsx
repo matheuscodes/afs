@@ -124,10 +124,7 @@ describe('WaterAndHeatingBill', () => {
   });
 
   test('does not log duplicate key warnings when heaters do not have ids', () => {
-    const originalConsoleError = console.error;
-    const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation((...args) => {
-      originalConsoleError(...args);
-    });
+    const consoleErrorSpy = jest.spyOn(console, 'error');
     const billWithoutHeaterIds = {
       ...mockBill,
       heaters: [

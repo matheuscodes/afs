@@ -14,7 +14,7 @@ class WaterAndHeatingBill extends React.Component<any, any> {
     if (heater?.id) {
       return heater.id;
     }
-    return `${heater?.location ?? 'unknown'}-${heater?.base ?? 'na'}-${heater?.consumption ?? 'na'}-${index}`;
+    return `location:${heater?.location ?? '<missing>'}|base:${heater?.base ?? '<missing>'}|consumption:${heater?.consumption ?? '<missing>'}|index:${index}`;
   }
 
   render() {
