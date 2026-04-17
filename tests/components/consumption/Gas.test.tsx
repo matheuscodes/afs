@@ -4,7 +4,6 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import configureStore from 'redux-mock-store';
 import { thunk } from 'redux-thunk';
-import type { Middleware } from 'redux';
 import ConnectedGas, { 
   Gas,
   getCurrentPrice,
@@ -23,7 +22,7 @@ jest.mock('../../../src/services/HomeService', () => ({
     fetchHeating: jest.fn(() => updateHeating("1",[],[],[])),
 }));
 
-const mockStore = configureStore([thunk as unknown as Middleware]);
+const mockStore = configureStore<any, any>([thunk as any]);
 
 describe('Gas Utility Functions', () => {
   describe('getCurrentPrice', () => {
