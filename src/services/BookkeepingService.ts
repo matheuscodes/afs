@@ -269,7 +269,7 @@ class Bookkeeping {
         expenses: total.filter(filterByExpense).reduce((accumulator: Charge, activity: SmallActivity) => reducer(accumulator, activity), {amount:0, currency: Currency.EUR}),
         income: total.filter(filterByIncome).reduce((accumulator: Charge, activity: SmallActivity) => reducer(accumulator, activity), {amount:0, currency: Currency.EUR})
       },
-      categorized: total.filter(filterByExpense).reduce(reduceByCategory, {}),
+      categorized: total.filter(filterByExpense).reduce((acc, current) => reduceByCategory(acc, current), {}),
       accounts: thisMonthPerAccount,
     }
 
