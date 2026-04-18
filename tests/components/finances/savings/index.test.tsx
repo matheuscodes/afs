@@ -19,7 +19,7 @@ jest.mock('../../../../src/services/LongTermService', () => ({
   loadUpkeeps: jest.fn(() => loadUpkeeps([])),
 }));
 
-const mockStore = configureStore([thunk]);
+const mockStore = configureStore<any, any>([thunk as any]);
 
 describe('Savings', () => {
   const mockSavings = [

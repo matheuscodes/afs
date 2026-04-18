@@ -7,7 +7,7 @@ import { thunk } from 'redux-thunk';
 import Bookkeeping from '../../src/components/Bookkeeping';
 import { Activity, Currency } from '../../src/models/Activity';
 
-const mockStore = configureStore([thunk]);
+const mockStore = configureStore<any, any>([thunk as any]);
 
 describe('Bookkeeping', () => {
   const mockActivities: Activity[] = [

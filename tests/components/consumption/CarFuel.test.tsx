@@ -16,7 +16,7 @@ jest.mock('../../../src/services/CarFuelService', () => ({
 }));
 
 
-const mockStore = configureStore([thunk]);
+const mockStore = configureStore<any, any>([thunk as any]);
 
 describe('CarFuel', () => {
   const mockCars = {

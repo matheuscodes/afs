@@ -20,7 +20,7 @@ jest.mock('../../../src/services/LongTermService', () => ({
   loadUpkeeps: jest.fn(() => (dispatch: any) => Promise.resolve())
 }));
 
-const mockStore = configureStore([thunk]);
+const mockStore = configureStore<any, any>([thunk as any]);
 
 describe('Upkeep', () => {
   const mockUpkeepData = [

@@ -14,7 +14,7 @@ jest.mock('../../../../src/services/InvestmentsService', () => ({
   fetchProperty: jest.fn(() => updateProperty("123", []))
 }));
 
-const mockStore = configureStore([thunk]);
+const mockStore = configureStore<any, any>([thunk as any]);
 
 describe('PropertyInvestments', () => {
   const mockProperties = {

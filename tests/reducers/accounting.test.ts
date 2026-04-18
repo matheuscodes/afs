@@ -13,7 +13,7 @@ describe('accounting reducer', () => {
     ];
     const next = reducer({}, { type: ACCOUNTING, operation: LOAD_ACCOUNTS, payload });
     expect(next.accounts).toBeDefined();
-    expect(next.accounts.a1).toEqual(payload[0]);
-    expect(next.accounts.a2).toEqual(payload[1]);
+    expect(next.accounts!.a1).toEqual(payload[0]);
+    expect(next.accounts!.a2).toEqual(payload[1]);
   });
 });

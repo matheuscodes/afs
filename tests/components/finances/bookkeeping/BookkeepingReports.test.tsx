@@ -22,7 +22,7 @@ jest.mock('../../../../src/services/BookkeepingService', () => ({
   categoryDescriptions: jest.fn(() => ({})),
 }));
 
-const mockStore = configureStore([thunk]);
+const mockStore = configureStore<any, any>([thunk as any]);
 
 describe('BookkeepingReports', () => {
   const mockActivities = [

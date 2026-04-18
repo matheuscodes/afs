@@ -109,5 +109,56 @@ describe('WaterAndHeatingBill', () => {
     expect(getByText(/20m²/)).toBeInTheDocument();
   });
 
+  test('renders without optional sections when they are missing', () => {
+    const billWithoutOptionalSections = {
+      cost: { total: { amount: 120.45, currency: Currency.EUR } },
+    };
+
+    const { container, queryByText } = render(<WaterAndHeatingBill bill={billWithoutOptionalSections} year={2024} />);
+
+    expect(queryByText(/Cold water/)).not.toBeInTheDocument();
+    expect(queryByText(/Warm water/)).not.toBeInTheDocument();
+    expect(queryByText(/Heaters/)).not.toBeInTheDocument();
+    expect(queryByText(/Total payment/)).not.toBeInTheDocument();
+    expect(container.textContent).toContain('120.45');
+  });
+
+  test('does not log duplicate key warnings when heaters do not have ids', () => {
+    const consoleErrorSpy = jest.spyOn(console, 'error');
+    consoleErrorSpy.mockClear();
+    const billWithoutHeaterIds = {
+      ...mockBill,
+      heaters: [
+        {
+          location: 'Kitchen',
+          base: 10,
+          consumption: 50,
+          cost: {
+            total: { amount: 25, currency: Currency.EUR }
+          }
+        },
+        {
+          location: 'Hallway',
+          base: 8,
+          consumption: 40,
+          cost: {
+            total: { amount: 20, currency: Currency.EUR }
+          }
+        }
+      ]
+    };
+
+    render(<WaterAndHeatingBill bill={billWithoutHeaterIds} year={2024} />);
+
+    try {
+      const duplicateKeyWarning = consoleErrorSpy.mock.calls.some((call) =>
+        call.some((part) => String(part).includes('Encountered two children with the same key'))
+      );
+      expect(duplicateKeyWarning).toBe(false);
+    } finally {
+      consoleErrorSpy.mockRestore();
+    }
+  });
+
 
 });

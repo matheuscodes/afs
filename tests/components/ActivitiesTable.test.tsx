@@ -1,7 +1,52 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import ActivitiesTable from '../../src/components/ActivitiesTable';
+
+jest.mock('evergreen-ui', () => {
+  const simpleContainer = ({ children }: any) => <div>{children}</div>;
+  const searchHeaderCell = ({ onChange, value, placeholder }: any) => (
+    <input
+      placeholder={placeholder}
+      value={value}
+      onChange={(event) => onChange?.(event.target.value)}
+    />
+  );
+
+  const Table: any = simpleContainer;
+  Table.Head = simpleContainer;
+  Table.Body = simpleContainer;
+  Table.Row = simpleContainer;
+  Table.TextCell = simpleContainer;
+  Table.Cell = simpleContainer;
+  Table.TextHeaderCell = simpleContainer;
+  Table.HeaderCell = simpleContainer;
+  Table.SearchHeaderCell = searchHeaderCell;
+
+  const Menu: any = simpleContainer;
+  Menu.OptionsGroup = simpleContainer;
+  Menu.Group = simpleContainer;
+  Menu.Item = simpleContainer;
+  Menu.Divider = () => <hr />;
+
+  return {
+    Table,
+    Popover: ({ children }: any) => (
+      <>{typeof children === 'function' ? children({ close: () => undefined }) : children}</>
+    ),
+    Position: {
+      BOTTOM_LEFT: 'BOTTOM_LEFT',
+      BOTTOM_RIGHT: 'BOTTOM_RIGHT',
+    },
+    Menu,
+    IconButton: ({ children }: any) => <button type="button">{children}</button>,
+    ArrowUpIcon: 'ArrowUpIcon',
+    ArrowDownIcon: 'ArrowDownIcon',
+    CaretDownIcon: 'CaretDownIcon',
+    MoreIcon: 'MoreIcon',
+    TextDropdownButton: ({ children }: any) => <button type="button">{children}</button>,
+  };
+});
 
 describe('ActivitiesTable', () => {
   const mockAccounts = {

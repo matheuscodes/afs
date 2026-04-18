@@ -38,7 +38,7 @@ jest.mock('../../../src/services/HomeService', () => ({
   updateHomes: jest.fn()
 }));
 
-const mockStore = configureStore([thunk]);
+const mockStore = configureStore<any, any>([thunk as any]);
 
 describe('WaterAndHeating', () => {
   const mockHomes = {

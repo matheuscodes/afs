@@ -22,7 +22,7 @@ jest.mock('../../../src/services/HomeService', () => ({
     fetchHeating: jest.fn(() => updateHeating("1",[],[],[])),
 }));
 
-const mockStore = configureStore([thunk]);
+const mockStore = configureStore<any, any>([thunk as any]);
 
 describe('Gas Utility Functions', () => {
   describe('getCurrentPrice', () => {
