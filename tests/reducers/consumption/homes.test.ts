@@ -33,8 +33,8 @@ describe('consumption/homes reducer', () => {
     expect(meter.prices.length).toBe(1);
     expect(meter.payments).toBeDefined();
     expect(meter.measurements).toBeDefined();
-    expect((meter.payments ?? []).every((p: any) => p.meter === 'm1')).toBe(true);
-    expect((meter.measurements ?? []).every((m: any) => m.meter === 'm1')).toBe(true);
+    expect(meter.payments!.every((p: any) => p.meter === 'm1')).toBe(true);
+    expect(meter.measurements!.every((m: any) => m.meter === 'm1')).toBe(true);
   });
 
   test('UPDATE_ELECTRICITY returns unchanged state when home does not exist', () => {
@@ -54,7 +54,7 @@ describe('consumption/homes reducer', () => {
     const gasMeter = next.hG.gas!.g1!;
     expect(gasMeter.prices.length).toBe(1);
     expect(gasMeter.payments).toBeDefined();
-    expect((gasMeter.payments ?? []).every((p: any) => p.meter === 'g1')).toBe(true);
+    expect(gasMeter.payments!.every((p: any) => p.meter === 'g1')).toBe(true);
   });
 
   test('UPDATE_GAS returns unchanged state when home does not exist', () => {
@@ -86,7 +86,7 @@ describe('consumption/homes reducer', () => {
     const heater = next.hH.heaters!.ht1!;
     expect(heater.prices.length).toBe(1);
     expect(heater.payments).toBeDefined();
-    expect((heater.payments ?? []).every((p: any) => p.meter === 'ht1')).toBe(true);
+    expect(heater.payments!.every((p: any) => p.meter === 'ht1')).toBe(true);
   });
 
   test('UPDATE_HEATING returns unchanged state when home does not exist', () => {
