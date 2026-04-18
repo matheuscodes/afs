@@ -3,9 +3,8 @@ module.exports = {
   testMatch: ['<rootDir>/tests/**/*.test.ts', '<rootDir>/tests/**/*.test.tsx'],
   testEnvironment: 'jsdom',
   setupFilesAfterEnv: ['<rootDir>/tests/setupTests.ts'],
-  // Disable TypeScript diagnostics during test transforms to keep CI test logs free of ts-jest error noise.
   transform: {
-    '^.+\\.tsx?$': ['ts-jest', { diagnostics: false }],
+    '^.+\\.tsx?$': ['ts-jest', { tsconfig: 'tsconfig.test.json' }],
   },
   collectCoverage: true,
   collectCoverageFrom: [

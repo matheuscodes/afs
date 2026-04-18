@@ -26,11 +26,15 @@ describe('consumption/homes reducer', () => {
     const measurements = [{ meter: 'm1', value: 100 }];
     const actionPayload = { homeId, prices, payments, measurements };
     const next = reducer(initial, { type: HOME_CONSUMPTION, operation: UPDATE_ELECTRICITY, payload: actionPayload } as any);
-    expect(next.h1.electricity).toBeTruthy();
-    expect(next.h1.electricity.m1).toBeTruthy();
-    expect(next.h1.electricity.m1.prices.length).toBe(1);
-    expect(next.h1.electricity.m1.payments.every((p: any) => p.meter === 'm1')).toBe(true);
-    expect(next.h1.electricity.m1.measurements.every((m: any) => m.meter === 'm1')).toBe(true);
+    const electricity = next.h1.electricity!;
+    const meter = electricity.m1!;
+    expect(electricity).toBeTruthy();
+    expect(meter).toBeTruthy();
+    expect(meter.prices.length).toBe(1);
+    expect(meter.payments).toBeDefined();
+    expect(meter.measurements).toBeDefined();
+    expect((meter.payments ?? []).every((p: any) => p.meter === 'm1')).toBe(true);
+    expect((meter.measurements ?? []).every((m: any) => m.meter === 'm1')).toBe(true);
   });
 
   test('UPDATE_ELECTRICITY returns unchanged state when home does not exist', () => {
@@ -47,8 +51,10 @@ describe('consumption/homes reducer', () => {
     const measurements = [{ meter: 'g1', value: 1 }];
     const payload = { homeId, prices, payments, measurements };
     const next = reducer(initial, { type: HOME_CONSUMPTION, operation: UPDATE_GAS, payload } as any);
-    expect(next.hG.gas.g1.prices.length).toBe(1);
-    expect(next.hG.gas.g1.payments.every((p: any) => p.meter === 'g1')).toBe(true);
+    const gasMeter = next.hG.gas!.g1!;
+    expect(gasMeter.prices.length).toBe(1);
+    expect(gasMeter.payments).toBeDefined();
+    expect((gasMeter.payments ?? []).every((p: any) => p.meter === 'g1')).toBe(true);
   });
 
   test('UPDATE_GAS returns unchanged state when home does not exist', () => {
@@ -77,8 +83,10 @@ describe('consumption/homes reducer', () => {
     const measurements = [{ meter: 'ht1' }];
     const payload = { homeId, prices, payments, measurements };
     const next = reducer(initial, { type: HOME_CONSUMPTION, operation: UPDATE_HEATING, payload } as any);
-    expect(next.hH.heaters.ht1.prices.length).toBe(1);
-    expect(next.hH.heaters.ht1.payments.every((p: any) => p.meter === 'ht1')).toBe(true);
+    const heater = next.hH.heaters!.ht1!;
+    expect(heater.prices.length).toBe(1);
+    expect(heater.payments).toBeDefined();
+    expect((heater.payments ?? []).every((p: any) => p.meter === 'ht1')).toBe(true);
   });
 
   test('UPDATE_HEATING returns unchanged state when home does not exist', () => {
