@@ -89,7 +89,7 @@
     "eslint": "10.2.0",
     "eslint-plugin-import": "2.32.0",
     "jest": "30.3.0",
-    "jest-environment-jsdom": "30.3.0",
+    "jest-environment-jsdom": "30.4.1",
     "node-loader": "2.1.0",
     "redux-mock-store": "1.5.5",
     "style-loader": "4.0.0",
