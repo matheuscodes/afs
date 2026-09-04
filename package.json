@@ -88,7 +88,7 @@
     "electron": "42.5.1",
     "eslint": "10.6.0",
     "jest": "30.4.2",
-    "jest-environment-jsdom": "30.4.1",
+    "jest-environment-jsdom": "30.5.1",
     "node-loader": "2.1.0",
     "redux-mock-store": "1.5.5",
     "style-loader": "4.0.0",
